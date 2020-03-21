@@ -14,15 +14,15 @@ interface Request {
 
     fun method(): HttpMethod
 
-    fun uri(): String
+    fun url(): String
 
-    fun headers(): Map<String, String>
+    fun headers(): MutableMap<String, String>
 
     fun header(name: String): String
 
     fun cookies(): Array<HttpCookie>
 
-    fun params(): Map<String, String>
+    fun params(): MutableMap<String, String>
 
     fun param(name: String): String
 

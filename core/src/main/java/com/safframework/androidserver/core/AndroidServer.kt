@@ -2,6 +2,7 @@ package com.safframework.androidserver.core
 
 import com.safframework.androidserver.core.http.HttpMethod
 import com.safframework.androidserver.core.log.LogProxy
+import com.safframework.androidserver.core.router.RouteTable
 import io.netty.channel.ChannelFuture
 import java.io.Closeable
 
@@ -16,6 +17,7 @@ import java.io.Closeable
 class AndroidServer :HttpServer,Closeable {
 
     private var channelFuture: ChannelFuture? = null
+    private val routeRegistry: RouteTable = RouteTable()
 
     private var log: LogProxy? = null
 
@@ -24,6 +26,7 @@ class AndroidServer :HttpServer,Closeable {
 
     override fun request(method: HttpMethod, route: String, handler: RequestHandler): HttpServer {
 
+        routeRegistry.registHandler(method,route,handler)
         return this
     }
 
