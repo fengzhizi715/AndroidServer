@@ -23,69 +23,47 @@ class HttpCookie {
         cookie.isHttpOnly = true
     }
 
-    fun name(): String {
-        return cookie.name()
-    }
+    fun name(): String = cookie.name()
 
-    fun value(): String {
-        return cookie.value()
-    }
+    fun value(): String = cookie.value()
 
     fun setValue(value: String) {
         cookie.setValue(value)
     }
 
-    fun domain(): String {
-        return cookie.domain()
-    }
+    fun domain(): String = cookie.domain()
 
     fun setDomain(domain: String) {
         cookie.setDomain(domain)
     }
 
-    fun path(): String {
-        return cookie.path()
-    }
+    fun path(): String = cookie.path()
 
     fun setPath(path: String) {
         cookie.setPath(path)
     }
 
-    fun maxAge(): Long {
-        return cookie.maxAge()
-    }
+    fun maxAge(): Long = cookie.maxAge()
 
     fun setMaxAge(maxAge: Long) {
         cookie.setMaxAge(maxAge)
     }
 
-    fun isSecure(): Boolean {
-        return cookie.isSecure
-    }
+    fun isSecure(): Boolean = cookie.isSecure
 
     fun setSecure(secure: Boolean) {
         cookie.isSecure = secure
     }
 
-    fun isHttpOnly(): Boolean {
-        return cookie.isHttpOnly
-    }
+    fun isHttpOnly(): Boolean = cookie.isHttpOnly
 
     fun setHttpOnly(httpOnly: Boolean) {
         cookie.isHttpOnly = httpOnly
     }
 
-    operator fun compareTo(o: Cookie): Int {
-        return cookie.compareTo(o)
-    }
+    operator fun compareTo(o: Cookie): Int = cookie.compareTo(o)
 
-    fun getWrapper(): Cookie {
-        return cookie
-    }
+    fun get(): Cookie = cookie
 
-    override fun toString(): String {
-        return "HttpCookie{" +
-                "cookie=" + cookie +
-                '}'
-    }
+    override fun toString(): String = "HttpCookie{cookie=$cookie}"
 }
