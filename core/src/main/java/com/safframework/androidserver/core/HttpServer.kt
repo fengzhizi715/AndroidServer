@@ -15,9 +15,6 @@ interface HttpServer {
     @Throws(Exception::class)
     fun start()
 
-    @Throws(Exception::class)
-    fun stop()
-
     fun get(route: String, handler: RequestHandler): HttpServer = request(HttpMethod.GET, route, handler)
 
     fun post(route: String, handler: RequestHandler): HttpServer = request(HttpMethod.POST, route, handler)
