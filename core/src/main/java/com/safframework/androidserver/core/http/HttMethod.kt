@@ -17,7 +17,8 @@ enum class HttpMethod {
     HEAD,
     TRACE,
     CONNECT,
-    OPTIONS;
+    OPTIONS,
+    PATCH;
 
     companion object {
         fun getMethod(method: io.netty.handler.codec.http.HttpMethod): HttpMethod {
