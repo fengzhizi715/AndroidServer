@@ -12,7 +12,7 @@ import com.safframework.androidserver.core.http.cookie.HttpCookie
  */
 interface Request {
 
-    fun method(): HttMethod
+    fun method(): HttpMethod
 
     fun uri(): String
 

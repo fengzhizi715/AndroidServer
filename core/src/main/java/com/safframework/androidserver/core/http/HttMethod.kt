@@ -8,23 +8,25 @@ package com.safframework.androidserver.core.http
  * @date: 2020-03-21 12:33
  * @version: V1.0 <描述当前版本功能>
  */
-enum class HttMethod {
+enum class HttpMethod {
+
     GET,
-    HEAD,
     POST,
     PUT,
     DELETE,
+    HEAD,
+    TRACE,
+    CONNECT,
     OPTIONS;
 
     companion object {
-
-        val allHttpMethod = arrayOf(
-            GET,
-            POST,
-            HEAD,
-            OPTIONS,
-            DELETE,
-            PUT
-        )
+        fun getMethod(method: io.netty.handler.codec.http.HttpMethod): HttpMethod {
+            for (m in values()) {
+                if (m.name == method.name()) {
+                    return m
+                }
+            }
+            return GET
+        }
     }
 }
