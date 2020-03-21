@@ -15,34 +15,35 @@ import com.safframework.androidserver.core.http.Request
  */
 class RouteTable {
 
-    private val getTrie: PathTrie<RequestHandler> = PathTrie()
-    private val postTrie: PathTrie<RequestHandler> = PathTrie()
-    private val putTrie: PathTrie<RequestHandler> = PathTrie()
-    private val deleteTrie: PathTrie<RequestHandler> = PathTrie()
+    private val getTrie: PathTrie<RequestHandler>     = PathTrie()
+    private val postTrie: PathTrie<RequestHandler>    = PathTrie()
+    private val putTrie: PathTrie<RequestHandler>     = PathTrie()
+    private val deleteTrie: PathTrie<RequestHandler>  = PathTrie()
+    private val headTrie: PathTrie<RequestHandler>    = PathTrie()
+    private val traceTrie: PathTrie<RequestHandler>   = PathTrie()
+    private val connectTrie: PathTrie<RequestHandler> = PathTrie()
+    private val optionsTrie: PathTrie<RequestHandler> = PathTrie()
+    private val patchTrie: PathTrie<RequestHandler>   = PathTrie()
 
-    fun registHandler(
-        method: HttpMethod,
-        url: String,
-        handler: RequestHandler
-    ) {
-        getTable(method)?.let {
-            it.insert(url, handler)
-        }
+    fun registHandler(method: HttpMethod, url: String, handler: RequestHandler) {
+        getTable(method).insert(url, handler)
     }
 
-    private fun getTable(method: HttpMethod): PathTrie<RequestHandler>? {
+    private fun getTable(method: HttpMethod): PathTrie<RequestHandler> =
         when (method) {
-            HttpMethod.GET -> return getTrie
-            HttpMethod.POST -> return postTrie
-            HttpMethod.PUT -> return putTrie
-            HttpMethod.DELETE -> return deleteTrie
+            HttpMethod.GET     -> getTrie
+            HttpMethod.POST    -> postTrie
+            HttpMethod.PUT     -> putTrie
+            HttpMethod.DELETE  -> deleteTrie
+            HttpMethod.HEAD    -> headTrie
+            HttpMethod.TRACE   -> traceTrie
+            HttpMethod.CONNECT -> connectTrie
+            HttpMethod.OPTIONS -> optionsTrie
+            HttpMethod.PATCH   -> patchTrie
         }
-        return null
-    }
 
     fun getHandler(request: Request): RequestHandler {
-       return getTable(request.method())?.let {
-            it.fetch(request.url(), request.params())
-        }?: NotFoundController()
+
+        return getTable(request.method()).fetch(request.url(),request.params())?:NotFoundController()
     }
 }
