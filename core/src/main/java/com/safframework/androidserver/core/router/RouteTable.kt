@@ -13,7 +13,7 @@ import com.safframework.androidserver.core.http.Request
  * @date: 2020-03-21 21:28
  * @version: V1.0 <描述当前版本功能>
  */
-class RouteTable {
+object RouteTable {
 
     private val getTrie: PathTrie<RequestHandler>     = PathTrie()
     private val postTrie: PathTrie<RequestHandler>    = PathTrie()
