@@ -1,7 +1,7 @@
 package com.safframework.androidserver.core.log
 
 /**
- *
+ * 日志库的代理操作，便于开发者使用自己的日志库
  * @FileName:
  *          com.safframework.androidserver.core.log.LogProxy
  * @author: Tony Shen
