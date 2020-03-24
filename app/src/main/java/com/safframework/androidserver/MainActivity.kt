@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity(){
                 .get("/hello")  { _, response: Response ->
                     response.setBodyText("hello world")
                 }
+                .get("/sayHi/{name}") { request,response: Response ->
+                    val name = request.param("name")
+                    response.setBodyText("hi $name!")
+                }
                 .start()
         }
     }

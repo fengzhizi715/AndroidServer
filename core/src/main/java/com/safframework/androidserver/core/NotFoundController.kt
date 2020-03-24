@@ -17,10 +17,8 @@ class NotFoundController: RequestHandler {
 
     override fun invoke(request: Request, response: Response): Response {
         val json = JSONObject()
-        val entity = JSONObject()
-        entity.put("status", 404)
-        entity.put("reason", "404 Not Found")
-        json.put("error", entity)
+        json.put("status", 404)
+        json.put("reason", "404 Not Found")
         return response.setBodyJson(json)
     }
 }
