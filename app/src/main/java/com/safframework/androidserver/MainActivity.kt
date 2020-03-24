@@ -3,6 +3,7 @@ package com.safframework.androidserver
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.safframework.androidserver.converter.gson.GsonConverter
 import com.safframework.androidserver.core.AndroidServer
 import com.safframework.androidserver.core.http.Response
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
 
         Handler().post {
-            val androidServer = AndroidServer.Builder().build()
+            val androidServer = AndroidServer.Builder().converter(GsonConverter()).build()
 
             androidServer
                 .get("/hello")  { _, response: Response ->

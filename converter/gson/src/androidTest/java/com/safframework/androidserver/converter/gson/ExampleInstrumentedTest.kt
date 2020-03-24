@@ -1,4 +1,4 @@
-package com.safframework.androidserver.converter
+package com.safframework.androidserver.converter.gson
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.safframework.androidserver.converter.test", appContext.packageName)
+        assertEquals("com.safframework.androidserver.converter.gson.test", appContext.packageName)
     }
 }

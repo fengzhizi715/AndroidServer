@@ -1,4 +1,4 @@
-package com.safframework.androidserver.converter
+package com.safframework.androidserver.converter.gson
 
 import org.junit.Test
 

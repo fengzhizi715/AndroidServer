@@ -8,7 +8,8 @@ ext {
     ]
 
     libraries = [
-            netty                  : "4.1.48.Final"
+            netty                  : "4.1.48.Final",
+            gson                   : "2.8.6"
     ]
 }
 
