@@ -1,5 +1,6 @@
 package com.safframework.androidserver.core
 
+import com.safframework.androidserver.core.converter.Converter
 import com.safframework.androidserver.core.http.HttpMethod
 import com.safframework.androidserver.core.log.LogProxy
 import com.safframework.androidserver.core.router.RouteTable
@@ -41,7 +42,6 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
             channelFuture = cf
             cf.sync()
             cf.channel().closeFuture().sync()
-            channelFuture = null
         } catch (e: UnknownHostException) {
             throw RuntimeException(e)
         } catch (e: InterruptedException) {
@@ -51,7 +51,9 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         }
     }
 
-    override fun request(method: HttpMethod, route: String, handler: RequestHandler): HttpServer {
+    fun getConverter(): Converter? = builder.converter
+
+    override fun request(method: HttpMethod, route: String, handler: RequestHandler): AndroidServer {
 
         routeRegistry.registHandler(method,route,handler)
         return this
@@ -73,6 +75,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         var useTls: Boolean = false
         var maxContentLength: Int = 524228
         var logProxy:LogProxy?=null
+        var converter: Converter?=null
 
         fun port(port: Int):Builder {
             this.port = port
@@ -96,6 +99,11 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
 
         fun logProxy(logProxy: LogProxy):Builder {
             this.logProxy = logProxy
+            return this
+        }
+
+        fun converter(converter: Converter):Builder {
+            this.converter = converter
             return this
         }
 
