@@ -42,8 +42,8 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
 
     override fun start() {
         val bootstrap = ServerBootstrap()
-        val bossEventLoopGroup = NioEventLoopGroup(5)
-        val eventLoopGroup = NioEventLoopGroup(10)
+        val bossEventLoopGroup = NioEventLoopGroup(1)
+        val eventLoopGroup = NioEventLoopGroup()
         try {
             val address = InetAddress.getByName(builder.address)
             val socketAddress = InetSocketAddress(address, builder.port)
@@ -51,7 +51,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
                 .group(bossEventLoopGroup, eventLoopGroup)
                 .channel(NioServerSocketChannel::class.java)
                 .localAddress(socketAddress)
-                .childHandler(NettyServerInitializer(routeRegistry,sslContext))
+                .childHandler(NettyServerInitializer(routeRegistry,sslContext,builder))
             val cf = bootstrap.bind()
             channelFuture = cf
             cf.sync()
