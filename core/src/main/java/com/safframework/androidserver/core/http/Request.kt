@@ -18,13 +18,11 @@ interface Request {
 
     fun headers(): MutableMap<String, String>
 
-    fun header(name: String): String
+    fun header(name: String): String?
 
     fun cookies(): Array<HttpCookie>
 
     fun params(): MutableMap<String, String>
 
     fun param(name: String): String
-
-    fun content(): String
 }
