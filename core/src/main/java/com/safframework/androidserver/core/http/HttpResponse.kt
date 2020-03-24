@@ -1,5 +1,6 @@
 package com.safframework.androidserver.core.http
 
+import com.safframework.androidserver.core.converter.ConverterManager
 import com.safframework.androidserver.core.log.LogManager
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufOutputStream
@@ -31,12 +32,13 @@ class HttpResponse(private val channel:Channel) : Response {
         TODO("Not yet implemented")
     }
 
-    override fun setBodyJson(serializeToJson: Any): Response {
+    override fun setBodyJson(any: Any): Response {
         val byteBuf = channel.alloc().directBuffer()
         try {
             ByteBufOutputStream(byteBuf).use { os: OutputStream ->
-//                objectMapper.writeValue(os, serializeToJson)
-//                os.writer()
+                ConverterManager.toJson(any)?.let {
+                    os.write(it.toByteArray())
+                }
                 addHeader(HttpHeaderNames.CONTENT_TYPE, JSON)
                 body = byteBuf
             }

@@ -16,7 +16,7 @@ interface Response {
 
     fun setStatus(status: HttpResponseStatus): Response
 
-    fun setBodyJson(serializeToJson: Any): Response
+    fun setBodyJson(any: Any): Response
 
     fun setBodyHtml(html: String): Response
 

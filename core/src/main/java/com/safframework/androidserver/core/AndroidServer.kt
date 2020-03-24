@@ -1,6 +1,7 @@
 package com.safframework.androidserver.core
 
 import com.safframework.androidserver.core.converter.Converter
+import com.safframework.androidserver.core.converter.ConverterManager
 import com.safframework.androidserver.core.http.HttpMethod
 import com.safframework.androidserver.core.log.LogManager
 import com.safframework.androidserver.core.log.LogProxy
@@ -33,6 +34,10 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
     init {
         builder.logProxy?.let {
             LogManager.logProxy(it)
+        }
+
+        builder.converter?.let {
+            ConverterManager.converter(it)
         }
 
         if (builder.useTls) {
