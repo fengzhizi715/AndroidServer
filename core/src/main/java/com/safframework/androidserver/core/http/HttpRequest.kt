@@ -2,6 +2,8 @@ package com.safframework.androidserver.core.http
 
 import com.safframework.androidserver.core.http.cookie.HttpCookie
 import io.netty.handler.codec.http.FullHttpRequest
+import io.netty.handler.codec.http.QueryStringDecoder
+import io.netty.util.CharsetUtil
 
 
 /**
@@ -23,6 +25,12 @@ class HttpRequest(private val fullHttpRequest: FullHttpRequest) :Request {
         for ((key, value) in list) {
             headers.put(key,value)
         }
+
+        val decoder = QueryStringDecoder(fullHttpRequest.uri())
+        val param = decoder.parameters()
+        for ((key, value) in param) {
+            params[key] = value[0]
+        }
     }
 
     override fun method(): HttpMethod = HttpMethod.getMethod(fullHttpRequest.method())
@@ -37,11 +45,9 @@ class HttpRequest(private val fullHttpRequest: FullHttpRequest) :Request {
         TODO("Not yet implemented")
     }
 
-    override fun params(): MutableMap<String, String> {
-        TODO("Not yet implemented")
-    }
+    override fun params(): MutableMap<String, String> = params
 
-    override fun param(name: String): String {
-        TODO("Not yet implemented")
-    }
+    override fun param(name: String): String? = params[name]
+
+    override fun content(): String = fullHttpRequest.content().toString(CharsetUtil.UTF_8)
 }

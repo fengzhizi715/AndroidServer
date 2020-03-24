@@ -24,5 +24,7 @@ interface Request {
 
     fun params(): MutableMap<String, String>
 
-    fun param(name: String): String
+    fun param(name: String): String?
+
+    fun content(): String
 }
