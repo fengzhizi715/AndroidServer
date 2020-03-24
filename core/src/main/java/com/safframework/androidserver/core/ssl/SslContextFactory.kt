@@ -15,7 +15,7 @@ import javax.net.ssl.SSLException
  * @date: 2020-03-24 13:22
  * @version: V1.0 <描述当前版本功能>
  */
-class SslContextFactory {
+object SslContextFactory {
 
     fun createSslContext(): SslContext? {
          return try {

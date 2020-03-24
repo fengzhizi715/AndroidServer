@@ -5,10 +5,12 @@ import com.safframework.androidserver.core.http.HttpMethod
 import com.safframework.androidserver.core.log.LogManager
 import com.safframework.androidserver.core.log.LogProxy
 import com.safframework.androidserver.core.router.RouteTable
+import com.safframework.androidserver.core.ssl.SslContextFactory
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelFuture
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
+import io.netty.handler.ssl.SslContext
 import java.io.Closeable
 import java.net.InetAddress
 import java.net.InetSocketAddress
@@ -26,15 +28,15 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
 
     private var channelFuture: ChannelFuture? = null
     private val routeRegistry: RouteTable = RouteTable
-    private var converter:Converter? = null
+    private var sslContext: SslContext? = null
 
     init {
         builder.logProxy?.let {
             LogManager.logProxy(it)
         }
-        converter = builder.converter
 
         if (builder.useTls) {
+            sslContext = SslContextFactory.createSslContext()
         }
     }
 
@@ -49,7 +51,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
                 .group(bossEventLoopGroup, eventLoopGroup)
                 .channel(NioServerSocketChannel::class.java)
                 .localAddress(socketAddress)
-                .childHandler(NettyServerInitializer(routeRegistry))
+                .childHandler(NettyServerInitializer(routeRegistry,sslContext))
             val cf = bootstrap.bind()
             channelFuture = cf
             cf.sync()
@@ -62,8 +64,6 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
             close()
         }
     }
-
-    fun getConverter(): Converter? = converter
 
     override fun request(method: HttpMethod, route: String, handler: RequestHandler): AndroidServer {
 
