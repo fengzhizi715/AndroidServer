@@ -1,3 +1,4 @@
 rootProject.name='AndroidServer'
 include ':app'
 include ':core'
+include ':converter'

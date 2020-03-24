@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(){
             val androidServer = AndroidServer.Builder().build()
 
             androidServer
-                .get("/")  { _, response: Response ->
+                .get("/hello")  { _, response: Response ->
                     response.setBodyText("hello world")
                 }
                 .start()

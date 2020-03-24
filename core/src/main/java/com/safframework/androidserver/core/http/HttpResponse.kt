@@ -1,12 +1,16 @@
 package com.safframework.androidserver.core.http
 
+import com.safframework.androidserver.core.log.LogManager
 import io.netty.buffer.ByteBuf
+import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.channel.Channel
 import io.netty.handler.codec.http.*
 import io.netty.handler.codec.http.DefaultFullHttpResponse
 import io.netty.util.AsciiString
 import io.netty.util.CharsetUtil
+import java.io.IOException
+import java.io.OutputStream
 import java.util.HashMap
 
 /**
@@ -28,7 +32,18 @@ class HttpResponse(private val channel:Channel) : Response {
     }
 
     override fun setBodyJson(serializeToJson: Any): Response {
-        TODO("Not yet implemented")
+        val byteBuf = channel.alloc().directBuffer()
+        try {
+            ByteBufOutputStream(byteBuf).use { os: OutputStream ->
+//                objectMapper.writeValue(os, serializeToJson)
+//                os.writer()
+                addHeader(HttpHeaderNames.CONTENT_TYPE, JSON)
+                body = byteBuf
+            }
+        } catch (e: IOException) {
+            LogManager.e("error serializing json", e.message?:"")
+        }
+        return this
     }
 
     override fun setBodyHtml(html: String): Response {
@@ -56,9 +71,7 @@ class HttpResponse(private val channel:Channel) : Response {
         return this
     }
 
-    private fun buildBodyData(): ByteBuf {
-        return body ?: Unpooled.EMPTY_BUFFER
-    }
+    private fun buildBodyData(): ByteBuf = body ?: Unpooled.EMPTY_BUFFER
 
     fun buildFullH1Response(): FullHttpResponse {
         var status = this.status

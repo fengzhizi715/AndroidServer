@@ -2,6 +2,8 @@ package com.safframework.androidserver.core
 
 import com.safframework.androidserver.core.http.Request
 import com.safframework.androidserver.core.http.Response
+import org.json.JSONObject
+
 
 /**
  *
@@ -14,7 +16,11 @@ import com.safframework.androidserver.core.http.Response
 class NotFoundController: RequestHandler {
 
     override fun invoke(request: Request, response: Response): Response {
-
-        return response
+        val json = JSONObject()
+        val entity = JSONObject()
+        entity.put("status", 404)
+        entity.put("reason", "404 Not Found")
+        json.put("error", entity)
+        return response.setBodyJson(json)
     }
 }
