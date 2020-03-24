@@ -2,6 +2,7 @@ package com.safframework.androidserver.core
 
 import com.safframework.androidserver.core.converter.Converter
 import com.safframework.androidserver.core.http.HttpMethod
+import com.safframework.androidserver.core.log.LogManager
 import com.safframework.androidserver.core.log.LogProxy
 import com.safframework.androidserver.core.router.RouteTable
 import io.netty.bootstrap.ServerBootstrap
@@ -25,6 +26,17 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
 
     private var channelFuture: ChannelFuture? = null
     private val routeRegistry: RouteTable = RouteTable
+    private var converter:Converter? = null
+
+    init {
+        builder.logProxy?.let {
+            LogManager.logProxy(it)
+        }
+        converter = builder.converter
+
+        if (builder.useTls) {
+        }
+    }
 
     override fun start() {
         val bootstrap = ServerBootstrap()
@@ -51,7 +63,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         }
     }
 
-    fun getConverter(): Converter? = builder.converter
+    fun getConverter(): Converter? = converter
 
     override fun request(method: HttpMethod, route: String, handler: RequestHandler): AndroidServer {
 
@@ -64,7 +76,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
             channelFuture?.channel()?.close()
 
         } catch (e: InterruptedException) {
-            builder.logProxy?.e("error", e.message?:"")
+            LogManager.e("error", e.message?:"")
             throw RuntimeException(e)
         }
     }
