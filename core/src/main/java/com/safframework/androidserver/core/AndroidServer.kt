@@ -50,12 +50,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         }
 
         if (builder.useHttp) {
-            channelInitializer =
-                NettyHttpServerInitializer(
-                    routeRegistry,
-                    sslContext,
-                    builder
-                )
+            channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
         }
     }
 
