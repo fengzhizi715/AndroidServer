@@ -31,6 +31,10 @@ class MainActivity : AppCompatActivity(){
                     val name = request.param("name")
                     response.setBodyText("hi $name!")
                 }
+                .post("/uploadLog") { request,response: Response ->
+                    val requestBody = request.content()
+                    response.setBodyText(requestBody)
+                }
                 .start()
         }
     }

@@ -7,12 +7,10 @@ import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.channel.Channel
 import io.netty.handler.codec.http.*
-import io.netty.handler.codec.http.DefaultFullHttpResponse
 import io.netty.util.AsciiString
 import io.netty.util.CharsetUtil
 import java.io.IOException
 import java.io.OutputStream
-import java.util.HashMap
 
 /**
  *
@@ -26,7 +24,7 @@ class HttpResponse(private val channel:Channel) : Response {
 
     private var status: HttpResponseStatus? = null
     private var body: ByteBuf? = null
-    private var headers: MutableMap<AsciiString, AsciiString>? = null
+    private var headers: MutableMap<AsciiString, AsciiString> = mutableMapOf()
 
     override fun setStatus(status: HttpResponseStatus): Response {
         TODO("Not yet implemented")
@@ -66,10 +64,7 @@ class HttpResponse(private val channel:Channel) : Response {
     override fun addHeader(key: CharSequence, value: CharSequence): Response = addHeader(AsciiString.of(key), AsciiString.of(value))
 
     override fun addHeader(key: AsciiString, value: AsciiString): Response {
-        if (headers == null) {
-            headers = HashMap()
-        }
-        headers!![key] = value
+        headers[key] = value
         return this
     }
 
@@ -83,14 +78,14 @@ class HttpResponse(private val channel:Channel) : Response {
 
         val response = DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status!!, buildBodyData())
         response.headers().set(HttpHeaderNames.SERVER, SERVER_VALUE)
-        headers?.forEach { (key, value) -> response.headers().set(key, value) }
+        headers.forEach { (key, value) -> response.headers().set(key, value) }
 
         response.headers().set(HttpHeaderNames.CONTENT_LENGTH, buildBodyData().readableBytes())
         return response
     }
 
     companion object {
-        private val SERVER_VALUE = AsciiString.of("androidserver")
+        private val SERVER_VALUE = AsciiString.of("monica")
         private val JSON = AsciiString.cached("application/json")
         private val TEXT_HTML = AsciiString.cached("text/html")
         private val TEXT_PLAIN = AsciiString.cached("text/plain")
