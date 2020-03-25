@@ -2,6 +2,7 @@ package com.safframework.androidserver.core
 
 import com.safframework.androidserver.converter.Converter
 import com.safframework.androidserver.core.converter.ConverterManager
+import com.safframework.androidserver.core.handler.http.NettyHttpServerInitializer
 import com.safframework.androidserver.core.http.HttpMethod
 import com.safframework.androidserver.core.log.LogManager
 import com.safframework.androidserver.core.log.LogProxy
@@ -9,8 +10,10 @@ import com.safframework.androidserver.core.router.RouteTable
 import com.safframework.androidserver.core.ssl.SslContextFactory
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelFuture
+import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
+import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.ssl.SslContext
 import java.io.Closeable
@@ -31,6 +34,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
     private var channelFuture: ChannelFuture? = null
     private val routeRegistry: RouteTable = RouteTable
     private var sslContext: SslContext? = null
+    private var channelInitializer: ChannelInitializer<SocketChannel>?=null
 
     init {
         builder.logProxy?.let {
@@ -44,12 +48,21 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         if (builder.useTls) {
             sslContext = SslContextFactory.createSslContext()
         }
+
+        if (builder.useHttp) {
+            channelInitializer =
+                NettyHttpServerInitializer(
+                    routeRegistry,
+                    sslContext,
+                    builder
+                )
+        }
     }
 
     override fun start() {
         val bootstrap = ServerBootstrap()
         val bossEventLoopGroup = NioEventLoopGroup(1)
-        val eventLoopGroup = NioEventLoopGroup()
+        val eventLoopGroup = NioEventLoopGroup(0)
         try {
             val address = InetAddress.getByName(builder.address)
             val socketAddress = InetSocketAddress(address, builder.port)
@@ -60,7 +73,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
                 .childOption(ChannelOption.SO_REUSEADDR, true)
                 .childOption(ChannelOption.TCP_NODELAY, true)
-                .childHandler(NettyHttpServerInitializer(routeRegistry,sslContext,builder))
+                .childHandler(channelInitializer)
             val cf = bootstrap.bind()
             channelFuture = cf
             cf.sync()
@@ -92,9 +105,11 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
     }
 
     class Builder {
+
         var port: Int = 8080
         var address: String = "127.0.0.1"
         var useTls: Boolean = false
+        var useHttp: Boolean = true
         var maxContentLength: Int = 524228
         var logProxy:LogProxy?=null
         var converter: Converter?=null
@@ -111,6 +126,11 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
 
         fun useTls(useTls: Boolean):Builder {
             this.useTls = useTls
+            return this
+        }
+
+        fun useHttp(useHttp: Boolean):Builder {
+            this.useHttp = useHttp
             return this
         }
 

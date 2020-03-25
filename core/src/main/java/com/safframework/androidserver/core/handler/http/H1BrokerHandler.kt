@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core
+package com.safframework.androidserver.core.handler.http
 
 import com.safframework.androidserver.core.http.HttpRequest
 import com.safframework.androidserver.core.http.HttpResponse
@@ -12,7 +12,7 @@ import io.netty.handler.codec.http.FullHttpRequest
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.H1BrokerHandler
+ *          com.safframework.androidserver.core.handler.http.H1BrokerHandler
  * @author: Tony Shen
  * @date: 2020-03-24 16:25
  * @version: V1.0 <描述当前版本功能>
