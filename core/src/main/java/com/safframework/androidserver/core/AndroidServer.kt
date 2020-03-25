@@ -1,6 +1,6 @@
 package com.safframework.androidserver.core
 
-import com.safframework.androidserver.core.converter.Converter
+import com.safframework.androidserver.converter.Converter
 import com.safframework.androidserver.core.converter.ConverterManager
 import com.safframework.androidserver.core.http.HttpMethod
 import com.safframework.androidserver.core.log.LogManager

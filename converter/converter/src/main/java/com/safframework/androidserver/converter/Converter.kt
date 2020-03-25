@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.converter
+package com.safframework.androidserver.converter
 
 import java.lang.reflect.Type
 

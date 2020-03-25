@@ -1,6 +1,6 @@
 package com.safframework.androidserver.core.converter
 
-import com.safframework.androidserver.core.log.LogProxy
+import com.safframework.androidserver.converter.Converter
 import java.lang.reflect.Type
 
 /**

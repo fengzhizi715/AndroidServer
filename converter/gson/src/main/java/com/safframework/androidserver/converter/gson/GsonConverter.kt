@@ -1,6 +1,6 @@
 package com.safframework.androidserver.converter.gson
 
-import com.safframework.androidserver.core.converter.Converter
+import com.safframework.androidserver.converter.Converter
 import java.lang.reflect.Type
 
 /**
