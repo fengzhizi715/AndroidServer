@@ -13,19 +13,13 @@ import java.lang.reflect.Type
  */
 object ConverterManager {
 
-    var converter: Converter? = null
+    private var converter: Converter? = null
 
     fun converter(converter: Converter) {
         this.converter = converter
     }
 
-    fun <T> fromJson(json: String, type: Type): T? {
+    fun <T> fromJson(json: String, type: Type): T? = converter?.fromJson(json,type)
 
-        return converter?.fromJson(json,type)
-    }
-
-    fun toJson(data: Any): String? {
-
-        return converter?.toJson(data)
-    }
+    fun toJson(data: Any): String? = converter?.toJson(data)
 }

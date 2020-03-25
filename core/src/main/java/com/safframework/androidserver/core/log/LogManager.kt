@@ -10,7 +10,7 @@ package com.safframework.androidserver.core.log
  */
 object LogManager {
 
-    var logProxy: LogProxy? = null
+    private var logProxy: LogProxy? = null
 
     fun logProxy(logProxy: LogProxy) {
         this.logProxy = logProxy
