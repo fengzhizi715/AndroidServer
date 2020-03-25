@@ -27,7 +27,8 @@ class HttpResponse(private val channel:Channel) : Response {
     private var headers: MutableMap<AsciiString, AsciiString> = mutableMapOf()
 
     override fun setStatus(status: HttpResponseStatus): Response {
-        TODO("Not yet implemented")
+        this.status = status
+        return this
     }
 
     override fun setBodyJson(any: Any): Response {
@@ -47,11 +48,16 @@ class HttpResponse(private val channel:Channel) : Response {
     }
 
     override fun setBodyHtml(html: String): Response {
-        TODO("Not yet implemented")
+        val bytes = html.toByteArray(CharsetUtil.UTF_8)
+        body = Unpooled.copiedBuffer(bytes)
+        addHeader(HttpHeaderNames.CONTENT_TYPE, TEXT_HTML)
+        return this
     }
 
     override fun setBodyData(contentType: String, data: ByteArray): Response {
-        TODO("Not yet implemented")
+        body = Unpooled.copiedBuffer(data)
+        addHeader(HttpHeaderNames.CONTENT_TYPE, contentType)
+        return this
     }
 
     override fun setBodyText(text: String): Response {
