@@ -13,12 +13,12 @@ import java.util.function.Consumer
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.NettyServerInitializer
+ *          com.safframework.androidserver.core.NettyHttpServerInitializer
  * @author: Tony Shen
  * @date: 2020-03-22 16:30
  * @version: V1.0 <描述当前版本功能>
  */
-class NettyServerInitializer(private val routeRegistry: RouteTable,private val sslContext: SslContext?,private val builder: AndroidServer.Builder) : ChannelInitializer<SocketChannel>() {
+class NettyHttpServerInitializer(private val routeRegistry: RouteTable, private val sslContext: SslContext?, private val builder: AndroidServer.Builder) : ChannelInitializer<SocketChannel>() {
 
     @Throws(Exception::class)
     public override fun initChannel(ch: SocketChannel) {

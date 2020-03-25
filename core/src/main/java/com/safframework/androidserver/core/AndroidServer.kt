@@ -9,6 +9,7 @@ import com.safframework.androidserver.core.router.RouteTable
 import com.safframework.androidserver.core.ssl.SslContextFactory
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelFuture
+import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.ssl.SslContext
@@ -56,7 +57,10 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
                 .group(bossEventLoopGroup, eventLoopGroup)
                 .channel(NioServerSocketChannel::class.java)
                 .localAddress(socketAddress)
-                .childHandler(NettyServerInitializer(routeRegistry,sslContext,builder))
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                .childOption(ChannelOption.SO_REUSEADDR, true)
+                .childOption(ChannelOption.TCP_NODELAY, true)
+                .childHandler(NettyHttpServerInitializer(routeRegistry,sslContext,builder))
             val cf = bootstrap.bind()
             channelFuture = cf
             cf.sync()
@@ -80,6 +84,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         try {
             channelFuture?.channel()?.close()
 
+            // TODO: bossEventLoopGroup、eventLoopGroup 关闭
         } catch (e: InterruptedException) {
             LogManager.e("error", e.message?:"")
             throw RuntimeException(e)
