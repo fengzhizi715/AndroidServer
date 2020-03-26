@@ -56,4 +56,14 @@ object RouteTable {
             || connectTrie.getRoot()!=null
             || optionsTrie.getRoot()!=null
             || patchTrie.getRoot()!=null
+
+    fun isEmpty():Boolean = getTrie.getRoot()==null
+            && postTrie.getRoot()==null
+            && putTrie.getRoot()==null
+            && deleteTrie.getRoot()==null
+            && headTrie.getRoot()==null
+            && traceTrie.getRoot()==null
+            && connectTrie.getRoot()==null
+            && optionsTrie.getRoot()==null
+            && patchTrie.getRoot()==null
 }
