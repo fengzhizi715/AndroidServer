@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.handler.tcp
+package com.safframework.androidserver.core.handler.socket
 
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
@@ -7,7 +7,7 @@ import io.netty.handler.codec.ByteToMessageDecoder
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.tcp.SocketChooseHandler
+ *          com.safframework.androidserver.core.handler.socket.SocketChooseHandler
  * @author: Tony Shen
  * @date: 2020-03-25 13:46
  * @version: V1.0 <描述当前版本功能>

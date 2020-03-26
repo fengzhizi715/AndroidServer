@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.handler.tcp
+package com.safframework.androidserver.core.handler.socket
 
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.socket.SocketChannel
@@ -10,12 +10,12 @@ import io.netty.util.CharsetUtil
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.tcp.NettyTCPServerInitializer
+ *          com.safframework.androidserver.core.handler.socket.NettySocketServerInitializer
  * @author: Tony Shen
  * @date: 2020-03-25 13:42
  * @version: V1.0 <描述当前版本功能>
  */
-class NettyTCPServerInitializer(private val webSocketPath:String) : ChannelInitializer<SocketChannel>() {
+class NettySocketServerInitializer(private val webSocketPath:String) : ChannelInitializer<SocketChannel>() {
 
     @Throws(Exception::class)
     public override fun initChannel(ch: SocketChannel) {

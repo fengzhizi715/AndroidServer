@@ -3,6 +3,8 @@ package com.safframework.androidserver.core
 import com.safframework.androidserver.converter.Converter
 import com.safframework.androidserver.core.converter.ConverterManager
 import com.safframework.androidserver.core.handler.http.NettyHttpServerInitializer
+import com.safframework.androidserver.core.handler.socket.NettySocketServerInitializer
+import com.safframework.androidserver.core.handler.socket.SocketListener
 import com.safframework.androidserver.core.http.HttpMethod
 import com.safframework.androidserver.core.log.LogManager
 import com.safframework.androidserver.core.log.LogProxy
@@ -85,6 +87,11 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
     override fun request(method: HttpMethod, route: String, handler: RequestHandler): AndroidServer {
 
         routeRegistry.registHandler(method,route,handler)
+        return this
+    }
+
+    override fun <T> socket(webSocketPath: String?, handler: SocketListener<T>): HttpServer {
+        channelInitializer = NettySocketServerInitializer(webSocketPath?:"/ws")
         return this
     }
 

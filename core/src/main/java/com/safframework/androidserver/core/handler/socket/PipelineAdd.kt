@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.handler.tcp
+package com.safframework.androidserver.core.handler.socket
 
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.http.HttpObjectAggregator
@@ -10,7 +10,7 @@ import io.netty.handler.stream.ChunkedWriteHandler
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.tcp.PipelineAdd
+ *          com.safframework.androidserver.core.handler.socket.PipelineAdd
  * @author: Tony Shen
  * @date: 2020-03-25 13:48
  * @version: V1.0 <描述当前版本功能>
