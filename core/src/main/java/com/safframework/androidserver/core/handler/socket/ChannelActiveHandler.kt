@@ -15,7 +15,7 @@ import java.net.InetSocketAddress
  * @version: V1.0 <描述当前版本功能>
  */
 @ChannelHandler.Sharable
-class ChannelActiveHandler : ChannelInboundHandlerAdapter() {
+class ChannelActiveHandler(private val mListener: SocketListener<String>) : ChannelInboundHandlerAdapter() {
 
     @Throws(Exception::class)
     override fun channelActive(ctx: ChannelHandlerContext) {
@@ -25,8 +25,8 @@ class ChannelActiveHandler : ChannelInboundHandlerAdapter() {
         val clientPort = insocket.port
 
         LogManager.i("ChannelActiveHandler","新的连接：$clientIP : $clientPort")
-//
-//        mListener.onChannelConnect(ctx.channel())
+
+        mListener.onChannelConnect(ctx.channel())
     }
 
 }

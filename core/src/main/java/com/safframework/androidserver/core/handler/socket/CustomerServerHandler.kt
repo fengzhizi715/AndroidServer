@@ -19,7 +19,7 @@ import java.net.InetSocketAddress
  * @version: V1.0 <描述当前版本功能>
  */
 @ChannelHandler.Sharable
-class CustomerServerHandler() : SimpleChannelInboundHandler<Any>() {
+class CustomerServerHandler(private val mListener: SocketListener<String>) : SimpleChannelInboundHandler<Any>() {
 
     @Throws(Exception::class)
     override fun channelReadComplete(ctx: ChannelHandlerContext) {
@@ -48,12 +48,12 @@ class CustomerServerHandler() : SimpleChannelInboundHandler<Any>() {
 
             LogManager.d(TAG, "收到WebSocketSocket消息：$webSocketInfo")
 
-//            mListener.onMessageResponseServer(webSocketInfo , ctx.channel().id().asShortText())
+            mListener.onMessageResponseServer(webSocketInfo , ctx.channel().id().asShortText())
         } else if (msg is String){   // Socket消息处理
 
             LogManager.d(TAG, "收到socket消息：$msg")
 
-//            mListener.onMessageResponseServer(msg, ctx.channel().id().asShortText())
+            mListener.onMessageResponseServer(msg, ctx.channel().id().asShortText())
         }
     }
 
@@ -69,7 +69,7 @@ class CustomerServerHandler() : SimpleChannelInboundHandler<Any>() {
 
         LogManager.d(TAG,"连接断开：$clientIP : $clientPort")
 
-//        mListener.onChannelDisConnect(ctx.channel())
+        mListener.onChannelDisConnect(ctx.channel())
     }
 
     companion object {
