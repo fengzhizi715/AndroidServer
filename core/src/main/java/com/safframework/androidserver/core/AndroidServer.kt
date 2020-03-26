@@ -37,6 +37,7 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
     private val routeRegistry: RouteTable = RouteTable
     private var sslContext: SslContext? = null
     private var channelInitializer: ChannelInitializer<SocketChannel>?=null
+    private var listener: SocketListener<String>?=null
 
     init {
         builder.logProxy?.let {
@@ -50,13 +51,13 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         if (builder.useTls) {
             sslContext = SslContextFactory.createSslContext()
         }
-
-        if (builder.useHttp) {
-            channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
-        }
     }
 
     override fun start() {
+        if (routeRegistry.isNotEmpty()) {
+            channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
+        }
+
         val bootstrap = ServerBootstrap()
         val bossEventLoopGroup = NioEventLoopGroup(1)
         val eventLoopGroup = NioEventLoopGroup(0)
@@ -85,13 +86,12 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
     }
 
     override fun request(method: HttpMethod, route: String, handler: RequestHandler): AndroidServer {
-
         routeRegistry.registHandler(method,route,handler)
         return this
     }
 
-    override fun <T> socket(webSocketPath: String?, handler: SocketListener<T>): HttpServer {
-        channelInitializer = NettySocketServerInitializer(webSocketPath?:"/ws")
+    override fun socket(webSocketPath: String?, listener: SocketListener<String>): HttpServer {
+        this.listener = listener
         return this
     }
 
@@ -111,7 +111,6 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         var port: Int = 8080
         var address: String = "127.0.0.1"
         var useTls: Boolean = false
-        var useHttp: Boolean = true
         var maxContentLength: Int = 524228
         var logProxy:LogProxy?=null
         var converter: Converter?=null
@@ -128,11 +127,6 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
 
         fun useTls(useTls: Boolean):Builder {
             this.useTls = useTls
-            return this
-        }
-
-        fun useHttp(useHttp: Boolean):Builder {
-            this.useHttp = useHttp
             return this
         }
 

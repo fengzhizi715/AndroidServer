@@ -15,7 +15,7 @@ import io.netty.util.CharsetUtil
  * @date: 2020-03-25 13:42
  * @version: V1.0 <描述当前版本功能>
  */
-class NettySocketServerInitializer(private val webSocketPath:String) : ChannelInitializer<SocketChannel>() {
+class NettySocketServerInitializer(private val webSocketPath:String,private val mListener: SocketListener<String>) : ChannelInitializer<SocketChannel>() {
 
     @Throws(Exception::class)
     public override fun initChannel(ch: SocketChannel) {

@@ -46,4 +46,14 @@ object RouteTable {
 
         return getTable(request.method()).fetch(request.url(),request.params())?:NotFoundController()
     }
+
+    fun isNotEmpty():Boolean = getTrie.getRoot()!=null
+            || postTrie.getRoot()!=null
+            || putTrie.getRoot()!=null
+            || deleteTrie.getRoot()!=null
+            || headTrie.getRoot()!=null
+            || traceTrie.getRoot()!=null
+            || connectTrie.getRoot()!=null
+            || optionsTrie.getRoot()!=null
+            || patchTrie.getRoot()!=null
 }

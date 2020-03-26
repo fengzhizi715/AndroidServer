@@ -36,5 +36,5 @@ interface HttpServer {
 
     fun request(method: HttpMethod, route: String, handler: RequestHandler): HttpServer
 
-    fun <T> socket(webSocketPath:String?,handler: SocketListener<T>): HttpServer
+    fun socket(webSocketPath:String?,listener: SocketListener<String>): HttpServer
 }
