@@ -31,5 +31,7 @@ interface HttpServer {
 
     fun connect(route: String, handler: RequestHandler): HttpServer = request(HttpMethod.CONNECT, route, handler)
 
+    fun options(route: String, handler: RequestHandler): HttpServer = request(HttpMethod.OPTIONS, route, handler)
+
     fun request(method: HttpMethod, route: String, handler: RequestHandler): HttpServer
 }
