@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.handler.tcp
+package com.safframework.androidserver.core.handler.socket
 
 import com.safframework.androidserver.core.log.LogManager
 import io.netty.channel.ChannelHandler
@@ -9,13 +9,13 @@ import java.net.InetSocketAddress
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.tcp.ChannelActiveHandler
+ *          com.safframework.androidserver.core.handler.socket.ChannelActiveHandler
  * @author: Tony Shen
  * @date: 2020-03-25 13:45
  * @version: V1.0 <描述当前版本功能>
  */
 @ChannelHandler.Sharable
-class ChannelActiveHandler : ChannelInboundHandlerAdapter() {
+class ChannelActiveHandler(private val mListener: SocketListener<String>) : ChannelInboundHandlerAdapter() {
 
     @Throws(Exception::class)
     override fun channelActive(ctx: ChannelHandlerContext) {
@@ -25,8 +25,8 @@ class ChannelActiveHandler : ChannelInboundHandlerAdapter() {
         val clientPort = insocket.port
 
         LogManager.i("ChannelActiveHandler","新的连接：$clientIP : $clientPort")
-//
-//        mListener.onChannelConnect(ctx.channel())
+
+        mListener.onChannelConnect(ctx.channel())
     }
 
 }

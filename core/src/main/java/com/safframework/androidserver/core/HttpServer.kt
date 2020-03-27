@@ -1,5 +1,6 @@
 package com.safframework.androidserver.core
 
+import com.safframework.androidserver.core.handler.socket.SocketListener
 import com.safframework.androidserver.core.http.HttpMethod
 
 /**
@@ -34,4 +35,6 @@ interface HttpServer {
     fun options(route: String, handler: RequestHandler): HttpServer = request(HttpMethod.OPTIONS, route, handler)
 
     fun request(method: HttpMethod, route: String, handler: RequestHandler): HttpServer
+
+    fun socket(webSocketPath:String?,listener: SocketListener<String>): HttpServer
 }
