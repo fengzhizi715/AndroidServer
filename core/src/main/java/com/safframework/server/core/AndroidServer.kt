@@ -30,12 +30,10 @@ import java.net.UnknownHostException
  * @date: 2020-03-21 17:54
  * @version: V1.0 <描述当前版本功能>
  */
-class AndroidServer private constructor(private val builder: Builder) :
-    HttpServer {
+class AndroidServer private constructor(private val builder: Builder) : Server {
 
     private var channelFuture: ChannelFuture? = null
-    private val routeRegistry: RouteTable =
-        RouteTable
+    private val routeRegistry: RouteTable = RouteTable
     private var sslContext: SslContext? = null
     private var channelInitializer: ChannelInitializer<SocketChannel>?=null
     private var webSocketPath: String?=null
@@ -57,18 +55,9 @@ class AndroidServer private constructor(private val builder: Builder) :
 
     override fun start() {
         if (routeRegistry.isNotEmpty() && listener == null) {
-            channelInitializer =
-                NettyHttpServerInitializer(
-                    routeRegistry,
-                    sslContext,
-                    builder
-                )
+            channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
         } else if (routeRegistry.isEmpty() && listener!=null) {
-            channelInitializer =
-                NettySocketServerInitializer(
-                    webSocketPath ?: "",
-                    listener!!
-                )
+            channelInitializer = NettySocketServerInitializer(webSocketPath ?: "", listener!!)
         } else {
             LogManager.e("error","channelInitializer is failed")
         }
@@ -103,7 +92,7 @@ class AndroidServer private constructor(private val builder: Builder) :
         return this
     }
 
-    override fun socket(webSocketPath: String?, listener: SocketListener<String>): HttpServer {
+    override fun socket(webSocketPath: String?, listener: SocketListener<String>): Server {
         this.webSocketPath = webSocketPath
         this.listener = listener
         return this

@@ -1,5 +1,6 @@
 package com.safframework.server.core.router
 
+import com.safframework.server.core.NotFound
 import com.safframework.server.core.NotFoundController
 import com.safframework.server.core.RequestHandler
 import com.safframework.server.core.http.HttpMethod
@@ -52,11 +53,7 @@ object RouteTable {
             HttpMethod.PATCH   -> patchTrie
         }
 
-    fun getHandler(request: Request): RequestHandler {
-
-        return getTable(request.method())
-            .fetch(request.url(),request.params())?: NotFoundController()
-    }
+    fun getHandler(request: Request): RequestHandler = getTable(request.method()).fetch(request.url(),request.params())?: NotFound()
 
     fun isNotEmpty():Boolean = getTrie.getRoot()!=null
             || postTrie.getRoot()!=null

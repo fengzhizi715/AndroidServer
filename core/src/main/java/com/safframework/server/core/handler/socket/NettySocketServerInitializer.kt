@@ -22,24 +22,12 @@ class NettySocketServerInitializer(private val webSocketPath:String,private val 
 
         val pipeline = ch.pipeline()
 
-        pipeline.addLast("active",
-            ChannelActiveHandler(
-                mListener
-            )
-        )
-        pipeline.addLast("socketChoose",
-            SocketChooseHandler(
-                webSocketPath
-            )
-        )
+        pipeline.addLast("active", ChannelActiveHandler(mListener))
+        pipeline.addLast("socketChoose", SocketChooseHandler(webSocketPath))
 
         pipeline.addLast("string_encoder", StringEncoder(CharsetUtil.UTF_8))
         pipeline.addLast("linebased", LineBasedFrameDecoder(1024))
         pipeline.addLast("string_decoder", StringDecoder(CharsetUtil.UTF_8))
-        pipeline.addLast("commonhandler",
-            CustomerServerHandler(
-                mListener
-            )
-        )
+        pipeline.addLast("commonhandler", CustomerServerHandler(mListener))
     }
 }
