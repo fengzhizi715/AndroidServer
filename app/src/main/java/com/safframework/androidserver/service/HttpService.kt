@@ -17,7 +17,9 @@ import com.safframework.androidserver.core.http.Response
  */
 class HttpService : Service() {
 
-    override fun onCreate() {
+    private lateinit var androidServer:AndroidServer
+
+        override fun onCreate() {
         super.onCreate()
         startServer()
     }
@@ -25,7 +27,7 @@ class HttpService : Service() {
     // 启动 Http 服务端
     private fun startServer() {
 
-        val androidServer = AndroidServer.Builder().converter(GsonConverter()).build()
+        androidServer = AndroidServer.Builder().converter(GsonConverter()).build()
 
         androidServer
             .get("/hello")  { _, response: Response ->
@@ -47,7 +49,7 @@ class HttpService : Service() {
     }
 
     override fun onDestroy() {
-
+        androidServer.close()
         super.onDestroy()
     }
 

@@ -18,7 +18,6 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.ssl.SslContext
-import java.io.Closeable
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.UnknownHostException
@@ -31,7 +30,7 @@ import java.net.UnknownHostException
  * @date: 2020-03-21 17:54
  * @version: V1.0 <描述当前版本功能>
  */
-class AndroidServer private constructor(private val builder: AndroidServer.Builder) :HttpServer,Closeable {
+class AndroidServer private constructor(private val builder: AndroidServer.Builder) :HttpServer {
 
     private var channelFuture: ChannelFuture? = null
     private val routeRegistry: RouteTable = RouteTable
@@ -85,8 +84,6 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
             throw RuntimeException(e)
         } catch (e: InterruptedException) {
             throw RuntimeException(e)
-        } finally {
-            close()
         }
     }
 
