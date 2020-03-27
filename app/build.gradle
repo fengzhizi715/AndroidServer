@@ -39,4 +39,5 @@ dependencies {
 
     implementation project(":core")
     implementation project(":converter:gson")
+    implementation "io.netty:netty-all:${libs.netty}"
 }

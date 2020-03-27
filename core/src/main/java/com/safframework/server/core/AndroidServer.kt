@@ -56,6 +56,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     }
 
     override fun start() {
+
         if (routeRegistry.isNotEmpty() && listener == null) {
             channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
         } else if (routeRegistry.isEmpty() && listener!=null) {
