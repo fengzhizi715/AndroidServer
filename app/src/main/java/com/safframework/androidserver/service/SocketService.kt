@@ -3,10 +3,13 @@ package com.safframework.androidserver.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.safframework.androidserver.log.LogProxy
 import com.safframework.server.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
 import com.safframework.server.core.handler.socket.SocketListener
+import com.safframework.server.core.log.LogManager
 import io.netty.channel.Channel
+import java.net.InetSocketAddress
 
 /**
  *
@@ -27,20 +30,24 @@ class SocketService : Service() {
 
     // 启动 Socket 服务端
     private fun startServer() {
-        androidServer = AndroidServer.Builder().converter(GsonConverter()).port(8888).build()
+        androidServer = AndroidServer.Builder().converter(GsonConverter()).port(8888).logProxy(LogProxy).build()
 
         androidServer
             .socket("/ws", object: SocketListener<String> {
                 override fun onMessageResponseServer(msg: String, ChannelId: String) {
-
+                    LogManager.d("SocketService","msg = $msg")
                 }
 
                 override fun onChannelConnect(channel: Channel) {
+                    val insocket = channel.remoteAddress() as InetSocketAddress
+                    val clientIP = insocket.address.hostAddress
+                    LogManager.d("SocketService","connect client: $clientIP")
 
                 }
 
                 override fun onChannelDisConnect(channel: Channel) {
-
+                    val ip = channel.remoteAddress().toString()
+                    LogManager.d("SocketService","disconnect client: $ip")
                 }
 
             })
