@@ -40,13 +40,11 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     private var listener: SocketListener<String>?=null
 
     init {
-        builder.logProxy?.let {
-            LogManager.logProxy(it)
-        }
+        builder.errorController?.let { routeRegistry.errorController(it) }
 
-        builder.converter?.let {
-            ConverterManager.converter(it)
-        }
+        builder.logProxy?.let { LogManager.logProxy(it) }
+
+        builder.converter?.let { ConverterManager.converter(it) }
 
         if (builder.useTls) {
             sslContext = SslContextFactory.createSslContext()
@@ -110,11 +108,11 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     }
 
     class Builder {
-
         var port: Int = 8080
         var address: String = "127.0.0.1"
         var useTls: Boolean = false
         var maxContentLength: Int = 524228
+        var errorController:RequestHandler?=null
         var logProxy: LogProxy?=null
         var converter: Converter?=null
 
@@ -135,6 +133,11 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
         fun maxContentLength(maxContentLength: Int): Builder {
             this.maxContentLength = maxContentLength
+            return this
+        }
+
+        fun errorController(errorController:RequestHandler):Builder {
+            this.errorController = errorController
             return this
         }
 
