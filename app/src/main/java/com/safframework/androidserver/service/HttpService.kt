@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import com.safframework.androidserver.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
-import com.safframework.androidserver.core.http.Response
+import com.safframework.server.core.http.Response
 
 /**
  *

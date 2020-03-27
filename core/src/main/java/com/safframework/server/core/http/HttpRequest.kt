@@ -1,6 +1,6 @@
-package com.safframework.androidserver.core.http
+package com.safframework.server.core.http
 
-import com.safframework.androidserver.core.http.cookie.HttpCookie
+import com.safframework.server.core.http.cookie.HttpCookie
 import io.netty.handler.codec.http.FullHttpRequest
 import io.netty.handler.codec.http.QueryStringDecoder
 import io.netty.util.CharsetUtil
@@ -9,12 +9,13 @@ import io.netty.util.CharsetUtil
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.http.HttpRequest
+ *          com.safframework.server.core.http.HttpRequest
  * @author: Tony Shen
  * @date: 2020-03-23 20:15
  * @version: V1.0 <描述当前版本功能>
  */
-class HttpRequest(private val fullHttpRequest: FullHttpRequest) :Request {
+class HttpRequest(private val fullHttpRequest: FullHttpRequest) :
+    Request {
 
     private val params: MutableMap<String, String> = mutableMapOf()
 

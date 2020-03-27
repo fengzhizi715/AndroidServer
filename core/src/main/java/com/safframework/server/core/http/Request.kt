@@ -1,11 +1,11 @@
-package com.safframework.androidserver.core.http
+package com.safframework.server.core.http
 
-import com.safframework.androidserver.core.http.cookie.HttpCookie
+import com.safframework.server.core.http.cookie.HttpCookie
 
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.http.Request
+ *          com.safframework.server.core.http.Request
  * @author: Tony Shen
  * @date: 2020-03-21 12:31
  * @version: V1.0 <描述当前版本功能>

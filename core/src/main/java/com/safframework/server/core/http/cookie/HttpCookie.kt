@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.http.cookie
+package com.safframework.server.core.http.cookie
 
 import io.netty.handler.codec.http.cookie.Cookie
 import io.netty.handler.codec.http.cookie.DefaultCookie
@@ -6,7 +6,7 @@ import io.netty.handler.codec.http.cookie.DefaultCookie
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.http.cookie.HttpCookie
+ *          com.safframework.server.core.http.cookie.HttpCookie
  * @author: Tony Shen
  * @date: 2020-03-21 12:54
  * @version: V1.0 <描述当前版本功能>

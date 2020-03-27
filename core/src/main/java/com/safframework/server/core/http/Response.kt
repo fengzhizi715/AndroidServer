@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.http
+package com.safframework.server.core.http
 
 import io.netty.handler.codec.http.HttpResponseStatus
 import io.netty.util.AsciiString
@@ -7,7 +7,7 @@ import io.netty.util.AsciiString
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.http.Response
+ *          com.safframework.server.core.http.Response
  * @author: Tony Shen
  * @date: 2020-03-21 13:09
  * @version: V1.0 <描述当前版本功能>

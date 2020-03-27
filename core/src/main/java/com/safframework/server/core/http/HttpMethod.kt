@@ -1,9 +1,9 @@
-package com.safframework.androidserver.core.http
+package com.safframework.server.core.http
 
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.http.HttpMethod
+ *          com.safframework.server.core.http.HttpMethod
  * @author: Tony Shen
  * @date: 2020-03-21 12:33
  * @version: V1.0 <描述当前版本功能>

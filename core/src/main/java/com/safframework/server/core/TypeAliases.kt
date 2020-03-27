@@ -1,7 +1,7 @@
 package com.safframework.server.core
 
-import com.safframework.androidserver.core.http.Request
-import com.safframework.androidserver.core.http.Response
+import com.safframework.server.core.http.Request
+import com.safframework.server.core.http.Response
 
 
 /**

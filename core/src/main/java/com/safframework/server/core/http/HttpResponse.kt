@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.http
+package com.safframework.server.core.http
 
 import com.safframework.server.core.converter.ConverterManager
 import com.safframework.server.core.log.LogManager
@@ -15,12 +15,13 @@ import java.io.OutputStream
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.http.HttpResponse
+ *          com.safframework.server.core.http.HttpResponse
  * @author: Tony Shen
  * @date: 2020-03-24 11:37
  * @version: V1.0 <描述当前版本功能>
  */
-class HttpResponse(private val channel:Channel) : Response {
+class HttpResponse(private val channel:Channel) :
+    Response {
 
     private var status: HttpResponseStatus? = null
     private var body: ByteBuf? = null
@@ -38,7 +39,9 @@ class HttpResponse(private val channel:Channel) : Response {
                 ConverterManager.toJson(any)?.let {
                     os.write(it.toByteArray())
                 }
-                addHeader(HttpHeaderNames.CONTENT_TYPE, JSON)
+                addHeader(HttpHeaderNames.CONTENT_TYPE,
+                    JSON
+                )
                 body = byteBuf
             }
         } catch (e: IOException) {
@@ -50,7 +53,9 @@ class HttpResponse(private val channel:Channel) : Response {
     override fun setBodyHtml(html: String): Response {
         val bytes = html.toByteArray(CharsetUtil.UTF_8)
         body = Unpooled.copiedBuffer(bytes)
-        addHeader(HttpHeaderNames.CONTENT_TYPE, TEXT_HTML)
+        addHeader(HttpHeaderNames.CONTENT_TYPE,
+            TEXT_HTML
+        )
         return this
     }
 
@@ -63,7 +68,9 @@ class HttpResponse(private val channel:Channel) : Response {
     override fun setBodyText(text: String): Response {
         val bytes = text.toByteArray(CharsetUtil.UTF_8)
         body = Unpooled.copiedBuffer(bytes)
-        addHeader(HttpHeaderNames.CONTENT_TYPE, TEXT_PLAIN)
+        addHeader(HttpHeaderNames.CONTENT_TYPE,
+            TEXT_PLAIN
+        )
         return this
     }
 
@@ -83,7 +90,9 @@ class HttpResponse(private val channel:Channel) : Response {
         }
 
         val response = DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status!!, buildBodyData())
-        response.headers().set(HttpHeaderNames.SERVER, SERVER_VALUE)
+        response.headers().set(HttpHeaderNames.SERVER,
+            SERVER_VALUE
+        )
         headers.forEach { (key, value) -> response.headers().set(key, value) }
 
         response.headers().set(HttpHeaderNames.CONTENT_LENGTH, buildBodyData().readableBytes())

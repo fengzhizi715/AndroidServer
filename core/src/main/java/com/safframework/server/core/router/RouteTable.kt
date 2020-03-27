@@ -2,8 +2,8 @@ package com.safframework.server.core.router
 
 import com.safframework.server.core.NotFoundController
 import com.safframework.server.core.RequestHandler
-import com.safframework.androidserver.core.http.HttpMethod
-import com.safframework.androidserver.core.http.Request
+import com.safframework.server.core.http.HttpMethod
+import com.safframework.server.core.http.Request
 
 /**
  *
