@@ -28,6 +28,6 @@ class NettySocketServerInitializer(private val webSocketPath:String,private val 
         pipeline.addLast("string_encoder", StringEncoder(CharsetUtil.UTF_8))
         pipeline.addLast("linebased", LineBasedFrameDecoder(1024))
         pipeline.addLast("string_decoder", StringDecoder(CharsetUtil.UTF_8))
-        pipeline.addLast("commonhandler", CustomerServerHandler(mListener))
+        pipeline.addLast("common_handler", CustomerServerHandler(mListener))
     }
 }

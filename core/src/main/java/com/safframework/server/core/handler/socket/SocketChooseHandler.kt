@@ -12,7 +12,7 @@ import io.netty.handler.codec.ByteToMessageDecoder
  * @date: 2020-03-25 13:46
  * @version: V1.0 <描述当前版本功能>
  */
-class SocketChooseHandler(val webSocketPath:String) : ByteToMessageDecoder() {
+class SocketChooseHandler(private val webSocketPath:String) : ByteToMessageDecoder() {
 
     @Throws(Exception::class)
     override fun decode(ctx: ChannelHandlerContext, `in`: ByteBuf, out: List<Any>) {

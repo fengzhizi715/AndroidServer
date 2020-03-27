@@ -25,8 +25,7 @@ class CustomerServerHandler(private val mListener: SocketListener<String>) : Sim
     override fun channelReadComplete(ctx: ChannelHandlerContext) {
     }
 
-    override fun exceptionCaught(ctx: ChannelHandlerContext,
-                                 cause: Throwable) {
+    override fun exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable) {
         cause.printStackTrace()
         ctx.close()
     }
