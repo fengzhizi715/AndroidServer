@@ -80,7 +80,6 @@ class HttpResponse(private val channel:Channel) :
         val response = DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status?:HttpResponseStatus.OK, buildBodyData())
         response.headers().set(HttpHeaderNames.SERVER, SERVER_VALUE)
         headers.forEach { (key, value) -> response.headers().set(key, value) }
-
         response.headers().set(HttpHeaderNames.CONTENT_LENGTH, buildBodyData().readableBytes())
         return response
     }

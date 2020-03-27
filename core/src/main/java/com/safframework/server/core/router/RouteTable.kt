@@ -54,23 +54,15 @@ object RouteTable {
         ?: errorController
         ?: NotFound()
 
-    fun isNotEmpty():Boolean = getTrie.getRoot()!=null
-            || postTrie.getRoot()!=null
-            || putTrie.getRoot()!=null
-            || deleteTrie.getRoot()!=null
-            || headTrie.getRoot()!=null
-            || traceTrie.getRoot()!=null
-            || connectTrie.getRoot()!=null
-            || optionsTrie.getRoot()!=null
-            || patchTrie.getRoot()!=null
+    fun isNotEmpty():Boolean = !isEmpty()
 
-    fun isEmpty():Boolean = getTrie.getRoot()==null
-            && postTrie.getRoot()==null
-            && putTrie.getRoot()==null
-            && deleteTrie.getRoot()==null
-            && headTrie.getRoot()==null
-            && traceTrie.getRoot()==null
-            && connectTrie.getRoot()==null
-            && optionsTrie.getRoot()==null
-            && patchTrie.getRoot()==null
+    fun isEmpty():Boolean = getTrie.getRoot().getChildren().isEmpty()
+            && postTrie.getRoot().getChildren().isEmpty()
+            && putTrie.getRoot().getChildren().isEmpty()
+            && deleteTrie.getRoot().getChildren().isEmpty()
+            && headTrie.getRoot().getChildren().isEmpty()
+            && traceTrie.getRoot().getChildren().isEmpty()
+            && connectTrie.getRoot().getChildren().isEmpty()
+            && optionsTrie.getRoot().getChildren().isEmpty()
+            && patchTrie.getRoot().getChildren().isEmpty()
 }
