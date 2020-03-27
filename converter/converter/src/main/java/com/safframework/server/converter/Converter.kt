@@ -1,11 +1,11 @@
-package com.safframework.androidserver.converter
+package com.safframework.server.converter
 
 import java.lang.reflect.Type
 
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.converter.Converter
+ *          com.safframework.server.core.converter.Converter
  * @author: Tony Shen
  * @date: 2020-03-23 20:51
  * @version: V1.0 <描述当前版本功能>

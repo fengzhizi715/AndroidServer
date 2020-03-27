@@ -1,6 +1,6 @@
 package com.safframework.server.core
 
-import com.safframework.androidserver.converter.Converter
+import com.safframework.server.converter.Converter
 import com.safframework.server.core.converter.ConverterManager
 import com.safframework.server.core.handler.http.NettyHttpServerInitializer
 import com.safframework.server.core.handler.socket.NettySocketServerInitializer
