@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.safframework.androidserver.converter.gson.GsonConverter
-import com.safframework.androidserver.core.AndroidServer
+import com.safframework.server.core.AndroidServer
 import com.safframework.androidserver.core.http.Response
 
 /**
@@ -17,9 +17,9 @@ import com.safframework.androidserver.core.http.Response
  */
 class HttpService : Service() {
 
-    private lateinit var androidServer:AndroidServer
+    private lateinit var androidServer: AndroidServer
 
-        override fun onCreate() {
+    override fun onCreate() {
         super.onCreate()
         startServer()
     }

@@ -1,6 +1,6 @@
 package com.safframework.androidserver.core.handler.socket
 
-import com.safframework.androidserver.core.log.LogManager
+import com.safframework.server.core.log.LogManager
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext

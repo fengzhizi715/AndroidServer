@@ -1,7 +1,7 @@
 package com.safframework.androidserver.core.http
 
 import com.safframework.androidserver.core.converter.ConverterManager
-import com.safframework.androidserver.core.log.LogManager
+import com.safframework.server.core.log.LogManager
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled

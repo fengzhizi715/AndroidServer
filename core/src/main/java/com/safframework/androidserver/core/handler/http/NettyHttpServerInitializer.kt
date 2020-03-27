@@ -1,7 +1,7 @@
 package com.safframework.androidserver.core.handler.http
 
-import com.safframework.androidserver.core.AndroidServer
-import com.safframework.androidserver.core.router.RouteTable
+import com.safframework.server.core.AndroidServer
+import com.safframework.server.core.router.RouteTable
 import io.netty.buffer.ByteBufAllocator
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelPipeline

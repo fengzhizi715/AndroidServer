@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core
+package com.safframework.server.core
 
 import com.safframework.androidserver.converter.Converter
 import com.safframework.androidserver.core.converter.ConverterManager
@@ -6,10 +6,10 @@ import com.safframework.androidserver.core.handler.http.NettyHttpServerInitializ
 import com.safframework.androidserver.core.handler.socket.NettySocketServerInitializer
 import com.safframework.androidserver.core.handler.socket.SocketListener
 import com.safframework.androidserver.core.http.HttpMethod
-import com.safframework.androidserver.core.log.LogManager
-import com.safframework.androidserver.core.log.LogProxy
-import com.safframework.androidserver.core.router.RouteTable
-import com.safframework.androidserver.core.ssl.SslContextFactory
+import com.safframework.server.core.log.LogManager
+import com.safframework.server.core.log.LogProxy
+import com.safframework.server.core.router.RouteTable
+import com.safframework.server.core.ssl.SslContextFactory
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelInitializer
@@ -25,15 +25,17 @@ import java.net.UnknownHostException
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.AndroidServer
+ *          com.safframework.server.core.AndroidServer
  * @author: Tony Shen
  * @date: 2020-03-21 17:54
  * @version: V1.0 <描述当前版本功能>
  */
-class AndroidServer private constructor(private val builder: AndroidServer.Builder) :HttpServer {
+class AndroidServer private constructor(private val builder: Builder) :
+    HttpServer {
 
     private var channelFuture: ChannelFuture? = null
-    private val routeRegistry: RouteTable = RouteTable
+    private val routeRegistry: RouteTable =
+        RouteTable
     private var sslContext: SslContext? = null
     private var channelInitializer: ChannelInitializer<SocketChannel>?=null
     private var webSocketPath: String?=null
@@ -115,35 +117,35 @@ class AndroidServer private constructor(private val builder: AndroidServer.Build
         var address: String = "127.0.0.1"
         var useTls: Boolean = false
         var maxContentLength: Int = 524228
-        var logProxy:LogProxy?=null
+        var logProxy: LogProxy?=null
         var converter: Converter?=null
 
-        fun port(port: Int):Builder {
+        fun port(port: Int): Builder {
             this.port = port
             return this
         }
 
-        fun address(address: String):Builder {
+        fun address(address: String): Builder {
             this.address = address
             return this
         }
 
-        fun useTls(useTls: Boolean):Builder {
+        fun useTls(useTls: Boolean): Builder {
             this.useTls = useTls
             return this
         }
 
-        fun maxContentLength(maxContentLength: Int):Builder {
+        fun maxContentLength(maxContentLength: Int): Builder {
             this.maxContentLength = maxContentLength
             return this
         }
 
-        fun logProxy(logProxy: LogProxy):Builder {
+        fun logProxy(logProxy: LogProxy): Builder {
             this.logProxy = logProxy
             return this
         }
 
-        fun converter(converter: Converter):Builder {
+        fun converter(converter: Converter): Builder {
             this.converter = converter
             return this
         }

@@ -1,6 +1,6 @@
-package com.safframework.androidserver.core.ssl
+package com.safframework.server.core.ssl
 
-import com.safframework.androidserver.core.log.LogManager
+import com.safframework.server.core.log.LogManager
 import io.netty.handler.codec.http2.Http2SecurityUtil
 import io.netty.handler.ssl.*
 import io.netty.handler.ssl.util.SelfSignedCertificate
@@ -10,7 +10,7 @@ import javax.net.ssl.SSLException
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.ssl.SslContextFactory
+ *          com.safframework.server.core.ssl.SslContextFactory
  * @author: Tony Shen
  * @date: 2020-03-24 13:22
  * @version: V1.0 <描述当前版本功能>

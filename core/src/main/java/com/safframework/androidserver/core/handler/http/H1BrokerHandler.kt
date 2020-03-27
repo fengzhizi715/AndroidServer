@@ -2,8 +2,8 @@ package com.safframework.androidserver.core.handler.http
 
 import com.safframework.androidserver.core.http.HttpRequest
 import com.safframework.androidserver.core.http.HttpResponse
-import com.safframework.androidserver.core.log.LogManager
-import com.safframework.androidserver.core.router.RouteTable
+import com.safframework.server.core.log.LogManager
+import com.safframework.server.core.router.RouteTable
 import io.netty.channel.ChannelFutureListener
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter

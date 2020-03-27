@@ -1,9 +1,9 @@
-package com.safframework.androidserver.core.router
+package com.safframework.server.core.router
 
 /**
  * 字典树
  * @FileName:
- *          com.safframework.androidserver.core.router.PathTrie
+ *          com.safframework.server.core.router.PathTrie
  * @author: Tony Shen
  * @date: 2020-03-21 21:34
  * @version: V1.0 <描述当前版本功能>
