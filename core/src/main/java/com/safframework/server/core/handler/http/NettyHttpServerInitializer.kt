@@ -35,13 +35,9 @@ class NettyHttpServerInitializer(private val routeRegistry: RouteTable, private 
 
     private fun configureH1(pipeline: ChannelPipeline) {
         pipeline
-            .addLast("server codec duplex", HttpServerCodec())
-            .addLast("message size limit aggregator", HttpObjectAggregator(builder.maxContentLength))
-            .addLast("request handler",
-                H1BrokerHandler(
-                    routeRegistry
-                )
-            )
+            .addLast("http-codec", HttpServerCodec())
+            .addLast("aggregator", HttpObjectAggregator(builder.maxContentLength))
+            .addLast("request-handler", H1BrokerHandler(routeRegistry))
     }
 
     private fun configureH2(pipeline: ChannelPipeline, alloc: ByteBufAllocator, sslContext: SslContext) {

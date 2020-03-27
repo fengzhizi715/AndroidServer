@@ -36,12 +36,8 @@ class HttpResponse(private val channel:Channel) :
         val byteBuf = channel.alloc().directBuffer()
         try {
             ByteBufOutputStream(byteBuf).use { os: OutputStream ->
-                ConverterManager.toJson(any)?.let {
-                    os.write(it.toByteArray())
-                }
-                addHeader(HttpHeaderNames.CONTENT_TYPE,
-                    JSON
-                )
+                ConverterManager.toJson(any)?.let { os.write(it.toByteArray()) }
+                addHeader(HttpHeaderNames.CONTENT_TYPE, JSON)
                 body = byteBuf
             }
         } catch (e: IOException) {
@@ -53,9 +49,7 @@ class HttpResponse(private val channel:Channel) :
     override fun setBodyHtml(html: String): Response {
         val bytes = html.toByteArray(CharsetUtil.UTF_8)
         body = Unpooled.copiedBuffer(bytes)
-        addHeader(HttpHeaderNames.CONTENT_TYPE,
-            TEXT_HTML
-        )
+        addHeader(HttpHeaderNames.CONTENT_TYPE, TEXT_HTML)
         return this
     }
 
@@ -68,9 +62,7 @@ class HttpResponse(private val channel:Channel) :
     override fun setBodyText(text: String): Response {
         val bytes = text.toByteArray(CharsetUtil.UTF_8)
         body = Unpooled.copiedBuffer(bytes)
-        addHeader(HttpHeaderNames.CONTENT_TYPE,
-            TEXT_PLAIN
-        )
+        addHeader(HttpHeaderNames.CONTENT_TYPE, TEXT_PLAIN)
         return this
     }
 
@@ -85,14 +77,8 @@ class HttpResponse(private val channel:Channel) :
 
     fun buildFullH1Response(): FullHttpResponse {
         var status = this.status
-        if (status == null) {
-            status = HttpResponseStatus.OK
-        }
-
-        val response = DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status!!, buildBodyData())
-        response.headers().set(HttpHeaderNames.SERVER,
-            SERVER_VALUE
-        )
+        val response = DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status?:HttpResponseStatus.OK, buildBodyData())
+        response.headers().set(HttpHeaderNames.SERVER, SERVER_VALUE)
         headers.forEach { (key, value) -> response.headers().set(key, value) }
 
         response.headers().set(HttpHeaderNames.CONTENT_LENGTH, buildBodyData().readableBytes())
@@ -100,7 +86,7 @@ class HttpResponse(private val channel:Channel) :
     }
 
     companion object {
-        private val SERVER_VALUE = AsciiString.of("monica")
+        private val SERVER_VALUE = AsciiString.of("monica") // 服务器的名称
         private val JSON = AsciiString.cached("application/json")
         private val TEXT_HTML = AsciiString.cached("text/html")
         private val TEXT_PLAIN = AsciiString.cached("text/plain")

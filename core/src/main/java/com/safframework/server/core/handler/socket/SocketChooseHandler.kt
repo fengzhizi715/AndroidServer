@@ -18,10 +18,7 @@ class SocketChooseHandler(val webSocketPath:String) : ByteToMessageDecoder() {
     override fun decode(ctx: ChannelHandlerContext, `in`: ByteBuf, out: List<Any>) {
         val protocol = getBufStart(`in`)
         if (protocol.startsWith(WEBSOCKET_PREFIX)) {
-            PipelineAdd.websocketAdd(
-                ctx,
-                webSocketPath
-            )
+            PipelineAdd.websocketAdd(ctx, webSocketPath)
 
             ctx.pipeline().remove("string_encoder")
             ctx.pipeline().remove("linebased")
