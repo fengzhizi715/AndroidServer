@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.converter
+package com.safframework.server.core.converter
 
 import com.safframework.androidserver.converter.Converter
 import java.lang.reflect.Type
@@ -6,7 +6,7 @@ import java.lang.reflect.Type
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.converter.ConverterManager
+ *          com.safframework.server.core.converter.ConverterManager
  * @author: Tony Shen
  * @date: 2020-03-25 00:26
  * @version: V1.0 <描述当前版本功能>
@@ -16,7 +16,7 @@ object ConverterManager {
     private var converter: Converter? = null
 
     fun converter(converter: Converter) {
-        this.converter = converter
+        ConverterManager.converter = converter
     }
 
     fun <T> fromJson(json: String, type: Type): T? = converter?.fromJson(json,type)

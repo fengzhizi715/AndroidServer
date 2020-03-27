@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.handler.socket
+package com.safframework.server.core.handler.socket
 
 import com.safframework.server.core.log.LogManager
 import io.netty.buffer.ByteBuf
@@ -13,7 +13,7 @@ import java.net.InetSocketAddress
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.socket.CustomerServerHandler
+ *          com.safframework.server.core.handler.socket.CustomerServerHandler
  * @author: Tony Shen
  * @date: 2020-03-25 13:48
  * @version: V1.0 <描述当前版本功能>

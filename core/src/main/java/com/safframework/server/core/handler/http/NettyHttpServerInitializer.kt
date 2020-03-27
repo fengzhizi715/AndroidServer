@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.handler.http
+package com.safframework.server.core.handler.http
 
 import com.safframework.server.core.AndroidServer
 import com.safframework.server.core.router.RouteTable
@@ -13,7 +13,7 @@ import io.netty.handler.ssl.SslContext
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.http.NettyHttpServerInitializer
+ *          com.safframework.server.core.handler.http.NettyHttpServerInitializer
  * @author: Tony Shen
  * @date: 2020-03-22 16:30
  * @version: V1.0 <描述当前版本功能>

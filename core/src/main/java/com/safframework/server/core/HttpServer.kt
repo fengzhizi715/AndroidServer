@@ -1,6 +1,6 @@
 package com.safframework.server.core
 
-import com.safframework.androidserver.core.handler.socket.SocketListener
+import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.androidserver.core.http.HttpMethod
 
 /**

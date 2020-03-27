@@ -1,11 +1,11 @@
-package com.safframework.androidserver.core.handler.socket
+package com.safframework.server.core.handler.socket
 
 import io.netty.channel.Channel
 
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.socket.SocketListener
+ *          com.safframework.server.core.handler.socket.SocketListener
  * @author: Tony Shen
  * @date: 2020-03-26 23:20
  * @version: V1.0 <描述当前版本功能>

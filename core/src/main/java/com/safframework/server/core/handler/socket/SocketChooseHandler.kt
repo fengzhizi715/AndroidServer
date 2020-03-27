@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.handler.socket
+package com.safframework.server.core.handler.socket
 
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
@@ -7,7 +7,7 @@ import io.netty.handler.codec.ByteToMessageDecoder
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.socket.SocketChooseHandler
+ *          com.safframework.server.core.handler.socket.SocketChooseHandler
  * @author: Tony Shen
  * @date: 2020-03-25 13:46
  * @version: V1.0 <描述当前版本功能>
@@ -18,7 +18,10 @@ class SocketChooseHandler(val webSocketPath:String) : ByteToMessageDecoder() {
     override fun decode(ctx: ChannelHandlerContext, `in`: ByteBuf, out: List<Any>) {
         val protocol = getBufStart(`in`)
         if (protocol.startsWith(WEBSOCKET_PREFIX)) {
-            PipelineAdd.websocketAdd(ctx,webSocketPath)
+            PipelineAdd.websocketAdd(
+                ctx,
+                webSocketPath
+            )
 
             ctx.pipeline().remove("string_encoder")
             ctx.pipeline().remove("linebased")
@@ -31,7 +34,8 @@ class SocketChooseHandler(val webSocketPath:String) : ByteToMessageDecoder() {
     private fun getBufStart(`in`: ByteBuf): String {
         var length = `in`.readableBytes()
         if (length > MAX_LENGTH) {
-            length = MAX_LENGTH
+            length =
+                MAX_LENGTH
         }
 
         // 标记读位置

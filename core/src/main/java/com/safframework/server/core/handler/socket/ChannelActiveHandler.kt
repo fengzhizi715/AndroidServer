@@ -1,4 +1,4 @@
-package com.safframework.androidserver.core.handler.socket
+package com.safframework.server.core.handler.socket
 
 import com.safframework.server.core.log.LogManager
 import io.netty.channel.ChannelHandler
@@ -9,7 +9,7 @@ import java.net.InetSocketAddress
 /**
  *
  * @FileName:
- *          com.safframework.androidserver.core.handler.socket.ChannelActiveHandler
+ *          com.safframework.server.core.handler.socket.ChannelActiveHandler
  * @author: Tony Shen
  * @date: 2020-03-25 13:45
  * @version: V1.0 <描述当前版本功能>

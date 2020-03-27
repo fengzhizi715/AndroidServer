@@ -1,10 +1,10 @@
 package com.safframework.server.core
 
 import com.safframework.androidserver.converter.Converter
-import com.safframework.androidserver.core.converter.ConverterManager
-import com.safframework.androidserver.core.handler.http.NettyHttpServerInitializer
-import com.safframework.androidserver.core.handler.socket.NettySocketServerInitializer
-import com.safframework.androidserver.core.handler.socket.SocketListener
+import com.safframework.server.core.converter.ConverterManager
+import com.safframework.server.core.handler.http.NettyHttpServerInitializer
+import com.safframework.server.core.handler.socket.NettySocketServerInitializer
+import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.androidserver.core.http.HttpMethod
 import com.safframework.server.core.log.LogManager
 import com.safframework.server.core.log.LogProxy
@@ -57,9 +57,18 @@ class AndroidServer private constructor(private val builder: Builder) :
 
     override fun start() {
         if (routeRegistry.isNotEmpty() && listener == null) {
-            channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
+            channelInitializer =
+                NettyHttpServerInitializer(
+                    routeRegistry,
+                    sslContext,
+                    builder
+                )
         } else if (routeRegistry.isEmpty() && listener!=null) {
-            channelInitializer = NettySocketServerInitializer(webSocketPath?:"",listener!!)
+            channelInitializer =
+                NettySocketServerInitializer(
+                    webSocketPath ?: "",
+                    listener!!
+                )
         } else {
             LogManager.e("error","channelInitializer is failed")
         }
