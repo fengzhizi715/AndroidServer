@@ -148,8 +148,6 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
             return this
         }
 
-        fun build(): AndroidServer {
-            return AndroidServer(this)
-        }
+        fun build(): AndroidServer = AndroidServer(this)
     }
 }

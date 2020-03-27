@@ -1,5 +1,6 @@
-package com.safframework.server.core
+package com.safframework.server.core.http.controller
 
+import com.safframework.server.core.RequestHandler
 import com.safframework.server.core.http.Request
 import com.safframework.server.core.http.Response
 import org.json.JSONObject
@@ -8,7 +9,7 @@ import org.json.JSONObject
 /**
  *
  * @FileName:
- *          com.safframework.server.core.NotFoundController
+ *          com.safframework.server.core.http.controller.NotFoundController
  * @author: Tony Shen
  * @date: 2020-03-22 00:32
  * @version: V1.0 <描述当前版本功能>
@@ -16,9 +17,10 @@ import org.json.JSONObject
 class NotFoundController: RequestHandler {
 
     override fun invoke(request: Request, response: Response): Response {
-        val json = JSONObject()
-        json.put("status", 404)
-        json.put("reason", "404 Not Found")
-        return response.setBodyJson(json)
+
+        return response.setBodyJson(JSONObject().apply {
+            put("status", 404)
+            put("reason", "404 Not Found")
+        })
     }
 }

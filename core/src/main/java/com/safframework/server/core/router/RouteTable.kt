@@ -1,7 +1,6 @@
 package com.safframework.server.core.router
 
 import com.safframework.server.core.NotFound
-import com.safframework.server.core.NotFoundController
 import com.safframework.server.core.RequestHandler
 import com.safframework.server.core.http.HttpMethod
 import com.safframework.server.core.http.Request
@@ -16,28 +15,19 @@ import com.safframework.server.core.http.Request
  */
 object RouteTable {
 
-    private val getTrie: PathTrie<RequestHandler> =
-        PathTrie()
-    private val postTrie: PathTrie<RequestHandler> =
-        PathTrie()
-    private val putTrie: PathTrie<RequestHandler> =
-        PathTrie()
-    private val deleteTrie: PathTrie<RequestHandler> =
-        PathTrie()
-    private val headTrie: PathTrie<RequestHandler> =
-        PathTrie()
-    private val traceTrie: PathTrie<RequestHandler> =
-        PathTrie()
-    private val connectTrie: PathTrie<RequestHandler> =
-        PathTrie()
-    private val optionsTrie: PathTrie<RequestHandler> =
-        PathTrie()
-    private val patchTrie: PathTrie<RequestHandler> =
-        PathTrie()
+    private val getTrie: PathTrie<RequestHandler> = PathTrie()
+    private val postTrie: PathTrie<RequestHandler> = PathTrie()
+    private val putTrie: PathTrie<RequestHandler> = PathTrie()
+    private val deleteTrie: PathTrie<RequestHandler> = PathTrie()
+    private val headTrie: PathTrie<RequestHandler> = PathTrie()
+    private val traceTrie: PathTrie<RequestHandler> = PathTrie()
+    private val connectTrie: PathTrie<RequestHandler> = PathTrie()
+    private val optionsTrie: PathTrie<RequestHandler> = PathTrie()
+    private val patchTrie: PathTrie<RequestHandler> = PathTrie()
+    private var errorController: RequestHandler?=null
 
     fun registHandler(method: HttpMethod, url: String, handler: RequestHandler) {
-        getTable(method)
-            .insert(url, handler)
+        getTable(method).insert(url, handler)
     }
 
     private fun getTable(method: HttpMethod): PathTrie<RequestHandler> =
@@ -53,7 +43,16 @@ object RouteTable {
             HttpMethod.PATCH   -> patchTrie
         }
 
-    fun getHandler(request: Request): RequestHandler = getTable(request.method()).fetch(request.url(),request.params())?: NotFound()
+    /**
+     * 支持自定义错误的
+     */
+    fun errorController(errorController: RequestHandler) {
+        this.errorController = errorController
+    }
+
+    fun getHandler(request: Request): RequestHandler = getTable(request.method()).fetch(request.url(),request.params())
+        ?: errorController
+        ?: NotFound()
 
     fun isNotEmpty():Boolean = getTrie.getRoot()!=null
             || postTrie.getRoot()!=null
