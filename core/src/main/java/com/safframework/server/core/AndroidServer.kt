@@ -56,16 +56,17 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     }
 
     override fun start() {
+        if (routeRegistry.isNotEmpty() && listener == null) {
+            channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
+        } else if (routeRegistry.isEmpty() && listener!=null) {
+            channelInitializer = NettySocketServerInitializer(webSocketPath ?: "", listener!!)
+        } else {
+            LogManager.e("error","channelInitializer is failed")
+            return
+        }
+
         object : Thread() {
             override fun run() {
-                if (routeRegistry.isNotEmpty() && listener == null) {
-                    channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
-                } else if (routeRegistry.isEmpty() && listener!=null) {
-                    channelInitializer = NettySocketServerInitializer(webSocketPath ?: "", listener!!)
-                } else {
-                    LogManager.e("error","channelInitializer is failed")
-                    return
-                }
 
                 val bootstrap = ServerBootstrap()
                 bossGroup= NioEventLoopGroup(1)
@@ -89,6 +90,8 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
                     throw RuntimeException(e)
                 } catch (e: InterruptedException) {
                     throw RuntimeException(e)
+                } finally {
+                    close()
                 }
             }
         }.start()
