@@ -14,6 +14,7 @@ import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption
+import io.netty.channel.EventLoopGroup
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
@@ -35,9 +36,12 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     private var channelFuture: ChannelFuture? = null
     private val routeRegistry: RouteTable = RouteTable
     private var sslContext: SslContext? = null
-    private var channelInitializer: ChannelInitializer<SocketChannel>?=null
     private var webSocketPath: String?=null
     private var listener: SocketListener<String>?=null
+
+    private lateinit var bossGroup: EventLoopGroup
+    private lateinit var workerGroup: EventLoopGroup
+    private lateinit var channelInitializer: ChannelInitializer<SocketChannel>
 
     init {
         builder.errorController?.let { routeRegistry.errorController(it) }
@@ -52,37 +56,42 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     }
 
     override fun start() {
-        if (routeRegistry.isNotEmpty() && listener == null) {
-            channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
-        } else if (routeRegistry.isEmpty() && listener!=null) {
-            channelInitializer = NettySocketServerInitializer(webSocketPath ?: "", listener!!)
-        } else {
-            LogManager.e("error","channelInitializer is failed")
-        }
+        object : Thread() {
+            override fun run() {
+                if (routeRegistry.isNotEmpty() && listener == null) {
+                    channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
+                } else if (routeRegistry.isEmpty() && listener!=null) {
+                    channelInitializer = NettySocketServerInitializer(webSocketPath ?: "", listener!!)
+                } else {
+                    LogManager.e("error","channelInitializer is failed")
+                    return
+                }
 
-        val bootstrap = ServerBootstrap()
-        val bossEventLoopGroup = NioEventLoopGroup(1)
-        val eventLoopGroup = NioEventLoopGroup(0)
-        try {
-            val address = InetAddress.getByName(builder.address)
-            val socketAddress = InetSocketAddress(address, builder.port)
-            bootstrap
-                .group(bossEventLoopGroup, eventLoopGroup)
-                .channel(NioServerSocketChannel::class.java)
-                .localAddress(socketAddress)
-                .childOption(ChannelOption.SO_KEEPALIVE, true)
-                .childOption(ChannelOption.SO_REUSEADDR, true)
-                .childOption(ChannelOption.TCP_NODELAY, true)
-                .childHandler(channelInitializer)
-            val cf = bootstrap.bind()
-            channelFuture = cf
-            cf.sync()
-            cf.channel().closeFuture().sync()
-        } catch (e: UnknownHostException) {
-            throw RuntimeException(e)
-        } catch (e: InterruptedException) {
-            throw RuntimeException(e)
-        }
+                val bootstrap = ServerBootstrap()
+                bossGroup= NioEventLoopGroup(1)
+                workerGroup= NioEventLoopGroup(0)
+                try {
+                    val address = InetAddress.getByName(builder.address)
+                    val socketAddress = InetSocketAddress(address, builder.port)
+                    bootstrap
+                        .group(bossGroup, workerGroup)
+                        .channel(NioServerSocketChannel::class.java)
+                        .localAddress(socketAddress)
+                        .childOption(ChannelOption.SO_KEEPALIVE, true)
+                        .childOption(ChannelOption.SO_REUSEADDR, true)
+                        .childOption(ChannelOption.TCP_NODELAY, true)
+                        .childHandler(channelInitializer)
+                    val cf = bootstrap.bind()
+                    channelFuture = cf
+                    cf.sync()
+                    cf.channel().closeFuture().sync()
+                } catch (e: UnknownHostException) {
+                    throw RuntimeException(e)
+                } catch (e: InterruptedException) {
+                    throw RuntimeException(e)
+                }
+            }
+        }.start()
     }
 
     override fun request(method: HttpMethod, route: String, handler: RequestHandler): AndroidServer {
@@ -100,7 +109,8 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         try {
             channelFuture?.channel()?.close()
 
-            // TODO: bossEventLoopGroup、eventLoopGroup 关闭
+            workerGroup.shutdownGracefully()
+            bossGroup.shutdownGracefully()
         } catch (e: InterruptedException) {
             LogManager.e("error", e.message?:"")
             throw RuntimeException(e)
