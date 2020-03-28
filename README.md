@@ -1,5 +1,8 @@
 # AndroidServer
 
+[![@Tony沈哲 on weibo](https://img.shields.io/badge/weibo-%40Tony%E6%B2%88%E5%93%B2-blue.svg)](http://www.weibo.com/fengzhizi715)
+[![License](https://img.shields.io/badge/license-Apache%202-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+
 基于 Kotlin+Netty 开发，为 Android 系统提供 Web Server 的服务，包括 Http、TCP、WebSocket
 
 # Feature:
@@ -8,7 +11,14 @@
 * Http 的路由表采用字典树(Tried Tree)实现
 * 日志隔离，开发者可以使用自己的日志库
 
-# Usage
+# 最新版本
+
+模块|最新版本
+---|:-------------:
+android-server-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/android-server-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/android-server-core/_latestVersion)
+android-server-converter-gson｜[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/android-server-converter-gson/images/download.svg) ](https://bintray.com/fengzhizi715/maven/android-server-converter-gson/_latestVersion)
+
+# Usage:
 
 ## Http 服务
 
@@ -60,6 +70,8 @@ class HttpService : Service() {
 ```
 
 ## Socket 服务
+
+Socket 服务支持同一个端口支持 TCP/WebSocket 服务
 
 ```kotlin
 class SocketService : Service() {
