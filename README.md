@@ -8,8 +8,10 @@
 # Feature:
 
 * 支持 Http、TCP、WebSocket 服务
+* 支持 Rest 风格的 API
 * Http 的路由表采用字典树(Tried Tree)实现
 * 日志隔离，开发者可以使用自己的日志库
+* core 模块只依赖 netty-all，不依赖其他第三方库
 
 # 最新版本
 
@@ -83,7 +85,7 @@ class HttpService : Service() {
 
 ## Socket 服务
 
-Socket 服务支持同一个端口支持 TCP/WebSocket 服务
+Socket 服务，支持同一个端口同时提供 TCP/WebSocket 服务
 
 ```kotlin
 class SocketService : Service() {
