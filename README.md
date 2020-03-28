@@ -83,6 +83,25 @@ class HttpService : Service() {
 }
 ```
 
+```
+curl -v 127.0.0.1:8080/hello
+*   Trying 127.0.0.1...
+* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+> GET /hello HTTP/1.1
+> Host: 127.0.0.1:8080
+> User-Agent: curl/7.50.1-DEV
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< server: monica
+< content-type: text/plain
+< content-length: 11
+<
+* Connection #0 to host 127.0.0.1 left intact
+
+hello world
+```
+
 ## Socket 服务
 
 Socket 服务，支持同一个端口同时提供 TCP/WebSocket 服务
@@ -139,6 +158,8 @@ class SocketService : Service() {
     }
 }
 ```
+
+Socket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行测试
 
 # TODO List：
 
