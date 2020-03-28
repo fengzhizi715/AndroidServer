@@ -144,3 +144,35 @@ class SocketService : Service() {
 * 支持 Https
 * 支持 HTTP/2
 * 自定义拦截器
+
+联系方式
+===
+
+Wechat：fengzhizi715
+
+
+> Java与Android技术栈：每周更新推送原创技术文章，欢迎扫描下方的公众号二维码并关注，期待与您的共同成长和进步。
+
+![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/gzh.jpeg)
+
+
+ChangeLog
+===
+[版本更新记录](CHANGELOG.md)
+
+License
+-------
+
+    Copyright (C) 2017 - present, Tony Shen.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
