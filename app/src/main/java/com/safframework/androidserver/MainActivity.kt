@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.safframework.androidserver.service.HttpService
+import com.safframework.androidserver.service.SocketService
 
 
 /**
@@ -19,6 +20,6 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        startService(Intent(this, HttpService::class.java))
+        startService(Intent(this, SocketService::class.java))
     }
 }

@@ -116,7 +116,7 @@ class SocketService : Service() {
 
 # TODO List：
 
-* 支持 HttpCookies、HttpSession
+* 支持 HttpSession
 * 支持 Https
 * 支持 HTTP/2
 * 自定义拦截器

@@ -14,7 +14,6 @@ import io.netty.handler.codec.http.cookie.DefaultCookie
 class HttpCookie {
 
     private var cookie: Cookie
-        get() = field
 
     constructor(name: String, value: String) {
         cookie = DefaultCookie(name, value)
@@ -62,6 +61,8 @@ class HttpCookie {
     fun setHttpOnly(httpOnly: Boolean) {
         cookie.isHttpOnly = httpOnly
     }
+
+    fun get() = cookie
 
     operator fun compareTo(o: Cookie): Int = cookie.compareTo(o)
 

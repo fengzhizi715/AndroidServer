@@ -1,12 +1,14 @@
 package com.safframework.server.core.http
 
 import com.safframework.server.core.converter.ConverterManager
+import com.safframework.server.core.http.cookie.HttpCookie
 import com.safframework.server.core.log.LogManager
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.channel.Channel
 import io.netty.handler.codec.http.*
+import io.netty.handler.codec.http.cookie.ServerCookieEncoder
 import io.netty.util.AsciiString
 import io.netty.util.CharsetUtil
 import java.io.IOException
@@ -72,6 +74,11 @@ class HttpResponse(private val channel:Channel) : Response {
         return this
     }
 
+    override fun addCookie(cookie: HttpCookie): Response {
+        addHeader(SET_COOKIE, ServerCookieEncoder.LAX.encode(cookie.get()))
+        return this
+    }
+
     private fun buildBodyData(): ByteBuf = body ?: Unpooled.EMPTY_BUFFER
 
     fun buildFullH1Response(): FullHttpResponse {
@@ -88,5 +95,6 @@ class HttpResponse(private val channel:Channel) : Response {
         private val JSON = AsciiString.cached("application/json")
         private val TEXT_HTML = AsciiString.cached("text/html")
         private val TEXT_PLAIN = AsciiString.cached("text/plain")
+        private val SET_COOKIE = AsciiString.cached("set-cookie")
     }
 }

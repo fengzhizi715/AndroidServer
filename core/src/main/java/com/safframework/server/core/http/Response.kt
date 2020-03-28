@@ -1,5 +1,6 @@
 package com.safframework.server.core.http
 
+import com.safframework.server.core.http.cookie.HttpCookie
 import io.netty.handler.codec.http.HttpResponseStatus
 import io.netty.util.AsciiString
 
@@ -27,4 +28,6 @@ interface Response {
     fun addHeader(key: CharSequence, value: CharSequence): Response
 
     fun addHeader(key: AsciiString, value: AsciiString): Response
+
+    fun addCookie(cookie: HttpCookie): Response
 }
