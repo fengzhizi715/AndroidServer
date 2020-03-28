@@ -83,6 +83,8 @@ class HttpService : Service() {
 }
 ```
 
+测试：
+
 ```
 curl -v 127.0.0.1:8080/hello
 *   Trying 127.0.0.1...
@@ -98,8 +100,28 @@ curl -v 127.0.0.1:8080/hello
 < content-length: 11
 <
 * Connection #0 to host 127.0.0.1 left intact
-
 hello world
+```
+
+```
+curl -v -d 测试 127.0.0.1:8080/uploadLog
+*   Trying 127.0.0.1...
+* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+> POST /uploadLog HTTP/1.1
+> Host: 127.0.0.1:8080
+> User-Agent: curl/7.50.1-DEV
+> Accept: */*
+> Content-Length: 6
+> Content-Type: application/x-www-form-urlencoded
+>
+* upload completely sent off: 6 out of 6 bytes
+< HTTP/1.1 200 OK
+< server: monica
+< content-type: text/plain
+< content-length: 6
+<
+* Connection #0 to host 127.0.0.1 left intact
+测试
 ```
 
 ## Socket 服务
