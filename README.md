@@ -16,7 +16,19 @@
 模块|最新版本
 ---|:-------------:
 android-server-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/android-server-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/android-server-core/_latestVersion)
-android-server-converter-gson｜[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/android-server-converter-gson/images/download.svg) ](https://bintray.com/fengzhizi715/maven/android-server-converter-gson/_latestVersion)
+android-server-converter-gson|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/android-server-converter-gson/images/download.svg) ](https://bintray.com/fengzhizi715/maven/android-server-converter-gson/_latestVersion)
+
+# 下载安装
+
+Gradle:
+
+```groovy
+implementation 'com.safframework.server:android-server-core:<latest-version>'
+```
+
+```groovy
+implementation 'com.safframework.server:android-server-converter-gson:<latest-version>'
+```
 
 # Usage:
 
