@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 def cfg = rootProject.ext.configuration // 配置
 def libs = rootProject.ext.libraries // 库
@@ -26,6 +26,9 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -38,4 +41,30 @@ dependencies {
     implementation "io.netty:netty-all:${libs.netty}"
 
     api project(":converter:converter")
+}
+
+repositories {
+    jcenter()
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    //加上这些
+    tasks.withType(Javadoc) {
+        options{ encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
+    }
+}
+
+publish{
+    userOrg = 'fengzhizi715'
+    groupId = 'com.safframework.server'
+    artifactId = 'android-server-core'
+    publishVersion = '1.0.0'
+    desc = 'this is a server library for android,written by kotlin'
+    website = 'https://github.com/fengzhizi715/AndroidServer'
 }
