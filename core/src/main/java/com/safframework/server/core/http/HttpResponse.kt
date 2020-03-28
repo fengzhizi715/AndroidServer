@@ -20,8 +20,7 @@ import java.io.OutputStream
  * @date: 2020-03-24 11:37
  * @version: V1.0 <描述当前版本功能>
  */
-class HttpResponse(private val channel:Channel) :
-    Response {
+class HttpResponse(private val channel:Channel) : Response {
 
     private var status: HttpResponseStatus? = null
     private var body: ByteBuf? = null

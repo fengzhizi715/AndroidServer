@@ -20,7 +20,7 @@ interface Request {
 
     fun header(name: String): String?
 
-    fun cookies(): Array<HttpCookie>
+    fun cookies(): Set<HttpCookie>
 
     fun params(): MutableMap<String, String>
 

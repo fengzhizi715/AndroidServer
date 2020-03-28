@@ -3,6 +3,8 @@ package com.safframework.server.core.http
 import com.safframework.server.core.http.cookie.HttpCookie
 import io.netty.handler.codec.http.FullHttpRequest
 import io.netty.handler.codec.http.QueryStringDecoder
+import io.netty.handler.codec.http.cookie.Cookie
+import io.netty.handler.codec.http.cookie.ServerCookieDecoder
 import io.netty.util.CharsetUtil
 
 
@@ -14,8 +16,7 @@ import io.netty.util.CharsetUtil
  * @date: 2020-03-23 20:15
  * @version: V1.0 <描述当前版本功能>
  */
-class HttpRequest(private val fullHttpRequest: FullHttpRequest) :
-    Request {
+class HttpRequest(private val fullHttpRequest: FullHttpRequest) : Request {
 
     private val params: MutableMap<String, String> = mutableMapOf()
 
@@ -42,8 +43,18 @@ class HttpRequest(private val fullHttpRequest: FullHttpRequest) :
 
     override fun header(name: String): String?  = headers[name]
 
-    override fun cookies(): Array<HttpCookie> {
-        TODO("Not yet implemented")
+    override fun cookies(): Set<HttpCookie> = headers[COOKIE]?.let {
+        val cookies: Set<Cookie> = ServerCookieDecoder.LAX.decode(it)
+        wrapCookies(cookies)
+    }?: mutableSetOf()
+
+    private fun wrapCookies(cookies: Set<Cookie>): Set<HttpCookie> {
+        val httpCookies: MutableSet<HttpCookie> = HashSet()
+        for (cookie in cookies) {
+            val hc = HttpCookie(cookie)
+            httpCookies.add(hc)
+        }
+        return httpCookies
     }
 
     override fun params(): MutableMap<String, String> = params
@@ -51,4 +62,8 @@ class HttpRequest(private val fullHttpRequest: FullHttpRequest) :
     override fun param(name: String): String? = params[name]
 
     override fun content(): String = fullHttpRequest.content().toString(CharsetUtil.UTF_8)
+
+    companion object {
+        private val COOKIE = "cookie"
+    }
 }

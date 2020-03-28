@@ -12,7 +12,9 @@ import io.netty.handler.codec.http.cookie.DefaultCookie
  * @version: V1.0 <描述当前版本功能>
  */
 class HttpCookie {
+
     private var cookie: Cookie
+        get() = field
 
     constructor(name: String, value: String) {
         cookie = DefaultCookie(name, value)
@@ -62,8 +64,6 @@ class HttpCookie {
     }
 
     operator fun compareTo(o: Cookie): Int = cookie.compareTo(o)
-
-    fun get(): Cookie = cookie
 
     override fun toString(): String = "HttpCookie{cookie=$cookie}"
 }
