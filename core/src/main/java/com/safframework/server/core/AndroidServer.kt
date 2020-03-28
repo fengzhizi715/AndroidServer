@@ -57,10 +57,10 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
     override fun start() {
 
-        if (routeRegistry.isNotEmpty() && listener == null) {
-            channelInitializer = NettyHttpServerInitializer(routeRegistry, sslContext, builder)
+        channelInitializer = if (routeRegistry.isNotEmpty() && listener == null) {
+            NettyHttpServerInitializer(routeRegistry, sslContext, builder)
         } else if (routeRegistry.isEmpty() && listener!=null) {
-            channelInitializer = NettySocketServerInitializer(webSocketPath ?: "", listener!!)
+            NettySocketServerInitializer(webSocketPath ?: "", listener!!)
         } else {
             LogManager.e("error","channelInitializer is failed")
             return
@@ -109,12 +109,21 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         return this
     }
 
+    private fun isWorkerGroupInitialized() = ::workerGroup.isInitialized
+
+    private fun isBossGroupInitialized() = ::workerGroup.isInitialized
+
     override fun close() {
         try {
             channelFuture?.channel()?.close()
 
-            workerGroup.shutdownGracefully()
-            bossGroup.shutdownGracefully()
+            if(isWorkerGroupInitialized()) {
+                workerGroup.shutdownGracefully()
+            }
+
+            if (isBossGroupInitialized()) {
+                bossGroup.shutdownGracefully()
+            }
         } catch (e: InterruptedException) {
             LogManager.e("error", e.message?:"")
             throw RuntimeException(e)
