@@ -1,6 +1,6 @@
 package com.safframework.server.converter.gson
 
-import com.safframework.server.converter.Converter
+import com.safframework.server.core.converter.Converter
 import java.lang.reflect.Type
 
 /**

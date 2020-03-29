@@ -1,6 +1,5 @@
 package com.safframework.server.core.converter
 
-import com.safframework.server.converter.Converter
 import java.lang.reflect.Type
 
 /**

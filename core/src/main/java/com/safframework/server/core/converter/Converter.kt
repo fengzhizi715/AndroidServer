@@ -1,4 +1,4 @@
-package com.safframework.server.converter
+package com.safframework.server.core.converter
 
 import java.lang.reflect.Type
 

@@ -20,6 +20,6 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        startService(Intent(this, SocketService::class.java))
+        startService(Intent(this, HttpService::class.java))
     }
 }
