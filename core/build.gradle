@@ -62,7 +62,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.safframework.server'
     artifactId = 'android-server-core'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'this is a server library for android,written by kotlin'
     website = 'https://github.com/fengzhizi715/AndroidServer'
 }
