@@ -36,6 +36,8 @@ implementation 'com.safframework.server:android-server-converter-gson:<latest-ve
 
 ## Http 服务
 
+通过使用 Service 来提供一个 http 服务，它的 http 服务本身支持 rest 风格、支持跨域、cookies 等。
+
 ```kotlin
 class HttpService : Service() {
 
