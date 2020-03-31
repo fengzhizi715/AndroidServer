@@ -25,6 +25,8 @@ interface Response {
 
     fun setBodyText(text: String): Response
 
+    fun sendFile(bytes: ByteArray , fileName: String , contentType: String): Response
+
     fun addHeader(key: CharSequence, value: CharSequence): Response
 
     fun addHeader(key: AsciiString, value: AsciiString): Response

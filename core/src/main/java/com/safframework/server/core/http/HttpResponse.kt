@@ -13,6 +13,8 @@ import io.netty.util.AsciiString
 import io.netty.util.CharsetUtil
 import java.io.IOException
 import java.io.OutputStream
+import java.io.UnsupportedEncodingException
+import java.nio.charset.Charset
 
 /**
  *
@@ -67,6 +69,19 @@ class HttpResponse(private val channel:Channel) : Response {
         return this
     }
 
+    override fun sendFile(bytes: ByteArray , fileName: String , contentType: String): Response {
+        var name: String = fileName
+        try {
+            name = String(fileName.toByteArray(), Charsets.ISO_8859_1)
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        }
+        addHeader(HttpHeaderNames.CONTENT_DISPOSITION,ATTACHMENT + name)
+        body = Unpooled.copiedBuffer(bytes)
+        addHeader(HttpHeaderNames.CONTENT_TYPE, contentType)
+        return this
+    }
+
     override fun addHeader(key: CharSequence, value: CharSequence): Response = addHeader(AsciiString.of(key), AsciiString.of(value))
 
     override fun addHeader(key: AsciiString, value: AsciiString): Response {
@@ -93,8 +108,10 @@ class HttpResponse(private val channel:Channel) : Response {
     companion object {
         private val SERVER_VALUE = AsciiString.of("monica") // 服务器的名称
         private val JSON = AsciiString.cached("application/json")
+        private val OCTET_STREAM = AsciiString.cached("application/json")
         private val TEXT_HTML = AsciiString.cached("text/html")
         private val TEXT_PLAIN = AsciiString.cached("text/plain")
         private val SET_COOKIE = AsciiString.cached("set-cookie")
+        private val ATTACHMENT = "attachment;filename="
     }
 }
