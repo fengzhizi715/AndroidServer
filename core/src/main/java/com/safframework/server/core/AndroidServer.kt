@@ -130,7 +130,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         }
     }
 
-    class Builder {
+    class Builder private constructor() {
         var port: Int = 8080
         var address: String = "127.0.0.1"
         var useTls: Boolean = false
@@ -139,39 +139,36 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         var logProxy: LogProxy?=null
         var converter: Converter?=null
 
-        fun port(port: Int): Builder {
-            this.port = port
-            return this
+        constructor(init: Builder.() -> Unit): this() {
+            init()
         }
 
-        fun address(address: String): Builder {
-            this.address = address
-            return this
+        fun port(init: Builder.() -> Int) = apply {
+            port = init()
         }
 
-        fun useTls(useTls: Boolean): Builder {
-            this.useTls = useTls
-            return this
+        fun address(init: Builder.() -> String) = apply {
+            address = init()
         }
 
-        fun maxContentLength(maxContentLength: Int): Builder {
-            this.maxContentLength = maxContentLength
-            return this
+        fun useTls(init: Builder.() -> Boolean) = apply {
+            useTls = init()
         }
 
-        fun errorController(errorController:RequestHandler):Builder {
-            this.errorController = errorController
-            return this
+        fun maxContentLength(init: Builder.() -> Int) = apply {
+            maxContentLength = init()
         }
 
-        fun logProxy(logProxy: LogProxy): Builder {
-            this.logProxy = logProxy
-            return this
+        fun errorController(init: Builder.() -> RequestHandler) = apply {
+            errorController = init()
         }
 
-        fun converter(converter: Converter): Builder {
-            this.converter = converter
-            return this
+        fun logProxy(init: Builder.()-> LogProxy) = apply {
+            logProxy = init()
+        }
+
+        fun converter(init: Builder.()->Converter) = apply {
+            converter = init()
         }
 
         fun build(): AndroidServer = AndroidServer(this)

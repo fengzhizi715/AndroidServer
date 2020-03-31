@@ -30,7 +30,18 @@ class SocketService : Service() {
 
     // 启动 Socket 服务端
     private fun startServer() {
-        androidServer = AndroidServer.Builder().converter(GsonConverter()).port(8888).logProxy(LogProxy).build()
+
+        androidServer = AndroidServer.Builder{
+            port {
+                8888
+            }
+            converter {
+                GsonConverter()
+            }
+            logProxy {
+                LogProxy
+            }
+        }.build()
 
         androidServer
             .socket("/ws", object: SocketListener<String> {

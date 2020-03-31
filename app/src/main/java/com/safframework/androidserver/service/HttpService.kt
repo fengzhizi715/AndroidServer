@@ -3,8 +3,10 @@ package com.safframework.androidserver.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.safframework.androidserver.log.LogProxy
 import com.safframework.server.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
+import com.safframework.server.core.converter.ConverterManager.converter
 import com.safframework.server.core.http.Response
 
 /**
@@ -27,17 +29,24 @@ class HttpService : Service() {
     // 启动 Http 服务端
     private fun startServer() {
 
-        androidServer = AndroidServer.Builder().converter(GsonConverter()).build()
+        androidServer = AndroidServer.Builder{
+            converter {
+                GsonConverter()
+            }
+            logProxy {
+                LogProxy
+            }
+        }.build()
 
         androidServer
-            .get("/hello")  { _, response: Response ->
+            .get("/hello") { _, response: Response ->
                 response.setBodyText("hello world")
             }
-            .get("/sayHi/{name}") { request,response: Response ->
+            .get("/sayHi/{name}") { request, response: Response ->
                 val name = request.param("name")
                 response.setBodyText("hi $name!")
             }
-            .post("/uploadLog") { request,response: Response ->
+            .post("/uploadLog") { request, response: Response ->
                 val requestBody = request.content()
                 response.setBodyText(requestBody)
             }
