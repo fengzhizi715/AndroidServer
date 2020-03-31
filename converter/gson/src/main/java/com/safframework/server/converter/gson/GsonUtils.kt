@@ -14,27 +14,14 @@ import java.lang.reflect.Type
  */
 object GsonUtils {
 
-    private var gson: Gson
-
-    init {
-        gson = Gson()
-    }
+    private var gson: Gson = Gson()
 
     @JvmStatic
-    fun <T> fromJson(json: String, type: Type): T {
-
-        return gson.fromJson(json, type)
-    }
+    fun <T> fromJson(json: String, type: Type): T = gson.fromJson(json, type)
 
     @JvmStatic
-    fun <T> fromJson(jsonElement: JsonElement, type: Type): T {
-
-        return gson.fromJson(jsonElement, type)
-    }
+    fun <T> fromJson(jsonElement: JsonElement, type: Type): T = gson.fromJson(jsonElement, type)
 
     @JvmStatic
-    fun toJson(data: Any): String {
-
-        return gson.toJson(data)
-    }
+    fun toJson(data: Any): String = gson.toJson(data)
 }

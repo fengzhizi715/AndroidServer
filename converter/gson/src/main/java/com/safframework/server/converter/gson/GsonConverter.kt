@@ -13,18 +13,7 @@ import java.lang.reflect.Type
  */
 class GsonConverter : Converter {
 
-    override fun <T> fromJson(json: String, type: Type): T {
+    override fun <T> fromJson(json: String, type: Type): T = GsonUtils.fromJson(json, type)
 
-        return GsonUtils.fromJson(
-            json,
-            type
-        )
-    }
-
-    override fun toJson(data: Any): String {
-
-        return GsonUtils.toJson(
-            data
-        )
-    }
+    override fun toJson(data: Any): String = GsonUtils.toJson(data)
 }
