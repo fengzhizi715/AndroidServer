@@ -7,7 +7,7 @@ import org.json.JSONObject
 
 
 /**
- *
+ * 找不到路径时，默认的 RequestHandler
  * @FileName:
  *          com.safframework.server.core.http.controller.NotFoundController
  * @author: Tony Shen

@@ -6,7 +6,6 @@ import android.os.IBinder
 import com.safframework.androidserver.log.LogProxy
 import com.safframework.server.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
-import com.safframework.server.core.converter.ConverterManager.converter
 import com.safframework.server.core.http.Response
 
 /**
@@ -62,9 +61,7 @@ class HttpService : Service() {
         super.onDestroy()
     }
 
-
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
-
 }

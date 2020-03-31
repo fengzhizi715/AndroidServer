@@ -139,37 +139,21 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         var logProxy: LogProxy?=null
         var converter: Converter?=null
 
-        constructor(init: Builder.() -> Unit): this() {
-            init()
-        }
+        constructor(init: Builder.() -> Unit): this() { init() }
 
-        fun port(init: Builder.() -> Int) = apply {
-            port = init()
-        }
+        fun port(init: Builder.() -> Int) = apply { port = init() }
 
-        fun address(init: Builder.() -> String) = apply {
-            address = init()
-        }
+        fun address(init: Builder.() -> String) = apply { address = init() }
 
-        fun useTls(init: Builder.() -> Boolean) = apply {
-            useTls = init()
-        }
+        fun useTls(init: Builder.() -> Boolean) = apply { useTls = init() }
 
-        fun maxContentLength(init: Builder.() -> Int) = apply {
-            maxContentLength = init()
-        }
+        fun maxContentLength(init: Builder.() -> Int) = apply { maxContentLength = init() }
 
-        fun errorController(init: Builder.() -> RequestHandler) = apply {
-            errorController = init()
-        }
+        fun errorController(init: Builder.() -> RequestHandler) = apply { errorController = init() }
 
-        fun logProxy(init: Builder.()-> LogProxy) = apply {
-            logProxy = init()
-        }
+        fun logProxy(init: Builder.()-> LogProxy) = apply { logProxy = init() }
 
-        fun converter(init: Builder.()->Converter) = apply {
-            converter = init()
-        }
+        fun converter(init: Builder.()->Converter) = apply { converter = init() }
 
         fun build(): AndroidServer = AndroidServer(this)
     }
