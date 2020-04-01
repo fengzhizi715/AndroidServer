@@ -7,6 +7,7 @@ import com.safframework.androidserver.log.LogProxy
 import com.safframework.server.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
 import com.safframework.server.core.http.Response
+import java.io.File
 
 /**
  *
@@ -48,6 +49,13 @@ class HttpService : Service() {
             .post("/uploadLog") { request, response: Response ->
                 val requestBody = request.content()
                 response.setBodyText(requestBody)
+            }
+            .get("/downloadFile") { request, response: Response ->
+                val file = File("/sdcard/xxx.txt")
+
+                file.readBytes()?.let {
+                    response.sendFile(it,"test.txt","application/octet-stream")
+                }
             }
             .start()
     }
