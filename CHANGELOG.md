@@ -1,6 +1,12 @@
 AndroidServer
 ===
 
+Version 1.1.0
+---
+2020-03-29
+* 提供文件下载的功能
+* 优化 AndroidServer的builder模式
+
 Version 1.0.1
 ---
 2020-03-29

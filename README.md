@@ -51,19 +51,33 @@ class HttpService : Service() {
     // 启动 Http 服务端
     private fun startServer() {
 
-        androidServer = AndroidServer.Builder().converter(GsonConverter()).build()
+        androidServer = AndroidServer.Builder{
+            converter {
+                GsonConverter()
+            }
+            logProxy {
+                LogProxy
+            }
+        }.build()
 
         androidServer
-            .get("/hello")  { _, response: Response ->
+            .get("/hello") { _, response: Response ->
                 response.setBodyText("hello world")
             }
-            .get("/sayHi/{name}") { request,response: Response ->
+            .get("/sayHi/{name}") { request, response: Response ->
                 val name = request.param("name")
                 response.setBodyText("hi $name!")
             }
-            .post("/uploadLog") { request,response: Response ->
+            .post("/uploadLog") { request, response: Response ->
                 val requestBody = request.content()
                 response.setBodyText(requestBody)
+            }
+            .get("/downloadFile") { request, response: Response ->
+                val file = File("/sdcard/xxx.txt")
+
+                file.readBytes()?.let {
+                    response.sendFile(it,"test.txt","application/octet-stream")
+                }
             }
             .start()
     }
@@ -77,11 +91,9 @@ class HttpService : Service() {
         super.onDestroy()
     }
 
-
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
-
 }
 ```
 
@@ -142,7 +154,18 @@ class SocketService : Service() {
 
     // 启动 Socket 服务端
     private fun startServer() {
-        androidServer = AndroidServer.Builder().converter(GsonConverter()).port(8888).logProxy(LogProxy).build()
+
+        androidServer = AndroidServer.Builder{
+            port {
+                8888
+            }
+            converter {
+                GsonConverter()
+            }
+            logProxy {
+                LogProxy
+            }
+        }.build()
 
         androidServer
             .socket("/ws", object: SocketListener<String> {
