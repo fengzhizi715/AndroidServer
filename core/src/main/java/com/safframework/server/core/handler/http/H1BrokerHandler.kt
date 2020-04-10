@@ -30,7 +30,7 @@ class H1BrokerHandler(private val routeRegistry: RouteTable): ChannelInboundHand
             }
             ctx.channel().writeAndFlush(response).addListener(ChannelFutureListener.CLOSE)
         } else {
-            LogManager.w("H1BrokerHandler","unknown message type ${msg}")
+            LogManager.w("H1BrokerHandler","unknown message type $msg")
         }
         ctx.fireChannelRead(msg)
     }

@@ -26,8 +26,8 @@ class NettyHttpServerInitializer(private val routeRegistry: RouteTable, private 
         val pipeline = ch.pipeline()
 
         sslContext?.let{
-            val alloc = ch.alloc()
-            configureH2(pipeline,alloc,it)
+//            val alloc = ch.alloc()
+//            configureH2(pipeline,alloc,it)
         } ?: {
             configureH1(pipeline)
         }()
@@ -40,9 +40,9 @@ class NettyHttpServerInitializer(private val routeRegistry: RouteTable, private 
             .addLast("request-handler", H1BrokerHandler(routeRegistry))
     }
 
-    private fun configureH2(pipeline: ChannelPipeline, alloc: ByteBufAllocator, sslContext: SslContext) {
-//        pipeline.addLast(sslContext.newHandler(alloc), AlpnHandler(Consumer {
+//    private fun configureH2(pipeline: ChannelPipeline, alloc: ByteBufAllocator, sslContext: SslContext) {
+//        pipeline.addLast(sslContext.newHandler(alloc), AlpnHandler({
 //            this.configureH1(it)
 //        }, routeRegistry, builder))
-    }
+//    }
 }

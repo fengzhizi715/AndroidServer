@@ -1,11 +1,17 @@
 package com.safframework.server.core.http
 
+import android.util.Log
 import com.safframework.server.core.http.cookie.HttpCookie
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.ByteBufAllocator
+import io.netty.buffer.CompositeByteBuf
 import io.netty.handler.codec.http.FullHttpRequest
 import io.netty.handler.codec.http.QueryStringDecoder
 import io.netty.handler.codec.http.cookie.Cookie
 import io.netty.handler.codec.http.cookie.ServerCookieDecoder
+import io.netty.handler.codec.http2.Http2Headers
 import io.netty.util.CharsetUtil
+import java.util.concurrent.ConcurrentHashMap
 
 
 /**
@@ -18,11 +24,13 @@ import io.netty.util.CharsetUtil
  */
 class HttpRequest(private val fullHttpRequest: FullHttpRequest) : Request {
 
+    private val body: ByteBuf
     private val params: MutableMap<String, String> = mutableMapOf()
-
     private val headers: MutableMap<String, String> = mutableMapOf()
 
     init {
+        body = fullHttpRequest.content()
+
         val list: List<Map.Entry<String, String>> = fullHttpRequest.headers().entries()
         for ((key, value) in list) {
             headers.put(key,value)
@@ -61,9 +69,19 @@ class HttpRequest(private val fullHttpRequest: FullHttpRequest) : Request {
 
     override fun param(name: String): String? = params[name]
 
-    override fun content(): String = fullHttpRequest.content().toString(CharsetUtil.UTF_8)
+    override fun content(): String = body.toString(CharsetUtil.UTF_8)
+
+    fun appendData(dataFrame: ByteBuf): Int {
+        // CompositeByteBuf releases data
+//        body.addComponent(true, dataFrame.retain())
+        return fullHttpRequest.content()?.readableBytes() ?: 0
+    }
 
     companion object {
         private val COOKIE = "cookie"
+
+//        fun fromH2Headers(alloc: ByteBufAllocator, headers: Http2Headers): HttpRequest {
+//            return RequestImpl(alloc, headers.path(), headers)
+//        }
     }
 }

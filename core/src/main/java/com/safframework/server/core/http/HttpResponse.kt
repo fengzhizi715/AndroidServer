@@ -9,12 +9,13 @@ import io.netty.buffer.Unpooled
 import io.netty.channel.Channel
 import io.netty.handler.codec.http.*
 import io.netty.handler.codec.http.cookie.ServerCookieEncoder
+import io.netty.handler.codec.http2.DefaultHttp2Headers
+import io.netty.handler.codec.http2.Http2Headers
 import io.netty.util.AsciiString
 import io.netty.util.CharsetUtil
 import java.io.IOException
 import java.io.OutputStream
 import java.io.UnsupportedEncodingException
-import java.nio.charset.Charset
 
 /**
  *
@@ -94,6 +95,8 @@ class HttpResponse(private val channel:Channel) : Response {
         return this
     }
 
+    fun getBody(): ByteBuf = body ?: Unpooled.EMPTY_BUFFER
+
     private fun buildBodyData(): ByteBuf = body ?: Unpooled.EMPTY_BUFFER
 
     fun buildFullH1Response(): FullHttpResponse {
@@ -105,10 +108,19 @@ class HttpResponse(private val channel:Channel) : Response {
         return response
     }
 
+    fun buildH2Headers(): Http2Headers {
+        var status = this.status
+        val http2Headers = DefaultHttp2Headers()
+        http2Headers.status(status?.codeAsText()?:HttpResponseStatus.OK.codeAsText())
+        http2Headers.set(HttpHeaderNames.SERVER, SERVER_VALUE)
+        headers.forEach { (name, value) -> http2Headers.set(name, value) }
+        http2Headers.setInt(HttpHeaderNames.CONTENT_LENGTH, buildBodyData().readableBytes())
+        return http2Headers
+    }
+
     companion object {
         private val SERVER_VALUE = AsciiString.of("monica") // 服务器的名称
         private val JSON = AsciiString.cached("application/json")
-        private val OCTET_STREAM = AsciiString.cached("application/json")
         private val TEXT_HTML = AsciiString.cached("text/html")
         private val TEXT_PLAIN = AsciiString.cached("text/plain")
         private val SET_COOKIE = AsciiString.cached("set-cookie")

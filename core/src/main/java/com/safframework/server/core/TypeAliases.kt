@@ -14,4 +14,6 @@ import com.safframework.server.core.http.controller.NotFoundController
  */
 typealias RequestHandler = (Request, Response) -> Response
 
+typealias Consumer<T> = (T) -> Unit
+
 typealias NotFound = NotFoundController

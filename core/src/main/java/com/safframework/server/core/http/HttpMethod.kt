@@ -21,9 +21,19 @@ enum class HttpMethod {
     PATCH;
 
     companion object {
+
         fun getMethod(method: io.netty.handler.codec.http.HttpMethod): HttpMethod {
             for (m in values()) {
                 if (m.name == method.name()) {
+                    return m
+                }
+            }
+            return GET
+        }
+
+        fun getMethod(method: String): HttpMethod {
+            for (m in values()) {
+                if (m.name == method) {
                     return m
                 }
             }

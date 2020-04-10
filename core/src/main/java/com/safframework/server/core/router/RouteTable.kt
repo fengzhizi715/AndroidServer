@@ -54,6 +54,10 @@ object RouteTable {
         ?: errorController
         ?: NotFound()
 
+    fun getHandler(method: HttpMethod, path: String): RequestHandler = getTable(method).fetch(path)
+        ?: errorController
+        ?: NotFound()
+
     fun isNotEmpty():Boolean = !isEmpty()
 
     fun isEmpty():Boolean = getTrie.getRoot().getChildren().isEmpty()
