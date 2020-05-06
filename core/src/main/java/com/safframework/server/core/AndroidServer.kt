@@ -130,7 +130,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
     class Builder private constructor() {
         var port: Int = 8080
-        var address: String = "127.0.0.1"
+        var address: String = "0.0.0.0"
         var useTls: Boolean = false
         var maxContentLength: Int = 524228
         var errorController:RequestHandler?=null
