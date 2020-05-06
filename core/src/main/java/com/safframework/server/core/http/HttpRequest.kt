@@ -28,12 +28,12 @@ class HttpRequest(private val fullHttpRequest: FullHttpRequest) : Request {
 
         val list: List<Map.Entry<String, String>> = fullHttpRequest.headers().entries()
         for ((key, value) in list) {
-            headers.put(key,value)
+            headers[key] = value
         }
 
         val decoder = QueryStringDecoder(fullHttpRequest.uri())
-        val param = decoder.parameters()
-        for ((key, value) in param) {
+        val map = decoder.parameters()
+        for ((key, value) in map) {
             params[key] = value[0]
         }
     }
