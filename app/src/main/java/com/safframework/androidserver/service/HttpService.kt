@@ -51,11 +51,11 @@ class HttpService : Service() {
                 response.setBodyText(requestBody)
             }
             .get("/downloadFile") { request, response: Response ->
-                val file = File("/sdcard/xxx.txt")
 
-                file.readBytes()?.let {
-                    response.sendFile(it,"test.txt","application/octet-stream")
-                }
+                val fileName = "xxx.txt"
+                File("/sdcard/$fileName").takeIf { it.exists() }?.let {
+                    response.sendFile(it.readBytes(),fileName,"application/octet-stream")
+                }?: response.setBodyText("no file found")
             }
             .start()
     }
