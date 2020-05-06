@@ -73,12 +73,10 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
                 bossGroup= NioEventLoopGroup(1)
                 workerGroup= NioEventLoopGroup(0)
                 try {
-                    val address = InetAddress.getByName(builder.address)
-                    val socketAddress = InetSocketAddress(address, builder.port)
                     bootstrap
                         .group(bossGroup, workerGroup)
                         .channel(NioServerSocketChannel::class.java)
-                        .localAddress(socketAddress)
+                        .localAddress(builder.address,builder.port)
                         .childOption(ChannelOption.SO_KEEPALIVE, true)
                         .childOption(ChannelOption.SO_REUSEADDR, true)
                         .childOption(ChannelOption.TCP_NODELAY, true)

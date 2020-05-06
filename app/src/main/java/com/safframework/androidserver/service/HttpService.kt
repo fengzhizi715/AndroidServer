@@ -30,6 +30,9 @@ class HttpService : Service() {
     private fun startServer() {
 
         androidServer = AndroidServer.Builder{
+            address{
+                "0.0.0.0"
+            }
             converter {
                 GsonConverter()
             }
