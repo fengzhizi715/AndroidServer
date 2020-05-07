@@ -9,6 +9,7 @@
 
 * 支持 Http、TCP、WebSocket 服务
 * 支持 Rest 风格的 API
+* 支持加载静态网页
 * Http 的路由表采用字典树(Tried Tree)实现
 * 日志隔离，开发者可以使用自己的日志库
 * core 模块只依赖 netty-all，不依赖其他第三方库
@@ -73,11 +74,14 @@ class HttpService : Service() {
                 response.setBodyText(requestBody)
             }
             .get("/downloadFile") { request, response: Response ->
-                val file = File("/sdcard/xxx.txt")
 
-                file.readBytes()?.let {
-                    response.sendFile(it,"test.txt","application/octet-stream")
-                }
+                val fileName = "xxx.txt"
+                File("/sdcard/$fileName").takeIf { it.exists() }?.let {
+                    response.sendFile(it.readBytes(),fileName,"application/octet-stream")
+                }?: response.setBodyText("no file found")
+            }
+            .get("/test") { _, response: Response ->
+                response.html(this,"test")
             }
             .start()
     }
