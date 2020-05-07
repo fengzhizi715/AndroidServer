@@ -3,7 +3,8 @@ package com.safframework.androidserver.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.safframework.androidserver.log.LogProxy
+import com.safframework.androidserver.log.LogImpl
+import com.safframework.log.L
 import com.safframework.server.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
 import com.safframework.server.core.http.Response
@@ -34,7 +35,7 @@ class HttpService : Service() {
                 GsonConverter()
             }
             logProxy {
-                LogProxy
+                LogImpl
             }
         }.build()
 
@@ -51,7 +52,6 @@ class HttpService : Service() {
                 response.setBodyText(requestBody)
             }
             .get("/downloadFile") { request, response: Response ->
-
                 val fileName = "xxx.txt"
                 File("/sdcard/$fileName").takeIf { it.exists() }?.let {
                     response.sendFile(it.readBytes(),fileName,"application/octet-stream")
@@ -59,6 +59,16 @@ class HttpService : Service() {
             }
             .get("/test") { _, response: Response ->
                 response.html(this,"test")
+            }
+            .fileUpload("/uploadFile") { request, response: Response -> // curl -v -F "file=@/Users/tony/1.png" 10.184.18.14:8080/uploadFile
+
+                val uploadFile = request.file("file")
+                val fileName = uploadFile.fileName
+                val f = File("/sdcard/$fileName")
+                val byteArray = uploadFile.content
+                f.writeBytes(byteArray)
+
+                response.setBodyText("upload success")
             }
             .start()
     }
