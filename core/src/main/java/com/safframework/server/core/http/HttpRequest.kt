@@ -1,6 +1,7 @@
 package com.safframework.server.core.http
 
 import com.safframework.server.core.http.cookie.HttpCookie
+import com.safframework.server.core.http.entity.UploadFile
 import io.netty.buffer.ByteBuf
 import io.netty.handler.codec.http.FullHttpRequest
 import io.netty.handler.codec.http.QueryStringDecoder
@@ -65,6 +66,8 @@ class HttpRequest(private val fullHttpRequest: FullHttpRequest) : Request {
     override fun param(name: String): String? = params[name]
 
     override fun content(): String = body.toString(CharsetUtil.UTF_8)
+
+    override fun file(name: String): UploadFile = ParamParser.parseFile(fullHttpRequest,name)
 
     fun appendData(dataFrame: ByteBuf): Int {
         // CompositeByteBuf releases data

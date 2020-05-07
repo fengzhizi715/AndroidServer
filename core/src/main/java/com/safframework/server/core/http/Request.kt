@@ -1,6 +1,7 @@
 package com.safframework.server.core.http
 
 import com.safframework.server.core.http.cookie.HttpCookie
+import com.safframework.server.core.http.entity.UploadFile
 
 /**
  *
@@ -27,4 +28,6 @@ interface Request {
     fun param(name: String): String?
 
     fun content(): String
+
+    fun file(name:String): UploadFile
 }

@@ -2,6 +2,7 @@ package com.safframework.server.core
 
 import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.server.core.http.HttpMethod
+import com.safframework.server.core.http.entity.FileParam
 
 /**
  *
@@ -38,6 +39,8 @@ interface Server {
     fun options(route: String, handler: RequestHandler): Server = request(HttpMethod.OPTIONS, route, handler)
 
     fun request(method: HttpMethod, route: String, handler: RequestHandler): Server
+
+    fun fileUpload(route: String, handler: RequestHandler): Server = request(HttpMethod.POST, route, handler)
 
     fun socket(webSocketPath:String?,listener: SocketListener<String>): Server
 }

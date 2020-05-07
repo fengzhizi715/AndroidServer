@@ -6,6 +6,7 @@ import com.safframework.server.core.handler.http.NettyHttpServerInitializer
 import com.safframework.server.core.handler.socket.NettySocketServerInitializer
 import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.server.core.http.HttpMethod
+import com.safframework.server.core.http.entity.FileParam
 import com.safframework.server.core.log.LogManager
 import com.safframework.server.core.log.LogProxy
 import com.safframework.server.core.router.RouteTable
@@ -101,7 +102,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         return this
     }
 
-    override fun socket(webSocketPath: String?, listener: SocketListener<String>): Server {
+    override fun socket(webSocketPath: String?, listener: SocketListener<String>): AndroidServer {
         this.webSocketPath = webSocketPath
         this.listener = listener
         return this

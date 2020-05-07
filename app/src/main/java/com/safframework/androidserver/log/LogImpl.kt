@@ -11,7 +11,7 @@ import com.safframework.server.core.log.LogProxy
  * @date: 2020-03-27 22:52
  * @version: V1.0 <描述当前版本功能>
  */
-object LogProxy : LogProxy {
+object LogImpl : LogProxy {
 
     override fun e(tag: String, msg: String) {
         L.e(tag,msg)
