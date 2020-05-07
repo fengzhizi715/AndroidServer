@@ -1,5 +1,6 @@
 package com.safframework.server.core.http
 
+import android.content.Context
 import com.safframework.server.core.converter.ConverterManager
 import com.safframework.server.core.http.cookie.HttpCookie
 import com.safframework.server.core.log.LogManager
@@ -93,6 +94,13 @@ class HttpResponse(private val channel:Channel) : Response {
     override fun addCookie(cookie: HttpCookie): Response {
         addHeader(SET_COOKIE, ServerCookieEncoder.LAX.encode(cookie.get()))
         return this
+    }
+
+    override fun html(context: Context, view: String): Response {
+
+        val inputStream = context.assets.open("web/$view.html")
+        val html = inputStream.bufferedReader().use{ it.readText() }
+        return setBodyHtml(html)
     }
 
     fun getBody(): ByteBuf = body ?: Unpooled.EMPTY_BUFFER

@@ -1,5 +1,6 @@
 package com.safframework.server.core.http
 
+import android.content.Context
 import com.safframework.server.core.http.cookie.HttpCookie
 import io.netty.handler.codec.http.HttpResponseStatus
 import io.netty.util.AsciiString
@@ -32,4 +33,6 @@ interface Response {
     fun addHeader(key: AsciiString, value: AsciiString): Response
 
     fun addCookie(cookie: HttpCookie): Response
+
+    fun html(context:Context, view: String): Response
 }
