@@ -10,6 +10,7 @@
 * 支持 Http、TCP、WebSocket 服务
 * 支持 Rest 风格的 API
 * 支持加载静态网页
+* 支持文件上传、下载
 * Http 的路由表采用字典树(Tried Tree)实现
 * 日志隔离，开发者可以使用自己的日志库
 * core 模块只依赖 netty-all，不依赖其他第三方库
