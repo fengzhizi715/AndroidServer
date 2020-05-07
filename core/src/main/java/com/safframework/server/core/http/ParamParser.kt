@@ -1,7 +1,6 @@
 package com.safframework.server.core.http
 
 import com.safframework.server.core.http.entity.UploadFile
-import com.safframework.server.core.log.LogManager
 import io.netty.handler.codec.http.FullHttpRequest
 import io.netty.handler.codec.http.HttpHeaderNames
 import io.netty.handler.codec.http.HttpHeaderValues
@@ -36,9 +35,9 @@ object ParamParser {
                 return uploadFile
             }
 
-            val paramlist = decoder.bodyHttpDatas
+            val params = decoder.bodyHttpDatas
 
-            for (param in paramlist) {
+            for (param in params) {
                 if (param.httpDataType == InterfaceHttpData.HttpDataType.FileUpload) {
                     val data = param as MemoryFileUpload
                     if (data.name == name) {
@@ -48,6 +47,8 @@ object ParamParser {
                     }
                 }
             }
+
+            decoder.destroy()
         }
         return uploadFile
     }
