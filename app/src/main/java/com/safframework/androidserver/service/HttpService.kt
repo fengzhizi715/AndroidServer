@@ -57,7 +57,7 @@ class HttpService : Service() {
                     response.sendFile(it.readBytes(),fileName,"application/octet-stream")
                 }?: response.setBodyText("no file found")
             }
-            .get("test") { _, response: Response ->
+            .get("/test") { _, response: Response ->
                 response.html(this,"test")
             }
             .start()

@@ -98,6 +98,15 @@ class HttpResponse(private val channel:Channel) : Response {
 
     override fun html(context: Context, view: String): Response {
 
+        val list = context.assets.list("web")
+        if (list==null || list.isEmpty()) {
+            return setBodyText("no $view.html file")
+        }
+
+        if (!list.contains("$view.html")) {
+            return setBodyText("no $view.html file")
+        }
+
         val inputStream = context.assets.open("web/$view.html")
         val html = inputStream.bufferedReader().use{ it.readText() }
         return setBodyHtml(html)
