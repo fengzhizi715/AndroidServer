@@ -1,6 +1,12 @@
 AndroidServer
 ===
 
+Version 1.1.1
+---
+2020-05-07
+* 修复 bug
+* response 增加 html() 用于加载静态网页
+
 Version 1.1.0
 ---
 2020-03-29
