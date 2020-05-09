@@ -215,10 +215,11 @@ Socket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行�
 
 # TODO List：
 
-* 支持 HttpSession
-* 支持 Https
-* 支持 HTTP/2
 * 自定义拦截器
+* 支持 Https
+* 支持 HttpSession
+* 支持 HTTP/2
+
 
 联系方式
 ===
