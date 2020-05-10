@@ -3,7 +3,7 @@ package com.safframework.androidserver.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.safframework.androidserver.log.LogImpl
+import com.safframework.androidserver.log.LogProxyImpl
 import com.safframework.server.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
 import com.safframework.server.core.handler.socket.SocketListener
@@ -39,7 +39,7 @@ class SocketService : Service() {
                 GsonConverter()
             }
             logProxy {
-                LogImpl
+                LogProxyImpl
             }
         }.build()
 
