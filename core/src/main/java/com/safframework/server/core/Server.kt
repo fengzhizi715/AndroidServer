@@ -2,7 +2,6 @@ package com.safframework.server.core
 
 import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.server.core.http.HttpMethod
-import com.safframework.server.core.http.entity.FileParam
 
 /**
  *

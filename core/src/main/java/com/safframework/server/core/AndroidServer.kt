@@ -6,7 +6,6 @@ import com.safframework.server.core.handler.http.NettyHttpServerInitializer
 import com.safframework.server.core.handler.socket.NettySocketServerInitializer
 import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.server.core.http.HttpMethod
-import com.safframework.server.core.http.entity.FileParam
 import com.safframework.server.core.log.LogManager
 import com.safframework.server.core.log.LogProxy
 import com.safframework.server.core.router.RouteTable
@@ -20,8 +19,6 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.ssl.SslContext
-import java.net.InetAddress
-import java.net.InetSocketAddress
 import java.net.UnknownHostException
 
 /**
