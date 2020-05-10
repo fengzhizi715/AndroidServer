@@ -6,7 +6,7 @@ import com.safframework.server.core.http.HttpMethod
 import com.safframework.server.core.http.Request
 
 /**
- *
+ * Http 的路由表，http 的方法使用字典树存储
  * @FileName:
  *          com.safframework.server.core.router.RouteTable
  * @author: Tony Shen

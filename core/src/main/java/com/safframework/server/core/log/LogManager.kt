@@ -1,7 +1,7 @@
 package com.safframework.server.core.log
 
 /**
- *
+ * AndroidServer 内部使用的日志操作
  * @FileName:
  *          com.safframework.server.core.log.LogManager
  * @author: Tony Shen

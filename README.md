@@ -219,6 +219,7 @@ Socket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行�
 * 支持 Https
 * 支持 HttpSession
 * 支持 HTTP/2
+* 完善 Android.Builder 类
 
 
 联系方式
