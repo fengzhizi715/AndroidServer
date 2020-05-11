@@ -4,7 +4,7 @@ import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.server.core.http.HttpMethod
 
 /**
- *
+ * Server 接口，提供 http 方法、socket 方法
  * @FileName:
  *          com.safframework.server.core.HttpServer
  * @author: Tony Shen

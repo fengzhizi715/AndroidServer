@@ -137,16 +137,21 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
         constructor(init: Builder.() -> Unit): this() { init() }
 
+        // 设置端口号
         fun port(init: Builder.() -> Int) = apply { port = init() }
 
+        // 设置地址
         fun address(init: Builder.() -> String) = apply { address = init() }
 
+        // 是否支持 https
         fun useTls(init: Builder.() -> Boolean) = apply { useTls = init() }
 
         fun maxContentLength(init: Builder.() -> Int) = apply { maxContentLength = init() }
 
+        // 设置 http 服务失败的自定义控制器
         fun errorController(init: Builder.() -> RequestHandler) = apply { errorController = init() }
 
+        // 设置日志的实现类，便于开发者使用自己的日志框架
         fun logProxy(init: Builder.()-> LogProxy) = apply { logProxy = init() }
 
         fun converter(init: Builder.()->Converter) = apply { converter = init() }
