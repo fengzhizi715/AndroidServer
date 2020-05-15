@@ -46,7 +46,7 @@ class HttpResponse(private val channel:Channel) : Response {
                 body = byteBuf
             }
         } catch (e: IOException) {
-            LogManager.e("error serializing json", e.message?:"")
+            LogManager.e(TAG, e.message?:"error serializing json")
         }
         return this
     }
@@ -136,6 +136,7 @@ class HttpResponse(private val channel:Channel) : Response {
     }
 
     companion object {
+        private val TAG = "HttpResponse"
         private val SERVER_VALUE = AsciiString.of("monica") // 服务器的名称
         private val JSON = AsciiString.cached("application/json")
         private val TEXT_HTML = AsciiString.cached("text/html")

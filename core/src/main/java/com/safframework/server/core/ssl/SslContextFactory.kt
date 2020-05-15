@@ -17,6 +17,8 @@ import javax.net.ssl.SSLException
  */
 object SslContextFactory {
 
+    private val TAG = "AndroidServer"
+
     fun createSslContext(): SslContext? {
          return try {
             val cert = SelfSignedCertificate()
@@ -36,10 +38,10 @@ object SslContextFactory {
                 )
                 .build()
         } catch (e: CertificateException) {
-            LogManager.e("error", e.message?:"")
+            LogManager.e(TAG, e.message?:"error")
             throw RuntimeException(e)
         } catch (e: SSLException) {
-             LogManager.e("error", e.message?:"")
+             LogManager.e(TAG, e.message?:"error")
             throw RuntimeException(e)
         }
     }

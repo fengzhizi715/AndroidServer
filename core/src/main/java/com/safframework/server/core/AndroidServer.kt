@@ -60,7 +60,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         } else if (routeRegistry.isEmpty() && listener!=null) {
             NettySocketServerInitializer(webSocketPath ?: "", listener!!)
         } else {
-            LogManager.e("error","channelInitializer is failed")
+            LogManager.e(TAG,"channelInitializer is failed")
             return
         }
 
@@ -121,7 +121,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
                 bossGroup.shutdownGracefully()
             }
         } catch (e: InterruptedException) {
-            LogManager.e("error", e.message?:"")
+            LogManager.e(TAG, e.message?:"error")
             throw RuntimeException(e)
         }
     }
@@ -157,5 +157,9 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         fun converter(init: Builder.()->Converter) = apply { converter = init() }
 
         fun build(): AndroidServer = AndroidServer(this)
+    }
+
+    companion object {
+        private val TAG = "AndroidServer"
     }
 }
