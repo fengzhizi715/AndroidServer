@@ -24,6 +24,7 @@ class H1BrokerHandler(private val routeRegistry: RouteTable): ChannelInboundHand
         if (msg is FullHttpRequest) {
 
             val request = HttpRequest(msg)
+
             val response = routeRegistry.getHandler(request)?.let {
                 val impl = it.invoke(request, HttpResponse(ctx.channel())) as HttpResponse
                 impl.buildFullH1Response()
