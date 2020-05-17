@@ -42,7 +42,7 @@ interface Server {
 
     fun request(method: HttpMethod, route: String, handler: RequestHandler): Server
 
-    fun filter(path:String, httpFilter: HttpFilter): Server
+    fun filter(route:String, httpFilter: HttpFilter): Server
 
     fun socket(webSocketPath:String?,listener: SocketListener<String>): Server
 }

@@ -14,7 +14,7 @@ import com.safframework.server.core.http.Response
 interface HttpFilter {
 
     @Throws(Exception::class)
-    fun before(request: Request, response: Response): Boolean
+    fun before(request: Request): Boolean
 
     @Throws(Exception::class)
     fun after(request: Request, response: Response)

@@ -26,7 +26,7 @@ object RouteTable {
     private val optionsTrie: PathTrie<RequestHandler> = PathTrie()
     private val patchTrie: PathTrie<RequestHandler> = PathTrie()
     private var errorController: RequestHandler?=null
-    private val filters:MutableMap<String,HttpFilter> = mutableMapOf()
+    private val filterTrie:PathTrie<HttpFilter> = PathTrie()
 
     fun registHandler(method: HttpMethod, url: String, handler: RequestHandler) {
         getTable(method).insert(url, handler)
@@ -60,11 +60,11 @@ object RouteTable {
         ?: errorController
         ?: NotFound()
 
-    fun addFilter(path:String,httpFilter: HttpFilter) {
-        filters[path] = httpFilter
+    fun addFilter(url:String,httpFilter: HttpFilter) {
+        filterTrie.insert(url,httpFilter)
     }
 
-    fun getFilters():MutableMap<String,HttpFilter> = filters
+    fun getFilter(request: Request):HttpFilter? = filterTrie.fetch(request.url(),request.params())
 
     fun isNotEmpty():Boolean = !isEmpty()
 

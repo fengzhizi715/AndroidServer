@@ -100,8 +100,8 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         return this
     }
 
-    override fun filter(path: String, httpFilter: HttpFilter): Server {
-        routeRegistry.addFilter(path,httpFilter)
+    override fun filter(route: String, httpFilter: HttpFilter): Server {
+        routeRegistry.addFilter(route,httpFilter)
         return this
     }
 
