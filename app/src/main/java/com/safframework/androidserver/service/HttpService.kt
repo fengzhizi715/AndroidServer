@@ -4,9 +4,12 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.safframework.androidserver.log.LogProxyImpl
+import com.safframework.log.L
 import com.safframework.server.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
+import com.safframework.server.core.http.Request
 import com.safframework.server.core.http.Response
+import com.safframework.server.core.http.filter.HttpFilter
 import java.io.File
 
 /**
@@ -69,6 +72,17 @@ class HttpService : Service() {
 
                 response.setBodyText("upload success")
             }
+            .filter("/sayHi/*", object : HttpFilter {
+                override fun before(request: Request): Boolean {
+                    L.d("before....")
+                    return true
+                }
+
+                override fun after(request: Request, response: Response) {
+                    L.d("after....")
+                }
+
+            })
             .start()
     }
 

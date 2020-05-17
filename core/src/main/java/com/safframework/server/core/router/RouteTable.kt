@@ -4,6 +4,7 @@ import com.safframework.server.core.NotFound
 import com.safframework.server.core.RequestHandler
 import com.safframework.server.core.http.HttpMethod
 import com.safframework.server.core.http.Request
+import com.safframework.server.core.http.filter.HttpFilter
 
 /**
  * Http 的路由表，http 的方法使用字典树存储
@@ -25,6 +26,7 @@ object RouteTable {
     private val optionsTrie: PathTrie<RequestHandler> = PathTrie()
     private val patchTrie: PathTrie<RequestHandler> = PathTrie()
     private var errorController: RequestHandler?=null
+    private val filterTrie:PathTrie<HttpFilter> = PathTrie()
 
     fun registHandler(method: HttpMethod, url: String, handler: RequestHandler) {
         getTable(method).insert(url, handler)
@@ -57,6 +59,12 @@ object RouteTable {
     fun getHandler(method: HttpMethod, path: String): RequestHandler = getTable(method).fetch(path)
         ?: errorController
         ?: NotFound()
+
+    fun addFilter(url:String,httpFilter: HttpFilter) {
+        filterTrie.insert(url,httpFilter)
+    }
+
+    fun getFilter(request: Request):HttpFilter? = filterTrie.fetch(request.url(),request.params())
 
     fun isNotEmpty():Boolean = !isEmpty()
 

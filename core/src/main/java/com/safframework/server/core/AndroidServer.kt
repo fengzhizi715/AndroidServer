@@ -6,6 +6,7 @@ import com.safframework.server.core.handler.http.NettyHttpServerInitializer
 import com.safframework.server.core.handler.socket.NettySocketServerInitializer
 import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.server.core.http.HttpMethod
+import com.safframework.server.core.http.filter.HttpFilter
 import com.safframework.server.core.log.LogManager
 import com.safframework.server.core.log.LogProxy
 import com.safframework.server.core.router.RouteTable
@@ -42,7 +43,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     private lateinit var channelInitializer: ChannelInitializer<SocketChannel>
 
     init {
-        builder.errorController?.let { routeRegistry.errorController(it) }
+        builder.errorController?.let { routeRegistry.errorController(it) } // 支持 RouteTable 中添加自定义的 errorController
 
         builder.logProxy?.let { LogManager.logProxy(it) }
 
@@ -96,6 +97,11 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
     override fun request(method: HttpMethod, route: String, handler: RequestHandler): AndroidServer {
         routeRegistry.registHandler(method,route,handler)
+        return this
+    }
+
+    override fun filter(route: String, httpFilter: HttpFilter): Server {
+        routeRegistry.addFilter(route,httpFilter)
         return this
     }
 

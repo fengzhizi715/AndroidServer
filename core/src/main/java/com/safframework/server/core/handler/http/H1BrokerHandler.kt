@@ -24,10 +24,24 @@ class H1BrokerHandler(private val routeRegistry: RouteTable): ChannelInboundHand
         if (msg is FullHttpRequest) {
 
             val request = HttpRequest(msg)
+
+            val filter = routeRegistry.getFilter(request)
+
+            val before = filter?.let {
+                it.before(request)
+            }?:true
+
+            if (!before) {
+                ctx.channel().writeAndFlush(HttpResponse.errorH1Response()).addListener(ChannelFutureListener.CLOSE)
+                return
+            }
+
             val response = routeRegistry.getHandler(request)?.let {
                 val impl = it.invoke(request, HttpResponse(ctx.channel())) as HttpResponse
+                filter?.after(request,impl)
                 impl.buildFullH1Response()
             }
+
             ctx.channel().writeAndFlush(response).addListener(ChannelFutureListener.CLOSE)
         } else {
             LogManager.w("H1BrokerHandler","unknown message type $msg")

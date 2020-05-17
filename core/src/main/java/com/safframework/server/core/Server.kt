@@ -2,6 +2,7 @@ package com.safframework.server.core
 
 import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.server.core.http.HttpMethod
+import com.safframework.server.core.http.filter.HttpFilter
 
 /**
  * Server 接口，提供 http 方法、socket 方法
@@ -37,9 +38,11 @@ interface Server {
 
     fun options(route: String, handler: RequestHandler): Server = request(HttpMethod.OPTIONS, route, handler)
 
+    fun fileUpload(route: String, handler: RequestHandler): Server = request(HttpMethod.POST, route, handler)
+
     fun request(method: HttpMethod, route: String, handler: RequestHandler): Server
 
-    fun fileUpload(route: String, handler: RequestHandler): Server = request(HttpMethod.POST, route, handler)
+    fun filter(route:String, httpFilter: HttpFilter): Server
 
     fun socket(webSocketPath:String?,listener: SocketListener<String>): Server
 }
