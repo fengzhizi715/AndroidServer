@@ -1,6 +1,11 @@
 AndroidServer
 ===
 
+Version 1.2.0
+---
+2020-05-17
+* 增加 HttpFilter
+
 Version 1.1.3
 ---
 2020-05-15
