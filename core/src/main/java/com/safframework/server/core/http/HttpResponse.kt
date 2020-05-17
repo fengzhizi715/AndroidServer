@@ -143,5 +143,18 @@ class HttpResponse(private val channel:Channel) : Response {
         private val TEXT_PLAIN = AsciiString.cached("text/plain")
         private val SET_COOKIE = AsciiString.cached("set-cookie")
         private val ATTACHMENT = "attachment;filename="
+
+        fun errorH1Response(): FullHttpResponse {
+
+            val bytes = "filter error".toByteArray(CharsetUtil.UTF_8)
+            val body = Unpooled.copiedBuffer(bytes)
+
+            val response = DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, body)
+            response.headers().set(HttpHeaderNames.SERVER, SERVER_VALUE)
+            response.headers().set(HttpHeaderNames.CONTENT_TYPE, TEXT_PLAIN)
+
+            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, body.readableBytes())
+            return response
+        }
     }
 }
