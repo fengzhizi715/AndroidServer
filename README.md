@@ -12,6 +12,7 @@
 * 支持加载静态网页
 * 支持文件上传、下载
 * Http 的路由表采用字典树(Tried Tree)实现
+* 支持全局的 HttpFilter
 * 日志隔离，开发者可以使用自己的日志库
 * core 模块只依赖 netty-all，不依赖其他第三方库
 
@@ -93,6 +94,17 @@ class HttpService : Service() {
 
                 response.setBodyText("upload success")
             }
+            .filter("/sayHi/*", object : HttpFilter {
+                override fun before(request: Request): Boolean {
+                    L.d("before....")
+                    return true
+                }
+
+                override fun after(request: Request, response: Response) {
+                    L.d("after....")
+                }
+
+            })
             .start()
     }
 
