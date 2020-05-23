@@ -8,11 +8,9 @@
 # Feature:
 
 * 支持 Http、TCP、WebSocket 服务
-* 支持 Rest 风格的 API
+* 支持 Rest 风格的 API、文件上传、下载
 * 支持加载静态网页
-* 支持文件上传、下载
-* Http 的路由表采用字典树(Tried Tree)实现
-* 支持全局的 HttpFilter
+* Http 的路由表、全局的 HttpFilter 均采用字典树(Tried Tree)实现
 * 日志隔离，开发者可以使用自己的日志库
 * core 模块只依赖 netty-all，不依赖其他第三方库
 
@@ -39,7 +37,7 @@ implementation 'com.safframework.server:android-server-converter-gson:<latest-ve
 
 ## Http 服务
 
-通过使用 Service 来提供一个 http 服务，它的 http 服务本身支持 rest 风格、支持跨域、cookies 等。
+通过使用 Service 来启动一个 http 服务，它的 http 服务本身支持 rest 风格、支持跨域、cookies 等。
 
 ```kotlin
 class HttpService : Service() {
@@ -166,7 +164,7 @@ curl -v -d 测试 127.0.0.1:8080/uploadLog
 
 ## Socket 服务
 
-Socket 服务，支持同一个端口同时提供 TCP/WebSocket 服务
+Socket 服务，AndroidServer 支持同一个端口同时提供 TCP/WebSocket 服务
 
 ```kotlin
 class SocketService : Service() {
