@@ -72,7 +72,7 @@ class HttpResponse(private val channel:Channel) : Response {
 
     override fun setBodyText(text: String): Response {
         val bytes = text.toByteArray(CharsetUtil.UTF_8)
-        body = Unpooled.copiedBuffer(bytes)
+        body = toByteBuf(bytes)
         addHeader(HttpHeaderNames.CONTENT_TYPE, TEXT_PLAIN)
         return this
     }
@@ -85,7 +85,7 @@ class HttpResponse(private val channel:Channel) : Response {
             e.printStackTrace()
         }
         addHeader(HttpHeaderNames.CONTENT_DISPOSITION,ATTACHMENT + name)
-        body = Unpooled.copiedBuffer(bytes)
+        body = toByteBuf(bytes)
         addHeader(HttpHeaderNames.CONTENT_TYPE, contentType)
         return this
     }
