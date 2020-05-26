@@ -119,6 +119,13 @@ class HttpResponse(private val channel:Channel) : Response {
         return setBodyHtml(html)
     }
 
+    override fun image(bytes: ByteArray): Response {
+        body = Unpooled.copiedBuffer(bytes)
+        addHeader(HttpHeaderNames.CONTENT_TYPE, IMAGE)
+
+        return this
+    }
+
     fun getBody(): ByteBuf = body ?: Unpooled.EMPTY_BUFFER
 
     private fun buildBodyData(): ByteBuf = body ?: Unpooled.EMPTY_BUFFER
@@ -144,11 +151,12 @@ class HttpResponse(private val channel:Channel) : Response {
 
     companion object {
         private val TAG = "HttpResponse"
-        private val SERVER_VALUE = AsciiString.of("monica") // 服务器的名称
+        private val SERVER_VALUE = AsciiString.cached("monica") // 服务器的名称
         private val JSON = AsciiString.cached("application/json")
         private val TEXT_HTML = AsciiString.cached("text/html")
         private val TEXT_PLAIN = AsciiString.cached("text/plain")
         private val SET_COOKIE = AsciiString.cached("set-cookie")
+        private val IMAGE = AsciiString.cached("image/png")
         private val ATTACHMENT = "attachment;filename="
 
         fun errorH1Response(): FullHttpResponse {

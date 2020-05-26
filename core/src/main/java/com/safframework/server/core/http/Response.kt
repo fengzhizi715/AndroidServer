@@ -39,4 +39,6 @@ interface Response {
     fun html(context:Context, view: String): Response
 
     fun html(context:Context, view: String, path: String): Response
+
+    fun image(bytes: ByteArray): Response
 }
