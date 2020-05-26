@@ -101,9 +101,11 @@ class HttpResponse(private val channel:Channel) : Response {
         return this
     }
 
-    override fun html(context: Context, view: String): Response {
+    override fun html(context: Context, view: String): Response = html(context,view,"web")
 
-        val list = context.assets.list("web")
+    override fun html(context: Context, view: String, path: String): Response {
+
+        val list = context.assets.list(path)
         if (list==null || list.isEmpty()) {
             return setBodyText("no $view.html file")
         }
@@ -112,7 +114,7 @@ class HttpResponse(private val channel:Channel) : Response {
             return setBodyText("no $view.html file")
         }
 
-        val inputStream = context.assets.open("web/$view.html")
+        val inputStream = context.assets.open("$path/$view.html")
         val html = inputStream.bufferedReader().use{ it.readText() }
         return setBodyHtml(html)
     }
