@@ -16,6 +16,8 @@ import io.netty.util.AsciiString
  */
 interface Response {
 
+    fun setStatus(code:Int): Response
+
     fun setStatus(status: HttpResponseStatus): Response
 
     fun setBodyJson(any: Any): Response

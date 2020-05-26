@@ -32,6 +32,11 @@ class HttpResponse(private val channel:Channel) : Response {
     private var body: ByteBuf? = null
     private var headers: MutableMap<AsciiString, AsciiString> = mutableMapOf()
 
+    override fun setStatus(code:Int): Response {
+        this.status = HttpResponseStatus.valueOf(code)
+        return this
+    }
+
     override fun setStatus(status: HttpResponseStatus): Response {
         this.status = status
         return this
