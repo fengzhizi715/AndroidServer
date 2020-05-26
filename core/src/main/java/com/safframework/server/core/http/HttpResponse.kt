@@ -4,6 +4,7 @@ import android.content.Context
 import com.safframework.server.core.converter.ConverterManager
 import com.safframework.server.core.http.cookie.HttpCookie
 import com.safframework.server.core.log.LogManager
+import com.safframework.server.core.utils.toByteBuf
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
@@ -58,7 +59,7 @@ class HttpResponse(private val channel:Channel) : Response {
 
     override fun setBodyHtml(html: String): Response {
         val bytes = html.toByteArray(CharsetUtil.UTF_8)
-        body = Unpooled.copiedBuffer(bytes)
+        body = toByteBuf(bytes)
         addHeader(HttpHeaderNames.CONTENT_TYPE, TEXT_HTML)
         return this
     }
