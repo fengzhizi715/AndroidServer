@@ -1,6 +1,11 @@
 AndroidServer
 ===
 
+Version 1.2.2
+---
+2020-05-27
+* 优化 Http 服务
+
 Version 1.2.1
 ---
 2020-05-27

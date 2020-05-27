@@ -85,7 +85,7 @@ class HttpResponse(private val channel:Channel) : Response {
             e.printStackTrace()
         }
         addHeader(HttpHeaderNames.CONTENT_DISPOSITION,ATTACHMENT + name)
-        body = toByteBuf(bytes)
+        body = Unpooled.copiedBuffer(bytes)
         addHeader(HttpHeaderNames.CONTENT_TYPE, contentType)
         return this
     }
