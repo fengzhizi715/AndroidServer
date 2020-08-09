@@ -10,7 +10,7 @@ ext {
     libraries = [
             netty                  : "4.1.48.Final",
             gson                   : "2.8.6",
-            saf_log                : "2.4.9"
+            saf_log                : "2.5.1"
     ]
 }
 
