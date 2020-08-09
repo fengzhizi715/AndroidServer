@@ -7,12 +7,11 @@ import org.json.JSONObject
 
 
 /**
- * 找不到路径时，默认的 RequestHandler
  * @FileName:
  *          com.safframework.server.core.http.controller.NotFoundController
  * @author: Tony Shen
  * @date: 2020-03-22 00:32
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0 找不到路径时，默认的 RequestHandler
  */
 class NotFoundController: RequestHandler {
 

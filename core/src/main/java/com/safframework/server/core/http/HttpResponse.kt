@@ -165,12 +165,12 @@ class HttpResponse(private val channel:Channel) : Response {
             val bytes = "filter error".toByteArray(CharsetUtil.UTF_8)
             val body = Unpooled.copiedBuffer(bytes)
 
-            val response = DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, body)
-            response.headers().set(HttpHeaderNames.SERVER, SERVER_VALUE)
-            response.headers().set(HttpHeaderNames.CONTENT_TYPE, TEXT_PLAIN)
+            return DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, body).apply {
 
-            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, body.readableBytes())
-            return response
+                headers().set(HttpHeaderNames.SERVER, SERVER_VALUE)
+                headers().set(HttpHeaderNames.CONTENT_TYPE, TEXT_PLAIN)
+                headers().set(HttpHeaderNames.CONTENT_LENGTH, body.readableBytes())
+            }
         }
     }
 }
