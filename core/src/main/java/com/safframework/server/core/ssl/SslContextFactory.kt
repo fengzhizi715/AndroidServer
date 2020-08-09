@@ -17,7 +17,7 @@ import javax.net.ssl.SSLException
  */
 object SslContextFactory {
 
-    private val TAG = "AndroidServer"
+    private val TAG = "SslContextFactory"
 
     fun createSslContext(): SslContext? {
          return try {

@@ -120,6 +120,24 @@ class HttpResponse(private val channel:Channel) : Response {
         return setBodyHtml(html)
     }
 
+    override fun json(context: Context, view: String): Response = json(context,view,"web")
+
+    override fun json(context: Context, view: String, path: String): Response {
+
+        val list = context.assets.list(path)
+        if (list==null || list.isEmpty()) {
+            return setBodyText("no $view.json file")
+        }
+
+        if (!list.contains("$view.json")) {
+            return setBodyText("no $view.json file")
+        }
+
+        val inputStream = context.assets.open("$path/$view.json")
+        val json = inputStream.bufferedReader().use{ it.readText() }
+        return setBodyData(JSON.toString(),json.toByteArray())
+    }
+
     override fun image(bytes: ByteArray): Response {
         body = Unpooled.copiedBuffer(bytes)
         addHeader(HttpHeaderNames.CONTENT_TYPE, IMAGE)

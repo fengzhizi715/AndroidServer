@@ -46,5 +46,15 @@ interface Response {
      */
     fun html(context:Context, view: String, path: String): Response
 
+    /**
+     * 加载本地的 json 文件，便于调试时使用
+     */
+    fun json(context:Context, view: String): Response
+
+    /**
+     * 加载本地的 json 文件，便于调试时使用
+     */
+    fun json(context:Context, view: String, path: String): Response
+
     fun image(bytes: ByteArray): Response
 }
