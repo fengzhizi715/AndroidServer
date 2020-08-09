@@ -36,8 +36,14 @@ interface Response {
 
     fun addCookie(cookie: HttpCookie): Response
 
+    /**
+     * 加载本地的 html 文件
+     */
     fun html(context:Context, view: String): Response
 
+    /**
+     * 加载本地的 html 文件
+     */
     fun html(context:Context, view: String, path: String): Response
 
     fun image(bytes: ByteArray): Response
