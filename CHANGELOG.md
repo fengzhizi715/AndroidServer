@@ -1,6 +1,11 @@
 AndroidServer
 ===
 
+Version 1.2.3
+---
+2020-08-11
+* Response 新增 json()
+
 Version 1.2.2
 ---
 2020-05-27
