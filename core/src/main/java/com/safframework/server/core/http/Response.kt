@@ -12,7 +12,7 @@ import io.netty.util.AsciiString
  *          com.safframework.server.core.http.Response
  * @author: Tony Shen
  * @date: 2020-03-21 13:09
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0 Response 请求
  */
 interface Response {
 

@@ -9,7 +9,7 @@ import com.safframework.server.core.http.entity.UploadFile
  *          com.safframework.server.core.http.Request
  * @author: Tony Shen
  * @date: 2020-03-21 12:31
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0 Request 请求
  */
 interface Request {
 

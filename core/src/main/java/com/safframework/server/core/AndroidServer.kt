@@ -28,7 +28,7 @@ import java.net.UnknownHostException
  *          com.safframework.server.core.AndroidServer
  * @author: Tony Shen
  * @date: 2020-03-21 17:54
- * @version: V1.0 AndroidServer 的实现类
+ * @version: V1.0 Server 的实现类
  */
 class AndroidServer private constructor(private val builder: Builder) : Server {
 
@@ -144,12 +144,12 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         constructor(init: Builder.() -> Unit): this() { init() }
 
         /**
-         * 设置端口号
+         * 设置服务的端口号
          */
         fun port(init: Builder.() -> Int) = apply { port = init() }
 
         /**
-         * 设置地址
+         * 设置服务的地址
          */
         fun address(init: Builder.() -> String) = apply { address = init() }
 
@@ -161,7 +161,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         fun maxContentLength(init: Builder.() -> Int) = apply { maxContentLength = init() }
 
         /**
-         * 设置 http 服务失败的自定义控制器
+         * 设置 http 服务失败的自定义控制器，只适用于 http 服务
          */
         fun errorController(init: Builder.() -> RequestHandler) = apply { errorController = init() }
 
@@ -170,6 +170,9 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
          */
         fun logProxy(init: Builder.()-> LogProxy) = apply { logProxy = init() }
 
+        /**
+         * 设置 converter 类
+         */
         fun converter(init: Builder.()->Converter) = apply { converter = init() }
 
         fun build(): AndroidServer = AndroidServer(this)
