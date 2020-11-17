@@ -17,18 +17,18 @@ object LogManager {
     }
 
     fun e(tag:String , msg:String) {
-        logProxy?.e(tag,msg)
+        logProxy?.e(tag,msg)?: println(msg)
     }
 
     fun w(tag:String , msg:String) {
-        logProxy?.w(tag,msg)
+        logProxy?.w(tag,msg)?: println(msg)
     }
 
     fun i(tag:String , msg:String) {
-        logProxy?.i(tag,msg)
+        logProxy?.i(tag,msg)?: println(msg)
     }
 
     fun d(tag:String , msg:String) {
-        logProxy?.d(tag,msg)
+        logProxy?.d(tag,msg)?: println(msg)
     }
 }

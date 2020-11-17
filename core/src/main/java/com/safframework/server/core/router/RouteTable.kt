@@ -28,6 +28,9 @@ object RouteTable {
     private var errorController: RequestHandler?=null
     private val filterTrie:PathTrie<HttpFilter> = PathTrie()
 
+    /**
+     * 注册 RequestHandler 到路由表
+     */
     fun registHandler(method: HttpMethod, url: String, handler: RequestHandler) {
         getTable(method).insert(url, handler)
     }
