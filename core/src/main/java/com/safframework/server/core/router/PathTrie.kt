@@ -1,12 +1,12 @@
 package com.safframework.server.core.router
 
 /**
- * 字典树
+ *
  * @FileName:
  *          com.safframework.server.core.router.PathTrie
  * @author: Tony Shen
  * @date: 2020-03-21 21:34
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0 字典树
  */
 class PathTrie<T> @JvmOverloads constructor(
     separator: String = "/",
@@ -48,7 +48,7 @@ class PathTrie<T> @JvmOverloads constructor(
 
     fun insert(key: String, value: T) {
         val strings = split(key)
-        if (strings.size == 0) {
+        if (strings.isEmpty()) {
             this.root.value = value
             return
         }
@@ -61,7 +61,7 @@ class PathTrie<T> @JvmOverloads constructor(
         params: MutableMap<String, String>? = null
     ): T? {
         val strings = split(key)
-        return if (strings.size == 0) {
+        return if (strings.isEmpty()) {
             root.value
         } else this.root.fetch(strings, 0, params)
     }
