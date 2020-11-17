@@ -44,7 +44,7 @@ class SocketService : Service() {
         }.build()
 
         androidServer
-            .socket("/ws", object: SocketListener<String> {
+            .socketAndWS("/ws", object: SocketListener<String> {
                 override fun onMessageResponseServer(msg: String, ChannelId: String) {
                     LogManager.d("SocketService","msg = $msg")
                 }

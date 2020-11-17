@@ -66,13 +66,15 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
     override fun start() {
 
-        channelInitializer = if (routeRegistry.isNotEmpty() && listener == null) {
-            NettyHttpServerInitializer(routeRegistry, sslContext, builder)
-        } else if (routeRegistry.isEmpty() && listener!=null) {
-            NettySocketServerInitializer(webSocketPath ?: "", listener!!)
-        } else {
-            LogManager.e(TAG,"channelInitializer is failed")
-            return
+        if (!isChannelInitializerInitialized()) {
+            channelInitializer = if (routeRegistry.isNotEmpty() && listener == null) {
+                NettyHttpServerInitializer(routeRegistry, sslContext, builder)
+            } else if (routeRegistry.isEmpty() && listener != null) {
+                NettySocketServerInitializer(webSocketPath ?: "", listener!!)
+            } else {
+                LogManager.e(TAG, "channelInitializer is failed")
+                return
+            }
         }
 
         object : Thread() {
@@ -115,7 +117,12 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         return this
     }
 
-    override fun socket(webSocketPath: String?, listener: SocketListener<String>): AndroidServer {
+    override fun socket(channelInitializer: ChannelInitializer<SocketChannel>): Server {
+        this.channelInitializer = channelInitializer
+        return this
+    }
+
+    override fun socketAndWS(webSocketPath: String?, listener: SocketListener<String>): AndroidServer {
         this.webSocketPath = webSocketPath
         this.listener = listener
         return this
@@ -124,6 +131,8 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     private fun isWorkerGroupInitialized() = ::workerGroup.isInitialized
 
     private fun isBossGroupInitialized() = ::workerGroup.isInitialized
+
+    private fun isChannelInitializerInitialized() = ::channelInitializer.isInitialized
 
     override fun close() {
         try {

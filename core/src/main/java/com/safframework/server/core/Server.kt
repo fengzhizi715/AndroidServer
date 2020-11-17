@@ -3,6 +3,8 @@ package com.safframework.server.core
 import com.safframework.server.core.handler.socket.SocketListener
 import com.safframework.server.core.http.HttpMethod
 import com.safframework.server.core.http.filter.HttpFilter
+import io.netty.channel.ChannelInitializer
+import io.netty.channel.socket.SocketChannel
 
 /**
  * Server 接口，提供 http 方法、socket 方法
@@ -20,6 +22,7 @@ interface Server {
     @Throws(Exception::class)
     fun close()
 
+    /*** http 相关的方法 start ***/
     fun get(route: String, handler: RequestHandler): Server = request(HttpMethod.GET, route, handler)
 
     fun post(route: String, handler: RequestHandler): Server = request(HttpMethod.POST, route, handler)
@@ -43,6 +46,9 @@ interface Server {
     fun request(method: HttpMethod, route: String, handler: RequestHandler): Server
 
     fun filter(route:String, httpFilter: HttpFilter): Server
+    /*** http 相关的方法 end ***/
 
-    fun socket(webSocketPath:String?,listener: SocketListener<String>): Server
+    fun socket(channelInitializer: ChannelInitializer<SocketChannel>): Server
+
+    fun socketAndWS(webSocketPath:String?,listener: SocketListener<String>): Server
 }
