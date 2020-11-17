@@ -10,7 +10,7 @@ import com.safframework.server.core.http.controller.NotFoundController
  *          com.safframework.androidserver.core.TypeAliases
  * @author: Tony Shen
  * @date: 2020-03-21 17:23
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0  别名的集合
  */
 typealias RequestHandler = (Request, Response) -> Response
 

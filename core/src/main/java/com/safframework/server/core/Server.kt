@@ -10,7 +10,7 @@ import com.safframework.server.core.http.filter.HttpFilter
  *          com.safframework.server.core.HttpServer
  * @author: Tony Shen
  * @date: 2020-03-21 15:42
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0  AndroidServer 的接口
  */
 interface Server {
 

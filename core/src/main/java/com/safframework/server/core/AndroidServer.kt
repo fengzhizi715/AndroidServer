@@ -28,7 +28,7 @@ import java.net.UnknownHostException
  *          com.safframework.server.core.AndroidServer
  * @author: Tony Shen
  * @date: 2020-03-21 17:54
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0 AndroidServer 的实现类
  */
 class AndroidServer private constructor(private val builder: Builder) : Server {
 
