@@ -37,6 +37,8 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     private var sslContext: SslContext? = null
     private var webSocketPath: String?=null
     private var listener: SocketListener<String>?=null
+    private var bossGroupThread:Int = 0
+    private var workerGroupThread:Int = 0
 
     private lateinit var bossGroup: EventLoopGroup
     private lateinit var workerGroup: EventLoopGroup
@@ -51,6 +53,14 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
         if (builder.useTls) {
             sslContext = SslContextFactory.createSslContext()
+        }
+
+        builder.bossGroupThread?.let {
+            bossGroupThread = it
+        }
+
+        builder.workerGroupThread?.let {
+            workerGroupThread = it
         }
     }
 
@@ -69,8 +79,8 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
             override fun run() {
 
                 val bootstrap = ServerBootstrap()
-                bossGroup= NioEventLoopGroup(1)
-                workerGroup= NioEventLoopGroup(0)
+                bossGroup= NioEventLoopGroup(bossGroupThread)
+                workerGroup= NioEventLoopGroup(workerGroupThread)
                 try {
                     bootstrap
                         .group(bossGroup, workerGroup)
@@ -140,6 +150,8 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         var errorController:RequestHandler?=null
         var logProxy: LogProxy?=null
         var converter: Converter?=null
+        var bossGroupThread:Int = 0
+        var workerGroupThread:Int = 0
 
         constructor(init: Builder.() -> Unit): this() { init() }
 
@@ -174,6 +186,10 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
          * 设置 converter 类
          */
         fun converter(init: Builder.()->Converter) = apply { converter = init() }
+
+        fun bossGroupThread(init: Builder.() -> Int) = apply { bossGroupThread = init() }
+
+        fun workerGroupThread(init: Builder.() -> Int) = apply { workerGroupThread = init() }
 
         fun build(): AndroidServer = AndroidServer(this)
     }

@@ -236,7 +236,6 @@ Socket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行�
 
 * 重构，对 Socket 服务端的优化
 * Android 上性能的优化
-* 完善 Android.Builder 类
 * 支持 HttpSession
 * 支持 Https
 * 支持 HTTP/2
