@@ -1,6 +1,11 @@
 AndroidServer
 ===
 
+Version 1.2.6
+---
+2020-11-18
+* 修复 socket() 的 bug
+
 Version 1.2.5
 ---
 2020-11-18

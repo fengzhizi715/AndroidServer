@@ -42,7 +42,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
     private lateinit var bossGroup: EventLoopGroup
     private lateinit var workerGroup: EventLoopGroup
-    private lateinit var channelInitializer: ChannelInitializer<SocketChannel>
+    private lateinit var channelInitializer: ChannelInitializer<out SocketChannel>
 
     init {
         builder.errorController?.let { routeRegistry.errorController(it) } // 支持 RouteTable 中添加自定义的 errorController
@@ -117,7 +117,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         return this
     }
 
-    override fun socket(channelInitializer: ChannelInitializer<SocketChannel>): Server {
+    override fun socket(channelInitializer: ChannelInitializer<out SocketChannel>): Server {
         this.channelInitializer = channelInitializer
         return this
     }

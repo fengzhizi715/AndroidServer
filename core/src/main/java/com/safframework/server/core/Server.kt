@@ -48,7 +48,7 @@ interface Server {
     fun filter(route:String, httpFilter: HttpFilter): Server
     /*** http 相关的方法 end ***/
 
-    fun socket(channelInitializer: ChannelInitializer<SocketChannel>): Server
+    fun socket(channelInitializer: ChannelInitializer<out SocketChannel>): Server
 
     fun socketAndWS(webSocketPath:String?,listener: SocketListener<String>): Server
 }
