@@ -1,6 +1,11 @@
 AndroidServer
 ===
 
+Version 1.2.5
+---
+2020-11-18
+* 增加 socket()
+
 Version 1.2.4
 ---
 2020-11-17
