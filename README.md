@@ -234,7 +234,8 @@ Socket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行�
 
 # TODO List：
 
-* 重构，对 Socket 服务端的优化
+* 优化 WebSocket 的支持
+* 优化 Socket 的支持
 * Android 上性能的优化
 * 支持 HttpSession
 * 支持 Https
