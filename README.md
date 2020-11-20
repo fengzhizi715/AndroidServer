@@ -3,7 +3,7 @@
 [![@Tony沈哲 on weibo](https://img.shields.io/badge/weibo-%40Tony%E6%B2%88%E5%93%B2-blue.svg)](http://www.weibo.com/fengzhizi715)
 [![License](https://img.shields.io/badge/license-Apache%202-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-基于 Kotlin + Netty 开发，为 Android 系统提供 Web Server 的功能，包括 Http、TCP、WebSocket
+基于 Kotlin + Netty 开发，为 Android App 提供 Web Server 的功能，包括 Http、TCP、WebSocket
 
 # Feature:
 
@@ -35,7 +35,7 @@ implementation 'com.safframework.server:android-server-converter-gson:<latest-ve
 
 # Usage:
 
-## Http 服务
+## 搭建 Http 服务
 
 通过使用 Service 来启动一个 http 服务，它的 http 服务本身支持 rest 风格、支持跨域、cookies 等。
 
@@ -162,7 +162,7 @@ curl -v -d 测试 127.0.0.1:8080/uploadLog
 测试
 ```
 
-## Socket 服务
+## 搭建 Socket 服务
 
 Socket 服务，AndroidServer 支持同一个端口同时提供 TCP/WebSocket 服务
 
