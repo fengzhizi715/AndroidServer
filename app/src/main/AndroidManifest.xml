@@ -26,6 +26,9 @@
         <service
             android:name="com.safframework.androidserver.service.SocketService"
             android:exported="true" />
+        <service
+            android:name="com.safframework.androidserver.service.WebSocketService"
+            android:exported="true" />
 
     </application>
 
