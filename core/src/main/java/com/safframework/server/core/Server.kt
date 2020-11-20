@@ -50,7 +50,7 @@ interface Server {
 
     fun socket(channelInitializer: ChannelInitializer<out SocketChannel>): Server
 
-    fun websocket(webSocketPath:String): Server
+    fun websocket(webSocketPath:String,listener: SocketListener<String>): Server
 
     fun socketAndWS(webSocketPath:String?,listener: SocketListener<String>): Server
 }

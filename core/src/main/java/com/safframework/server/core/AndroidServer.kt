@@ -133,8 +133,9 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         return this
     }
 
-    override fun websocket(webSocketPath: String): Server {
+    override fun websocket(webSocketPath: String, listener: SocketListener<String>): Server {
         this.webSocketPath = webSocketPath
+        this.listener = listener
         this.wsOnly = true
         return this
     }
