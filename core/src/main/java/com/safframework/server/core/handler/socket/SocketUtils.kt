@@ -13,6 +13,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame
  * @date: 2020-11-20 11:54
  * @version: V1.0 <描述当前版本功能>
  */
+private val TAG = "SocketUtils"
 
 /**
  * 异步发送TCP消息
@@ -26,7 +27,7 @@ fun sendMsgToClient(data: String, channel:Channel?, listener: ChannelFutureListe
 
     flag
 } ?: run {
-    LogManager.d("SocketUtils","channel is null")
+    LogManager.d(TAG,"channel is null")
     false
 }
 
@@ -38,9 +39,10 @@ fun sendMsgToClient(data: String, channel:Channel?) = channel?.run {
     if (this.isActive) {
         return this.writeAndFlush(data + System.getProperty("line.separator")).awaitUninterruptibly().isSuccess
     }
+
     false
 } ?: run {
-    LogManager.d("SocketUtils","channel is null")
+    LogManager.d(TAG,"channel is null")
     false
 }
 
@@ -57,11 +59,13 @@ fun sendMsgToWS(data: String, channel:Channel?, listener: ChannelFutureListener)
 
     flag
 } ?: run {
-    LogManager.d("SocketUtils","channel is null")
+    LogManager.d(TAG,"channel is null")
     false
 }
 
-// 同步发送WebSocket消息
+/**
+ * 同步发送 WebSocket 消息
+ */
 fun sendMsgToWS(data: String,channel:Channel?) = channel?.run {
 
     if (this.isActive) {
@@ -70,6 +74,6 @@ fun sendMsgToWS(data: String,channel:Channel?) = channel?.run {
 
     false
 } ?: run {
-    LogManager.d("SocketUtils","channel is null")
+    LogManager.d(TAG,"channel is null")
     false
 }
