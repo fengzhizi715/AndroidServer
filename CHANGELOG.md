@@ -1,6 +1,11 @@
 AndroidServer
 ===
 
+Version 1.2.7
+---
+2020-11-21
+* 增加 websocket()
+
 Version 1.2.6
 ---
 2020-11-18
