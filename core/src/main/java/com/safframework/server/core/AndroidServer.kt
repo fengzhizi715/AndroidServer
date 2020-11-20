@@ -5,6 +5,7 @@ import com.safframework.server.core.converter.ConverterManager
 import com.safframework.server.core.handler.http.NettyHttpServerInitializer
 import com.safframework.server.core.handler.socket.NettySocketServerInitializer
 import com.safframework.server.core.handler.socket.SocketListener
+import com.safframework.server.core.handler.websocket.NettyWebSocketServerInitializer
 import com.safframework.server.core.http.HttpMethod
 import com.safframework.server.core.http.filter.HttpFilter
 import com.safframework.server.core.log.LogManager
@@ -39,6 +40,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     private var listener: SocketListener<String>?=null
     private var bossGroupThread:Int = 0
     private var workerGroupThread:Int = 0
+    private var wsOnly = false
 
     private lateinit var bossGroup: EventLoopGroup
     private lateinit var workerGroup: EventLoopGroup
@@ -65,15 +67,24 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
     }
 
     override fun start() {
-
+        // 如果 channelInitializer 已经赋值，则使用该值。 否则 AndroidServer 会自行判断提供哪种服务。
+        // 一个 AndroidServer 实例只能提供一种服务，比如提供 Http 服务、提供 TCP 服务、提供 WebSocket 服务或同时提供 TCP/WebSocket 服务
         if (!isChannelInitializerInitialized()) {
-            channelInitializer = if (routeRegistry.isNotEmpty() && listener == null) {
-                NettyHttpServerInitializer(routeRegistry, sslContext, builder)
-            } else if (routeRegistry.isEmpty() && listener != null) {
-                NettySocketServerInitializer(webSocketPath ?: "", listener!!)
-            } else {
-                LogManager.e(TAG, "channelInitializer is failed")
-                return
+            channelInitializer = when {
+                routeRegistry.isNotEmpty() -> NettyHttpServerInitializer(routeRegistry, sslContext, builder)
+
+                routeRegistry.isEmpty() -> {
+                    if (wsOnly) {
+                        NettyWebSocketServerInitializer(webSocketPath ?: "/ws")
+                    } else {
+                        NettySocketServerInitializer(webSocketPath ?: "/ws", listener!!)
+                    }
+                }
+
+                else -> {
+                    LogManager.e(TAG, "channelInitializer is failed")
+                    return
+                }
             }
         }
 
@@ -119,6 +130,12 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
 
     override fun socket(channelInitializer: ChannelInitializer<out SocketChannel>): Server {
         this.channelInitializer = channelInitializer
+        return this
+    }
+
+    override fun websocket(webSocketPath: String): Server {
+        this.webSocketPath = webSocketPath
+        this.wsOnly = true
         return this
     }
 
@@ -196,8 +213,14 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
          */
         fun converter(init: Builder.()->Converter) = apply { converter = init() }
 
+        /**
+         * 设置 Android Server 的 bossGroup 线程数
+         */
         fun bossGroupThread(init: Builder.() -> Int) = apply { bossGroupThread = init() }
 
+        /**
+         * 设置 Android Server 的 workerGroupThread 线程数
+         */
         fun workerGroupThread(init: Builder.() -> Int) = apply { workerGroupThread = init() }
 
         fun build(): AndroidServer = AndroidServer(this)

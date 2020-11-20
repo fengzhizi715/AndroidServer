@@ -15,7 +15,7 @@ import io.netty.handler.stream.ChunkedWriteHandler
  * @date: 2020-11-19 15:23
  * @version: V1.0 <描述当前版本功能>
  */
-class NettyWebSocketServerInitializer : ChannelInitializer<SocketChannel>() {
+class NettyWebSocketServerInitializer(private val webSocketPath:String) : ChannelInitializer<SocketChannel>() {
 
     override fun initChannel(ch: SocketChannel) {
 
