@@ -73,9 +73,9 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
             channelInitializer = when {
                 routeRegistry.isNotEmpty() -> NettyHttpServerInitializer(routeRegistry, sslContext, builder)
 
-                routeRegistry.isEmpty() -> {
+                routeRegistry.isEmpty() && listener!=null -> {
                     if (wsOnly) {
-                        NettyWebSocketServerInitializer(webSocketPath ?: "/ws")
+                        NettyWebSocketServerInitializer(webSocketPath ?: "/ws", listener!!)
                     } else {
                         NettySocketServerInitializer(webSocketPath ?: "/ws", listener!!)
                     }
