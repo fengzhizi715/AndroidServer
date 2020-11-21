@@ -3,7 +3,7 @@
 [![@Tony沈哲 on weibo](https://img.shields.io/badge/weibo-%40Tony%E6%B2%88%E5%93%B2-blue.svg)](http://www.weibo.com/fengzhizi715)
 [![License](https://img.shields.io/badge/license-Apache%202-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-基于 Kotlin + Netty 开发，为 Android App 提供 Web Server 的功能，包括 Http、TCP、WebSocket
+基于 Kotlin + Netty 开发，为 Android App 提供 Server 的功能，包括 Http、TCP、WebSocket 服务
 
 # Feature:
 
@@ -163,7 +163,9 @@ fun startWebSocketServer(androidServer:AndroidServer) {
 
 ## 搭建 Socket 服务
 
-AndroidServer 支持提供 Socket 服务，也提供一个端口同时支持 Socket/WebSocket 服务
+AndroidServer 支持单独提供 Socket 服务，也支持一个端口同时提供 Socket/WebSocket 服务。
+
+使用 androidServer 的 socketAndWS()，同时提供 Socket/WebSocket 服务：
 
 ```kotlin
 fun startSocketServer(androidServer:AndroidServer) {
@@ -189,6 +191,8 @@ fun startSocketServer(androidServer:AndroidServer) {
         .start()
 }
 ```
+
+androidServer 的 socket() 单独提供 Socket 服务。
 
 # TODO List：
 
