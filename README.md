@@ -37,87 +37,54 @@ implementation 'com.safframework.server:android-server-converter-gson:<latest-ve
 
 ## 搭建 Http 服务
 
-通过使用 Service 来启动一个 http 服务，它的 http 服务本身支持 rest 风格、支持跨域、cookies 等。
+AndroidServer 的 http 服务本身支持 rest 风格、支持跨域、cookies 等。
 
 ```kotlin
-class HttpService : Service() {
+fun startHttpServer(context:Context, androidServer:AndroidServer) {
 
-    private lateinit var androidServer: AndroidServer
+    androidServer
+        .get("/hello") { _, response: Response ->
+            response.setBodyText("hello world")
+        }
+        .get("/sayHi/{name}") { request, response: Response ->
+            val name = request.param("name")
+            response.setBodyText("hi $name!")
+        }
+        .post("/uploadLog") { request, response: Response ->
+            val requestBody = request.content()
+            response.setBodyText(requestBody)
+        }
+        .get("/downloadFile") { request, response: Response ->
+            val fileName = "xxx.txt"
+            File("/sdcard/$fileName").takeIf { it.exists() }?.let {
+                response.sendFile(it.readBytes(),fileName,"application/octet-stream")
+            }?: response.setBodyText("no file found")
+        }
+        .get("/test") { _, response: Response ->
+            response.html(context,"test")
+        }
+        .fileUpload("/uploadFile") { request, response: Response -> // curl -v -F "file=@/Users/tony/1.png" 10.184.18.14:8080/uploadFile
 
-    override fun onCreate() {
-        super.onCreate()
-        startServer()
-    }
+            val uploadFile = request.file("file")
+            val fileName = uploadFile.fileName
+            val f = File("/sdcard/$fileName")
+            val byteArray = uploadFile.content
+            f.writeBytes(byteArray)
 
-    // 启动 Http 服务端
-    private fun startServer() {
-
-        androidServer = AndroidServer.Builder{
-            converter {
-                GsonConverter()
+            response.setBodyText("upload success")
+        }
+        .filter("/sayHi/*", object : HttpFilter {
+            override fun before(request: Request): Boolean {
+                LogManager.d("HttpService","before....")
+                return true
             }
-            logProxy {
-                LogProxyImpl
+
+            override fun after(request: Request, response: Response) {
+                LogManager.d("HttpService","after....")
             }
-        }.build()
 
-        androidServer
-            .get("/hello") { _, response: Response ->
-                response.setBodyText("hello world")
-            }
-            .get("/sayHi/{name}") { request, response: Response ->
-                val name = request.param("name")
-                response.setBodyText("hi $name!")
-            }
-            .post("/uploadLog") { request, response: Response ->
-                val requestBody = request.content()
-                response.setBodyText(requestBody)
-            }
-            .get("/downloadFile") { request, response: Response ->
-                val fileName = "xxx.txt"
-                File("/sdcard/$fileName").takeIf { it.exists() }?.let {
-                    response.sendFile(it.readBytes(),fileName,"application/octet-stream")
-                }?: response.setBodyText("no file found")
-            }
-            .get("/test") { _, response: Response ->
-                response.html(this,"test")
-            }
-            .fileUpload("/uploadFile") { request, response: Response -> // curl -v -F "file=@/Users/tony/1.png" 10.184.18.14:8080/uploadFile
-
-                val uploadFile = request.file("file")
-                val fileName = uploadFile.fileName
-                val f = File("/sdcard/$fileName")
-                val byteArray = uploadFile.content
-                f.writeBytes(byteArray)
-
-                response.setBodyText("upload success")
-            }
-            .filter("/sayHi/*", object : HttpFilter {
-                override fun before(request: Request): Boolean {
-                    L.d("before....")
-                    return true
-                }
-
-                override fun after(request: Request, response: Response) {
-                    L.d("after....")
-                }
-
-            })
-            .start()
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
-    }
-
-    override fun onDestroy() {
-        androidServer.close()
-        super.onDestroy()
-    }
-
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+        })
+        .start()
 }
 ```
 
@@ -162,75 +129,66 @@ curl -v -d 测试 127.0.0.1:8080/uploadLog
 测试
 ```
 
-## 搭建 Socket 服务
+## 搭建 WebSocket 服务
 
-Socket 服务，AndroidServer 支持同一个端口同时提供 TCP/WebSocket 服务
+AndroidServer 支持提供 WebSocket 服务
 
 ```kotlin
-class SocketService : Service() {
-
-    private lateinit var androidServer: AndroidServer
-
-    override fun onCreate() {
-        super.onCreate()
-        startServer()
-    }
-
-    // 启动 Socket 服务端
-    private fun startServer() {
-
-        androidServer = AndroidServer.Builder{
-            port {
-                8888
+fun startWebSocketServer(androidServer:AndroidServer) {
+    androidServer
+        .websocket("/ws",object : SocketListener<String>{
+            override fun onMessageResponseServer(msg: String, ChannelId: String) {
+                LogManager.d("WebSocketService","msg = $msg")
             }
-            converter {
-                GsonConverter()
+
+            override fun onChannelConnect(channel: Channel) {
+                val insocket = channel.remoteAddress() as InetSocketAddress
+                val clientIP = insocket.address.hostAddress
+                LogManager.d("WebSocketService","connect client: $clientIP")
+
             }
-            logProxy {
-                LogProxy
+
+            override fun onChannelDisConnect(channel: Channel) {
+                val ip = channel.remoteAddress().toString()
+                LogManager.d("WebSocketService","disconnect client: $ip")
             }
-        }.build()
 
-        androidServer
-            .socketAndWS("/ws", object: SocketListener<String> {
-                override fun onMessageResponseServer(msg: String, ChannelId: String) {
-                    LogManager.d("SocketService","msg = $msg")
-                }
-
-                override fun onChannelConnect(channel: Channel) {
-                    val insocket = channel.remoteAddress() as InetSocketAddress
-                    val clientIP = insocket.address.hostAddress
-                    LogManager.d("SocketService","connect client: $clientIP")
-
-                }
-
-                override fun onChannelDisConnect(channel: Channel) {
-                    val ip = channel.remoteAddress().toString()
-                    LogManager.d("SocketService","disconnect client: $ip")
-                }
-
-            })
-            .start()
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
-    }
-
-    override fun onDestroy() {
-
-        androidServer.close()
-        super.onDestroy()
-    }
-
-
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+        })
+        .start()
 }
 ```
 
-Socket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行测试
+> Socket/WebSocket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行测试
+
+
+## 搭建 Socket 服务
+
+AndroidServer 支持提供 Socket 服务，也提供一个端口同时支持 Socket/WebSocket 服务
+
+```kotlin
+fun startSocketServer(androidServer:AndroidServer) {
+    androidServer
+        .socketAndWS("/ws", object: SocketListener<String> {
+            override fun onMessageResponseServer(msg: String, ChannelId: String) {
+                LogManager.d("SocketService","msg = $msg")
+            }
+
+            override fun onChannelConnect(channel: Channel) {
+                val insocket = channel.remoteAddress() as InetSocketAddress
+                val clientIP = insocket.address.hostAddress
+                LogManager.d("SocketService","connect client: $clientIP")
+
+            }
+
+            override fun onChannelDisConnect(channel: Channel) {
+                val ip = channel.remoteAddress().toString()
+                LogManager.d("SocketService","disconnect client: $ip")
+            }
+
+        })
+        .start()
+}
+```
 
 # TODO List：
 

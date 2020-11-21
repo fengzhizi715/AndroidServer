@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        runInBackground{
+        runInBackground{ //  通过协程启动 AndroidServer
             androidServer = AndroidServer.Builder{
                 converter {
                     GsonConverter()
