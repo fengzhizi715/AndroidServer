@@ -3,6 +3,7 @@ package com.safframework.androidserver
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.safframework.androidserver.log.LogProxyImpl
+import com.safframework.androidserver.server.startHttpServer
 import com.safframework.androidserver.server.startWebSocketServer
 import com.safframework.kotlin.coroutines.runInBackground
 import com.safframework.server.converter.gson.GsonConverter
@@ -37,7 +38,8 @@ class MainActivity : AppCompatActivity(){
                 }
             }.build()
 
-            startWebSocketServer(androidServer)
+//            startWebSocketServer(androidServer)
+            startHttpServer(this@MainActivity,androidServer)
         }
     }
 

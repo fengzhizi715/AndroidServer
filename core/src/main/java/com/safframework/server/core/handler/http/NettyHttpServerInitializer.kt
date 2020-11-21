@@ -2,13 +2,14 @@ package com.safframework.server.core.handler.http
 
 import com.safframework.server.core.AndroidServer
 import com.safframework.server.core.router.RouteTable
-import io.netty.buffer.ByteBufAllocator
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelPipeline
 import io.netty.channel.socket.SocketChannel
 import io.netty.handler.codec.http.HttpObjectAggregator
 import io.netty.handler.codec.http.HttpServerCodec
 import io.netty.handler.ssl.SslContext
+import io.netty.handler.stream.ChunkedWriteHandler
+
 
 /**
  *
@@ -18,7 +19,11 @@ import io.netty.handler.ssl.SslContext
  * @date: 2020-03-22 16:30
  * @version: V1.0 <描述当前版本功能>
  */
-class NettyHttpServerInitializer(private val routeRegistry: RouteTable, private val sslContext: SslContext?, private val builder: AndroidServer.Builder) : ChannelInitializer<SocketChannel>() {
+class NettyHttpServerInitializer(
+    private val routeRegistry: RouteTable,
+    private val sslContext: SslContext?,
+    private val builder: AndroidServer.Builder
+) : ChannelInitializer<SocketChannel>() {
 
     @Throws(Exception::class)
     public override fun initChannel(ch: SocketChannel) {
@@ -37,6 +42,7 @@ class NettyHttpServerInitializer(private val routeRegistry: RouteTable, private 
         pipeline
             .addLast("http-codec", HttpServerCodec())
             .addLast("aggregator", HttpObjectAggregator(builder.maxContentLength))
+            .addLast("http-chunked", ChunkedWriteHandler()) //用于大数据的分区传输
             .addLast("request-handler", H1BrokerHandler(routeRegistry))
     }
 
