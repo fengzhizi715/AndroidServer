@@ -173,7 +173,7 @@ class AndroidServer private constructor(private val builder: Builder) : Server {
         var port: Int = 8080
         var address: String = "0.0.0.0"
         var useTls: Boolean = false
-        var maxContentLength: Int = 524228
+        var maxContentLength: Int = 524288 // 512k
         var errorController:RequestHandler?=null
         var logProxy: LogProxy?=null
         var converter: Converter?=null
