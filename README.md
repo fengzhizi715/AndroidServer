@@ -196,10 +196,9 @@ androidServer 的 socket() 单独提供 Socket 服务。
 
 # TODO List：
 
-* 增加 Socket 服务的默认实现
-* Android 上性能的优化
 * 支持 Https
 * 支持 HTTP/2
+* 反向代理
 
 
 联系方式
