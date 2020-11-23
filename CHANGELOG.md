@@ -4,7 +4,7 @@ AndroidServer
 Version 1.3.0
 ---
 2020-11-23
-* 修复文件上传的 bug
+* 修复 http 服务中文件上传的 bug
 
 Version 1.2.7
 ---
