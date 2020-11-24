@@ -10,5 +10,5 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="100dp"
-        android:textSize="20sp"/>
+        android:textSize="16sp"/>
 </RelativeLayout>

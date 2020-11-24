@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(){
 
     private lateinit var androidServer: AndroidServer
+    private val port = 8080
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun initData() {
-        content.text = "内网IP：$localIPAddress"
+        content.text = "内网IP：$localIPAddress \nAndroidServer库在${port}端口提供服务"
 
         runInBackground{ //  通过协程启动 AndroidServer
             androidServer = AndroidServer.Builder{
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity(){
                     LogProxyImpl
                 }
                 port {
-                    8080
+                    port
                 }
             }.build()
 
