@@ -8,6 +8,8 @@ import com.safframework.androidserver.server.startWebSocketServer
 import com.safframework.kotlin.coroutines.runInBackground
 import com.safframework.server.converter.gson.GsonConverter
 import com.safframework.server.core.AndroidServer
+import com.safframework.utils.localIPAddress
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 /**
@@ -24,6 +26,14 @@ class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+        initData()
+    }
+
+    private fun initData() {
+        content.text = "内网IP：$localIPAddress"
 
         runInBackground{ //  通过协程启动 AndroidServer
             androidServer = AndroidServer.Builder{

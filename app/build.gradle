@@ -50,4 +50,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.kotlinx_coroutines_core}"
     implementation "com.safframework.kotlin.coroutines:coroutines-utils:${libs.coroutines_utils}"
+    implementation 'com.safframework.utils:saf-kotlin-utils:0.2.1'
+    implementation 'com.safframework.utils:saf-kotlin-ext:0.2.1'
 }
