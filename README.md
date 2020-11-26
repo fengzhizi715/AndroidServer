@@ -158,7 +158,8 @@ fun startWebSocketServer(androidServer:AndroidServer) {
 }
 ```
 
-> Socket/WebSocket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行测试
+> Socket/WebSocket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行测试。
+上述 websocket 服务默认的 endpoint：ws://ip:port/ws
 
 
 ## 搭建 Socket 服务
