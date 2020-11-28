@@ -48,9 +48,18 @@ interface Server {
     fun filter(route:String, httpFilter: HttpFilter): Server
     /*** http 相关的方法 end ***/
 
+    /**
+     * 自定义的 TCP 服务
+     */
     fun socket(channelInitializer: ChannelInitializer<out SocketChannel>): Server
 
+    /**
+     * 仅支持 WebSocket 服务
+     */
     fun websocket(webSocketPath:String,listener: SocketListener<String>): Server
 
+    /**
+     * 一个端口同时支持 TCP/WebSocket 服务
+     */
     fun socketAndWS(webSocketPath:String?,listener: SocketListener<String>): Server
 }
