@@ -1,6 +1,13 @@
 AndroidServer
 ===
 
+Version 1.3.1
+---
+2020-11-30
+* Kotlin 版本升级到 1.4.20
+* Android API 版本 30.0.0
+* 包名的优化
+
 Version 1.3.0
 ---
 2020-11-23
