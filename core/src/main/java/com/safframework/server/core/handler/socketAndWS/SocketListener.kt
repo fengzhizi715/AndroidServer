@@ -1,4 +1,4 @@
-package com.safframework.server.core.handler.socket
+package com.safframework.server.core.handler.socketAndWS
 
 import io.netty.channel.Channel
 
@@ -13,6 +13,7 @@ import io.netty.channel.Channel
 interface SocketListener<T> {
 
     /**
+     * 收到客户端消息的回调
      *
      * @param msg
      * @param ChannelId unique id

@@ -1,4 +1,4 @@
-package com.safframework.server.core.handler.socket
+package com.safframework.server.core.handler.socketAndWS
 
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.socket.SocketChannel

@@ -2,7 +2,7 @@ package com.safframework.androidserver.server
 
 import android.content.Context
 import com.safframework.server.core.AndroidServer
-import com.safframework.server.core.handler.socket.SocketListener
+import com.safframework.server.core.handler.socketAndWS.SocketListener
 import com.safframework.server.core.http.Request
 import com.safframework.server.core.http.Response
 import com.safframework.server.core.http.filter.HttpFilter

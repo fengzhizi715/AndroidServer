@@ -3,8 +3,8 @@ package com.safframework.server.core
 import com.safframework.server.core.converter.Converter
 import com.safframework.server.core.converter.ConverterManager
 import com.safframework.server.core.handler.http.NettyHttpServerInitializer
-import com.safframework.server.core.handler.socket.NettySocketServerInitializer
-import com.safframework.server.core.handler.socket.SocketListener
+import com.safframework.server.core.handler.socketAndWS.NettySocketServerInitializer
+import com.safframework.server.core.handler.socketAndWS.SocketListener
 import com.safframework.server.core.handler.websocket.NettyWebSocketServerInitializer
 import com.safframework.server.core.http.HttpMethod
 import com.safframework.server.core.http.filter.HttpFilter

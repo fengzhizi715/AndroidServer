@@ -1,6 +1,6 @@
 package com.safframework.server.core
 
-import com.safframework.server.core.handler.socket.SocketListener
+import com.safframework.server.core.handler.socketAndWS.SocketListener
 import com.safframework.server.core.http.HttpMethod
 import com.safframework.server.core.http.filter.HttpFilter
 import io.netty.channel.ChannelInitializer

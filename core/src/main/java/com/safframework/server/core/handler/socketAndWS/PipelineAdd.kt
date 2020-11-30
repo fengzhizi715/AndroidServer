@@ -1,4 +1,4 @@
-package com.safframework.server.core.handler.socket
+package com.safframework.server.core.handler.socketAndWS
 
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.http.HttpObjectAggregator

@@ -1,4 +1,4 @@
-package com.safframework.server.core.handler.socket
+package com.safframework.server.core.handler.socketAndWS
 
 import com.safframework.server.core.log.LogManager
 import io.netty.buffer.ByteBuf
