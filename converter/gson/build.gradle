@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'kotlin-android'
 
 def cfg = rootProject.ext.configuration // 配置
@@ -44,11 +44,13 @@ dependencies {
 
 repositories {
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
     //加上这些
     tasks.withType(Javadoc) {
@@ -59,11 +61,11 @@ allprojects {
     }
 }
 
-publish{
-    userOrg = 'fengzhizi715'
-    groupId = 'com.safframework.server'
-    artifactId = 'android-server-converter-gson'
-    publishVersion = "$server_version"
-    desc = 'this is a server library for android,written by kotlin'
-    website = 'https://github.com/fengzhizi715/AndroidServer'
-}
+//publish{
+//    userOrg = 'fengzhizi715'
+//    groupId = 'com.safframework.server'
+//    artifactId = 'android-server-converter-gson'
+//    publishVersion = "$server_version"
+//    desc = 'this is a server library for android,written by kotlin'
+//    website = 'https://github.com/fengzhizi715/AndroidServer'
+//}
