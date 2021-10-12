@@ -19,8 +19,8 @@
 
 模块|最新版本
 ---|:-------------:
-android-server-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/android-server-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/android-server-core/_latestVersion)
-android-server-converter-gson|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/android-server-converter-gson/images/download.svg) ](https://bintray.com/fengzhizi715/maven/android-server-converter-gson/_latestVersion)
+android-server-core|[![](https://jitpack.io/v/fengzhizi715/AndroidServer.svg)](https://jitpack.io/#fengzhizi715/AndroidServer)
+android-server-converter-gson|[![](https://jitpack.io/v/fengzhizi715/AndroidServer.svg)](https://jitpack.io/#fengzhizi715/AndroidServer)
 
 # 下载安装
 
