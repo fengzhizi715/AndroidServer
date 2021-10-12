@@ -24,14 +24,25 @@ android-server-converter-gson|[ ![Download](https://api.bintray.com/packages/fen
 
 # 下载安装
 
+将它添加到项目的 root build.gradle 中：
+
+```groovy
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
 Gradle:
 
 ```groovy
-implementation 'com.safframework.server:android-server-core:<latest-version>'
+implementation 'com.github.fengzhizi715.AndroidServer:core:<latest-version>'
 ```
 
 ```groovy
-implementation 'com.safframework.server:android-server-converter-gson:<latest-version>'
+implementation 'com.github.fengzhizi715.AndroidServer:gson:<latest-version>'
 ```
 
 # Usage:
