@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'kotlin-android'
+
+group = 'com.github.fengzhizi715'
 
 def cfg = rootProject.ext.configuration // 配置
 def libs = rootProject.ext.libraries // 库
@@ -60,12 +61,3 @@ allprojects {
         }
     }
 }
-
-//publish{
-//    userOrg = 'fengzhizi715'
-//    groupId = 'com.safframework.server'
-//    artifactId = 'android-server-converter-gson'
-//    publishVersion = "$server_version"
-//    desc = 'this is a server library for android,written by kotlin'
-//    website = 'https://github.com/fengzhizi715/AndroidServer'
-//}
