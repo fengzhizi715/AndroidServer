@@ -186,18 +186,22 @@ curl -v \
 ```
 
 ```
-*   Trying 127.0.0.1:8080...
-* TCP_NODELAY set
-* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
-> GET /ws HTTP/1.1
-> Host: echo.websocket.org
-> User-Agent: curl/7.67.0
-> Accept: */*
-> Connection: Upgrade
-> Upgrade: websocket
-> Origin: https://echo.websocket.org
-> Sec-WebSocket-Key: NVwjmQUcWCenfWu98asDmg==
-> Sec-WebSocket-Version: 13
+GET /ws HTTP/1.1
+Host: echo.websocket.org
+User-Agent: curl/7.67.0
+Accept: */*
+Connection: Upgrade
+Upgrade: websocket
+Origin: https://echo.websocket.org
+Sec-WebSocket-Key: NVwjmQUcWCenfWu98asDmg==
+Sec-WebSocket-Version: 13
+```
+
+```
+HTTP/1.1 101 Switching Protocols
+upgrade: websocket
+connection: upgrade
+sec-websocket-accept: oPhRcOTYgRvrC0D+cTPcN3XYC1k=
 ```
 
 > Socket/WebSocket 服务可以使用 ：https://github.com/fengzhizi715/NetDiagnose 进行测试。
