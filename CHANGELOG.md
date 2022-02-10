@@ -1,6 +1,12 @@
 AndroidServer
 ===
 
+Version 1.3.3
+---
+2022-2-10
+* gradle 版本升级
+* 升级其他第三方库
+
 Version 1.3.2
 ---
 2021-10-12
