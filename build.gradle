@@ -16,7 +16,7 @@ ext {
 
             gson                      : "2.8.6",
 
-            saf_log                   : "v2.6.3"
+            saf_log                   : "2.6.7"
     ]
 }
 
@@ -25,11 +25,11 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -40,7 +40,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
     }
     tasks.withType(Javadoc) {
